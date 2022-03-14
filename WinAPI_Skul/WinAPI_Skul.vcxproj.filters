@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="01.Engine">
+      <UniqueIdentifier>{ac2ce126-7917-474b-83ba-0b8d051ceea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Core">
+      <UniqueIdentifier>{7f2a383d-21f2-452b-b22d-a5b7b95266a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Engine\Manager">
+      <UniqueIdentifier>{4b1d2fa4-466a-4d22-918d-5ef448f6519e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Util">
+      <UniqueIdentifier>{e25a48fd-98e1-430d-80b4-14de931c9873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject">
+      <UniqueIdentifier>{6bef62df-a19d-44de-b882-9a8ad6d3887d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Scene">
+      <UniqueIdentifier>{e83aa916-e208-46ff-8d34-cfab586b3868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.Resource">
+      <UniqueIdentifier>{af8c72e4-4a05-479a-9476-8e994b2984e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Component">
+      <UniqueIdentifier>{d21cbee9-9e0a-437b-8f63-cbca6a1f466d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Tile">
+      <UniqueIdentifier>{123bcafb-9f98-4469-8c38-cf18a714db97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object">
+      <UniqueIdentifier>{f18e6dff-09f3-4451-92fc-78431d3341d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\UI">
+      <UniqueIdentifier>{014b1227-f121-4153-a5d2-682d8ce6bcf9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="WinAPI_Skul.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CCore.h">
+      <Filter>01.Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollisionManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CEventManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CResourceManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimeManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation.h">
+      <Filter>06.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimator.h">
+      <Filter>06.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>06.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CButtonUI.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUI.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanelUI.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>03.GameObject\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObject.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>05.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>05.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CResource.h">
+      <Filter>05.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CSingleton.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectGDI.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="enumClass.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="struct.h">
+      <Filter>02.Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinAPI_Skul.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CCore.cpp">
+      <Filter>01.Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CEventManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CResourceManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CSoundManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>06.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator.cpp">
+      <Filter>06.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>06.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanelUI.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUI.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CButtonUI.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>03.GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObject.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>05.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>05.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CResource.cpp">
+      <Filter>05.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectGDI.cpp">
+      <Filter>02.Util</Filter>
+    </ClCompile>
+    <ClCompile Include="CSingleton.cpp">
+      <Filter>02.Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinAPI_Skul.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="WinAPI_Skul.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
