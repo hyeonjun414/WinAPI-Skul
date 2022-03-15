@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CCollisionManager.h"
 #include "CScene.h"
-#include "CGameObject.h"
+#include "CObject.h"
 #include "CCollider.h"
 
 CCollisionManager::CCollisionManager():
@@ -70,8 +70,8 @@ void CCollisionManager::CollisionGroupUpdate(OBJ_TYPE _eLeft, OBJ_TYPE _eRight)
 	// ÇöÀç ¾À °¡Á®¿È.
 	CScene* pCurScene = SINGLE(CSceneManager)->GetCurScene();
 
-	const vector<CGameObject*>& vecLeft = pCurScene->GetGroupObject(_eLeft);
-	const vector<CGameObject*>& vecRight = pCurScene->GetGroupObject(_eRight);
+	const vector<CObject*>& vecLeft = pCurScene->GetGroupObject(_eLeft);
+	const vector<CObject*>& vecRight = pCurScene->GetGroupObject(_eRight);
 
 	map<ULONGLONG, bool>::iterator iter;
 

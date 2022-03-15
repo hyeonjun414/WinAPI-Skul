@@ -2,7 +2,7 @@
 #include "CUI.h"
 
 CUI::CUI(OBJ_TYPE _eType):
-	CGameObject(_eType),
+	CObject(_eType),
 	m_pParentUI(nullptr),
 	m_bCameraAffected(false),
 	m_bMouseOn(false),
@@ -14,7 +14,7 @@ CUI::CUI(OBJ_TYPE _eType):
 }
 
 CUI::CUI(const CUI& _origin):
-	CGameObject(_origin),
+	CObject(_origin),
 	m_pParentUI(nullptr),
 	m_bCameraAffected(_origin.m_bCameraAffected),
 	m_bMouseOn(false),
@@ -47,7 +47,7 @@ void CUI::Update()
 
 void CUI::FinalUpdate()
 {
-	CGameObject::FinalUpdate();
+	CObject::FinalUpdate();
 
 	m_vFinalPos = GetPos();
 
@@ -75,12 +75,12 @@ void CUI::Render(HDC _hDC)
 	}
 	if (m_bLbtnDown)
 	{
-		SelectGDI green(_hDC, PEN_TYPE::GREEN);
-		Rectangle(_hDC,
+		RENDER->RenderFillRectangle(
 			(int)(vPos.x),
 			(int)(vPos.y),
 			(int)(vPos.x + vScale.x),
 			(int)(vPos.y + vScale.y));
+			
 	}
 	else
 	{

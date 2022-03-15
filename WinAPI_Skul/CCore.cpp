@@ -1,14 +1,11 @@
 #include "pch.h"
 #include "CCore.h"
 #include "CScene.h"
-#include "CGameObject.h"
+#include "CObject.h"
 #include "CTexture.h"
 
 CCore::CCore() :
 	m_hDC(0),
-	m_pMemTex(nullptr),
-	m_arrBrush{},
-	m_arrPen{},
 	m_bDebugMode(false)
 {
 }
@@ -17,16 +14,10 @@ CCore::~CCore()
 	// 메인 DC 해제
 	ReleaseDC(hWnd, m_hDC);
 
-	// 생성한 펜을 모두 삭제해준다.
-	for (int i = 0; i < (UINT)PEN_TYPE::SIZE; i++)
-		DeleteObject(m_arrPen[i]);
 }
 
 void CCore::Init()
 {
-	// 자주 사용할 펜, 브러쉬 생성
-	CreateBrushPen();
-
 	// 코어의 변수에 DC 할당
 	m_hDC = GetDC(hWnd);
 
@@ -35,19 +26,10 @@ void CCore::Init()
 	SINGLE(CKeyManager)->Init();
 	SINGLE(CPathManager)->Init();
 	SINGLE(CSoundManager)->Init();
+	SINGLE(CRenderManager)->Init();
 	SINGLE(CSceneManager)->Init();
 	SINGLE(CCollisionManager)->Init();
 	SINGLE(CCameraManager)->Init();
-
-	// 더블 버퍼링 용도의 비트맵과 DC를 만든다.
-	m_pMemTex = SINGLE(CResourceManager)->CreateTexture(L"CoreTex", WINSIZEX, WINSIZEY);
-
-	// 폰트와 텍스트 배경색 변경
-	SetBkMode(m_pMemTex->GetDC(), 1);
-	SetTextColor(m_pMemTex->GetDC(), RGB(0, 0, 0));
-	HFONT	hFont, oldFont;
-	hFont = CreateFont(16, 0, 0, 0, 0, 0, 0, 0, HANGUL_CHARSET, 0, 0, 0, VARIABLE_PITCH || FF_ROMAN, TEXT("맑은고딕"));
-	oldFont = (HFONT)SelectObject(m_pMemTex->GetDC(), hFont);
 }
 
 void CCore::Update()
@@ -72,30 +54,17 @@ void CCore::Update()
 
 void CCore::Render()
 {
-	// 화면 Clear
-	Rectangle(m_pMemTex->GetDC(), -1, -1, WINSIZEX + 1, WINSIZEY + 1);
+	RENDER->GetRenderTarget()->BeginDraw();
 
-	// 매니저 클래스 렌더 ( 장면, 카메라 )
-	SINGLE(CSceneManager)->Render(m_pMemTex->GetDC());
-	SINGLE(CCameraManager)->Render(m_pMemTex->GetDC());
+	RENDER->RenderFillRectangle(-1, -1, WINSIZEX + 1, WINSIZEY + 1, RGB(255, 255, 255));
 
-	// FPS 출력
+	SINGLE(CSceneManager)->Render();
+	CCameraManager::GetInst()->Render();
+
+	// 오른쪽 상단에 FPS 표시
 	WCHAR strFPS[6];
 	swprintf_s(strFPS, L"%5d", CTimeManager::GetInst()->GetFPS());
-	TextOutW(m_pMemTex->GetDC(), WINSIZEX - 60, 10, strFPS, 5);
+	RENDER->RenderText(strFPS, WINSIZEX - 50, 10, WINSIZEX, 50, 16, RGB(255, 255, 255));
 
-	// m_hMemDC에 모아 그린 정보를 m_hDC로 한번에 다시 그림.
-	BitBlt(m_hDC, 0, 0, WINSIZEX, WINSIZEY, m_pMemTex->GetDC(), 0, 0, SRCCOPY);
-}
-
-
-void CCore::CreateBrushPen()
-{
-	// 브러쉬
-	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
-
-	// 펜
-	m_arrPen[(UINT)PEN_TYPE::RED] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-	m_arrPen[(UINT)PEN_TYPE::GREEN] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-	m_arrPen[(UINT)PEN_TYPE::BLUE] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	RENDER->GetRenderTarget()->EndDraw();
 }

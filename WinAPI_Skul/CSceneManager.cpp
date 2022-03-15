@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CSceneManager.h"
 #include "CScene.h"
+#include "CStartScene.h"
+#include "CToolScene.h"
+#include "CInGameScene.h"
 
 CSceneManager::CSceneManager():
 	m_arrScene{},
@@ -23,13 +26,18 @@ void CSceneManager::Update()
 	m_pCurScene->FinalUpdate();
 }
 
-void CSceneManager::Render(HDC hdc)
+void CSceneManager::Render()
 {
-	m_pCurScene->Render(hdc);
+	m_pCurScene->Render();
 }
 
 void CSceneManager::Init()
 {
+
+	m_arrScene[(int)SCENE_TYPE::START] = new CStartScene(L"StartScene", SCENE_TYPE::START);
+	m_arrScene[(int)SCENE_TYPE::TOOL] = new CToolScene(L"ToolScene", SCENE_TYPE::TOOL);
+	m_arrScene[(int)SCENE_TYPE::STAGE_01] = new CInGameScene(L"Stage_01", SCENE_TYPE::STAGE_01);
+
 	m_pCurScene = m_arrScene[(int)SCENE_TYPE::START];
 	m_pCurScene->Enter();
 }

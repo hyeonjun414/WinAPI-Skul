@@ -117,7 +117,7 @@
     <ClInclude Include="CTile.h">
       <Filter>03.GameObject\Tile</Filter>
     </ClInclude>
-    <ClInclude Include="CGameObject.h">
+    <ClInclude Include="CObject.h">
       <Filter>03.GameObject\Object</Filter>
     </ClInclude>
     <ClInclude Include="CScene.h">
@@ -138,9 +138,6 @@
     <ClInclude Include="CSingleton.h">
       <Filter>02.Util</Filter>
     </ClInclude>
-    <ClInclude Include="SelectGDI.h">
-      <Filter>02.Util</Filter>
-    </ClInclude>
     <ClInclude Include="function.h">
       <Filter>02.Util</Filter>
     </ClInclude>
@@ -149,6 +146,27 @@
     </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>02.Util</Filter>
+    </ClInclude>
+    <ClInclude Include="CRenderManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CStartScene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CImageObj.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CD2DImage.h">
+      <Filter>05.Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="CToolScene.h">
+      <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CInGameScene.h">
+      <Filter>04.Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +230,7 @@
     <ClCompile Include="CTile.cpp">
       <Filter>03.GameObject\Tile</Filter>
     </ClCompile>
-    <ClCompile Include="CGameObject.cpp">
+    <ClCompile Include="CObject.cpp">
       <Filter>03.GameObject\Object</Filter>
     </ClCompile>
     <ClCompile Include="CScene.cpp">
@@ -227,11 +245,29 @@
     <ClCompile Include="CResource.cpp">
       <Filter>05.Resource</Filter>
     </ClCompile>
-    <ClCompile Include="SelectGDI.cpp">
-      <Filter>02.Util</Filter>
-    </ClCompile>
     <ClCompile Include="CSingleton.cpp">
       <Filter>02.Util</Filter>
+    </ClCompile>
+    <ClCompile Include="CRenderManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CD2DImage.cpp">
+      <Filter>05.Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="CStartScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageObj.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CToolScene.cpp">
+      <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameScene.cpp">
+      <Filter>04.Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,5 +282,8 @@
     <Image Include="WinAPI_Skul.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

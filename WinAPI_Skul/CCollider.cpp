@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CCollider.h"
-#include "CGameObject.h"
+#include "CObject.h"
 
 UINT CCollider::g_iNextID = 0;
 
@@ -34,16 +34,28 @@ void CCollider::FinalUpdate()
 	assert(m_uiColCount >= 0);
 }
 
-void CCollider::Render(HDC _hDC)
+void CCollider::Render()
 {
-	SelectGDI GDI(_hDC, m_uiColCount > 0? PEN_TYPE::RED : PEN_TYPE::GREEN, BRUSH_TYPE::HOLLOW);
+	if (m_uiColCount > 0)
+	{
+		RENDER->RenderRectangle(
+			m_vRenderPos.x - m_vScale.x / 2,
+			m_vRenderPos.y - m_vScale.y / 2,
+			m_vRenderPos.x + m_vScale.x / 2,
+			m_vRenderPos.y + m_vScale.y / 2,
+			RGB(255, 0, 0));
+	}
+	else
+	{
+		RENDER->RenderRectangle(
+			m_vRenderPos.x - m_vScale.x / 2,
+			m_vRenderPos.y - m_vScale.y / 2,
+			m_vRenderPos.x + m_vScale.x / 2,
+			m_vRenderPos.y + m_vScale.y / 2,
+			RGB(0, 255, 0));
+	}
 
 
-	Rectangle(_hDC,
-		(int)(m_vRenderPos.x - m_vScale.x / 2),
-		(int)(m_vRenderPos.y - m_vScale.y / 2),
-		(int)(m_vRenderPos.x + m_vScale.x / 2),
-		(int)(m_vRenderPos.y + m_vScale.y / 2));
 }
 
 void CCollider::OnCollision(CCollider* _pOther)

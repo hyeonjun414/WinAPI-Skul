@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
-#include "CGameObject.h"
+#include "CObject.h"
 
 CAnimator::CAnimator():
 	m_bRepeat(false),
@@ -31,14 +31,14 @@ void CAnimator::Update()
 	}
 }
 
-void CAnimator::Render(HDC _hDC)
+void CAnimator::Render()
 {
 	if (nullptr != m_pCurAnim)
-		m_pCurAnim->Render(_hDC);
+		m_pCurAnim->Render();
 }
 
 
-void CAnimator::CreateAnimation(const wstring& _strName, CTexture* _pTex, Vec2 _vLeftTop, 
+void CAnimator::CreateAnimation(const wstring& _strName, CD2DImage* _pImg, Vec2 _vLeftTop,
 								Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)
 {
 	CAnimation* pAnim = FindAnimation(_strName);
@@ -49,7 +49,7 @@ void CAnimator::CreateAnimation(const wstring& _strName, CTexture* _pTex, Vec2 _
 	pAnim->SetName(_strName);
 	pAnim->m_pAnimator = this;
 
-	pAnim->Create(_pTex, _vLeftTop, _vSliceSize, _vStep, _fFrameTime,_iFrameCount);
+	pAnim->Create(_pImg, _vLeftTop, _vSliceSize, _vStep, _fFrameTime,_iFrameCount);
 
 	m_mapAnim.insert(make_pair(_strName, pAnim));
 }

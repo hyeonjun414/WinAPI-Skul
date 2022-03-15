@@ -1,7 +1,7 @@
 #pragma once
-#include "CGameObject.h"
+#include "CObject.h"
 class CUI :
-    public CGameObject
+    public CObject
 {
     friend class CUIManager;
 private:

@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "CAnimation.h"
 #include "CAnimator.h"
-#include "CTexture.h"
-#include "CGameObject.h"
+#include "CD2DImage.h"
+#include "CObject.h"
 
 CAnimation::CAnimation() :
 	m_strName(L""),
 	m_pAnimator(nullptr),
-	m_pTex(nullptr),
+	m_pImg(nullptr),
 	m_iCurFrame(0),
 	m_fFlowTime(0.f),
 	m_bFinish(false)
@@ -48,33 +48,33 @@ void CAnimation::Update()
 	}
 }
 
-void CAnimation::Render(HDC _hDC)
+void CAnimation::Render()
 {
 	if (m_bFinish) return; // 애니메이션이 끝났다면 렌더도 진행하지 않는다.
 
 	// 애니메이션을 출력할 위치를 가져온다.
-	CGameObject* pObj = m_pAnimator->GetObj();
+	CObject* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetRenderPos();
 
 	// 오브젝트의 위치값에 더해 애니메이션의 위치 오프셋 값을 더해준다.
 	vPos += m_vecFrame[m_iCurFrame].vOffset;
 
-	TransparentBlt(_hDC,
-		(int)(vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x / 2.f), // 좌상단 위치 찾기
-		(int)(vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y / 2.f), 
-		(int)(m_vecFrame[m_iCurFrame].vSliceSize.x), // 프레임 크기만큼 출력
-		(int)(m_vecFrame[m_iCurFrame].vSliceSize.y),
-		m_pTex->GetDC(),
-		(int)(m_vecFrame[m_iCurFrame].vLT.x), // 해당 텍스쳐내에서 잘라내기를 시작할 좌상단 좌표
-		(int)(m_vecFrame[m_iCurFrame].vLT.y),
-		(int)(m_vecFrame[m_iCurFrame].vSliceSize.x), // 잘라낼 크기
-		(int)(m_vecFrame[m_iCurFrame].vSliceSize.y),
-		RGB(255,0,255));
+	RENDER->RenderFrame(
+		m_pImg,
+		vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x / 2.f, // 좌상단 위치 찾기
+		vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y / 2.f,
+		vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x / 2.f + m_vecFrame[m_iCurFrame].vSliceSize.x, // 프레임 크기만큼 출력
+		vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y / 2.f + m_vecFrame[m_iCurFrame].vSliceSize.y,
+		m_vecFrame[m_iCurFrame].vLT.x, 
+		m_vecFrame[m_iCurFrame].vLT.y,
+		m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+		m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+		1.0f);
 }
 
-void CAnimation::Create(CTexture* _pTex, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)
+void CAnimation::Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)
 {
-	m_pTex = _pTex;
+	m_pImg = _pImg;
 
 	tAnimFrame frame = {};
 	for (int i = 0; i < (int)_iFrameCount; i++)

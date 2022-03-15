@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CTexture.h"
-#include "CGameObject.h"
+#include "CObject.h"
 
 CTexture::CTexture()
 {

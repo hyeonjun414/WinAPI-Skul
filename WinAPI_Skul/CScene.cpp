@@ -1,19 +1,23 @@
 #include "pch.h"
 #include "CScene.h"
-#include "CGameObject.h"
+#include "CObject.h"
 #include "CTile.h"
 
-CScene::CScene():
+CScene::CScene() :
 	m_strName{},
 	m_eType(SCENE_TYPE::NONE),
+	m_eNextScene(SCENE_TYPE::NONE),
+	m_bIsChange(false),
 	m_iTileX(0),
 	m_iTileY(0)
 {
 }
 
-CScene::CScene(wstring _strName, SCENE_TYPE _eTYpe):
+CScene::CScene(wstring _strName, SCENE_TYPE _eTYpe) :
 	m_strName(_strName),
 	m_eType(_eTYpe),
+	m_eNextScene(SCENE_TYPE::NONE),
+	m_bIsChange(false),
 	m_iTileX(0),
 	m_iTileY(0)
 {
@@ -34,10 +38,13 @@ void CScene::Update()
 	{
 		for (unsigned int j = 0; j < m_vecObjectList[i].size(); j++)
 		{
-			if(m_vecObjectList[i][j]->GetActive())
+			if (m_vecObjectList[i][j]->GetActive())
 				m_vecObjectList[i][j]->Update();
 		}
 	}
+
+	if (m_bIsChange)
+		DelayChange(SINGLE(CTimeManager)->GetPlayTime());
 }
 
 void CScene::FinalUpdate()
@@ -51,23 +58,23 @@ void CScene::FinalUpdate()
 	}
 }
 
-void CScene::Render(HDC _hDC)
+void CScene::Render()
 {
 	for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
 	{
 		if ((UINT)OBJ_TYPE::TILE == i && m_vecObjectList[i].size() != 0)
 		{
-			RenderTile(_hDC);
+			RenderTile();
 			continue;
 		}
 		// 렌더부분에서 활성화 여부를 체크해서 벡터의 크기를 조절한다.
 		// 메모리해제는 이벤트매니저에서 진행하기 때문에 별도를 메모리해제는 해주지 않아도 된다.
-		vector<CGameObject*>::iterator iter = m_vecObjectList[i].begin();
+		vector<CObject*>::iterator iter = m_vecObjectList[i].begin();
 		for (; iter != m_vecObjectList[i].end();)
 		{
 			if ((*iter)->GetActive())
 			{
-				(*iter)->Render(_hDC);
+				(*iter)->Render();
 				++iter;
 			}
 			else
@@ -78,14 +85,14 @@ void CScene::Render(HDC _hDC)
 	}
 }
 
-void CScene::AddObject(CGameObject* _pObj)
+void CScene::AddObject(CObject* _pObj)
 {
 	m_vecObjectList[(int)_pObj->GetObjGroup()].push_back(_pObj);
 }
 
-void CScene::EraseObject(CGameObject* _pObj)
+void CScene::EraseObject(CObject* _pObj)
 {
-	vector<CGameObject*>::iterator iter = m_vecObjectList[(int)_pObj->GetObjGroup()].begin();
+	vector<CObject*>::iterator iter = m_vecObjectList[(int)_pObj->GetObjGroup()].begin();
 
 	for (; iter != m_vecObjectList[(int)_pObj->GetObjGroup()].end();)
 	{
@@ -118,15 +125,16 @@ void CScene::CreateTile(UINT _xSize, UINT _ySize)
 	m_iTileX = _xSize;
 	m_iTileY = _ySize;
 
-	CTexture* pTileTex = SINGLE(CResourceManager)->LoadTexture(L"Tile", L"texture\\Tile\\tilemap.bmp");
+	CD2DImage* pTileTex = SINGLE(CResourceManager)->LoadD2DImage(L"Tile", L"texture\\Tile\\tilemap.bmp");
+	CTexture* pTileTex2 = SINGLE(CResourceManager)->LoadTexture(L"Tile", L"texture\\Tile\\tilemap.bmp");
 
-	for (int i = 0; i < _ySize; i++)
+	for (UINT i = 0; i < _ySize; i++)
 	{
-		for (int j = 0; j < _xSize; j++)
+		for (UINT j = 0; j < _xSize; j++)
 		{
 			CTile* pTile = new CTile();
 			pTile->SetPos(Vec2((float)(j * CTile::SIZE_TILE), (float)(i * CTile::SIZE_TILE)));
-			pTile->SetTexture(pTileTex);
+			pTile->SetImage(pTileTex);
 			AddObject(pTile);
 		}
 	}
@@ -147,7 +155,7 @@ void CScene::LoadTile(const wstring& _strPath)
 
 	CreateTile(xCount, yCount);
 
-	const vector<CGameObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
+	const vector<CObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
 	for (UINT i = 0; i < vecTile.size(); i++)
 	{
 		((CTile*)vecTile[i])->Load(pFile);
@@ -156,22 +164,22 @@ void CScene::LoadTile(const wstring& _strPath)
 	fclose(pFile);
 }
 
-void CScene::RenderTile(HDC _hDC)
+void CScene::RenderTile()
 {
-	const vector<CGameObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
+	const vector<CObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
 
-	Vec2 vCamLook = SINGLE(CCameraManager)->GetLookAt();
-	Vec2 vLeftTop = vCamLook - Vec2(WINSIZEX, WINSIZEY) / 2.f;
+	Vec2 vCamLook = SINGLE(CCameraManager)->GetCurLookAt();
+	Vec2 vLeftTop = vCamLook - Vec2(WINSIZEX, WINSIZEY) / 2;
 
-	int iLTX = (int)vLeftTop.x / CTile::SIZE_TILE;
-	int iLTY = (int)vLeftTop.y / CTile::SIZE_TILE;
-	int iLTIdx = m_iTileX * iLTY + iLTX;
+	UINT iLTX = (int)vLeftTop.x / CTile::SIZE_TILE;
+	UINT iLTY = (int)vLeftTop.y / CTile::SIZE_TILE;
+	UINT iLTIdx = m_iTileX * iLTY + iLTX;
 
-	int iClientWidth = (int)WINSIZEX / CTile::SIZE_TILE;
-	int iClientHeight = (int)WINSIZEY / CTile::SIZE_TILE;
-	for (int iCurY = iLTY; iCurY <= (iLTY + iClientHeight); ++iCurY)
+	UINT iClientWidth = (int)WINSIZEX / CTile::SIZE_TILE;
+	UINT iClientHeight = (int)WINSIZEY / CTile::SIZE_TILE;
+	for (UINT iCurY = iLTY; iCurY <= (iLTY + iClientHeight); ++iCurY)
 	{
-		for (int iCurX = iLTX; iCurX <= (iLTX + iClientWidth); ++iCurX)
+		for (UINT iCurX = iLTX; iCurX <= (iLTX + iClientWidth); ++iCurX)
 		{
 			if (iCurX < 0 || m_iTileX <= iCurX || iCurY < 0 || m_iTileY <= iCurY)
 			{
@@ -179,8 +187,29 @@ void CScene::RenderTile(HDC _hDC)
 			}
 			int iIdx = (m_iTileX * iCurY) + iCurX;
 
-			vecTile[iIdx]->Render(_hDC);
+			vecTile[iIdx]->Render();
 		}
+	}
+}
+
+void CScene::ChangeNextScene(SCENE_TYPE _eType)
+{
+	if (m_bIsChange)
+		return;
+
+	SINGLE(CCameraManager)->FadeOut(1.0f);
+	m_eNextScene = _eType;
+	m_bIsChange = true;
+	m_iTime = SINGLE(CTimeManager)->GetPlayTime();
+}
+
+void CScene::DelayChange(UINT _iTime)
+{
+	if (m_iTime + 1 <= _iTime)
+	{
+		CHANGESCENE(m_eNextScene);
+		m_eNextScene = SCENE_TYPE::NONE;
+		m_bIsChange = false;
 	}
 }
 

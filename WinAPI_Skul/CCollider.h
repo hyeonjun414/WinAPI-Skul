@@ -1,15 +1,15 @@
 #pragma once
 
-class CGameObject;
+class CObject;
 
 class CCollider
 {
-	friend class CGameObject;
+	friend class CObject;
 
 private:
 	static UINT		g_iNextID; // 충돌체 생성시 ID값을 지정할 변수
 
-	CGameObject*	m_pOwner; // 해당 콜라이더를 소유하는 오브젝트
+	CObject*	m_pOwner; // 해당 콜라이더를 소유하는 오브젝트
 
 	Vec2			m_vOffsetPos;	// 오브젝트에서의 상대적인 위치 -> 기준점은 오브젝트의 중심이다.
 	Vec2			m_vFinalPos;	// 충돌체의 최종 위치
@@ -25,12 +25,12 @@ public:
 	~CCollider();
 
 	void			FinalUpdate();
-	void			Render(HDC _hDC);
+	void			Render();
 
 	void			SetOffsetPos(Vec2 _vPos)	{ m_vOffsetPos = _vPos; }
 	void			SetScale(Vec2 _vScale)		{ m_vScale = _vScale; }
 
-	CGameObject*	GetObj()			{ return m_pOwner; }
+	CObject*	GetObj()			{ return m_pOwner; }
 	Vec2			GetOffsetPos()		{ return m_vOffsetPos; }
 	Vec2			GetScale()			{ return m_vScale; }
 	UINT			GetID()				{ return m_uiID; }

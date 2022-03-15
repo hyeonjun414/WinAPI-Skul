@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CEventManager.h"
 #include "CScene.h"
-#include "CGameObject.h"
+#include "CObject.h"
 
 CEventManager::CEventManager(){}
 CEventManager::~CEventManager(){}
@@ -14,7 +14,7 @@ void CEventManager::Excute(const tEvent& _event)
 	{
 		// lParam : 오브젝트 주소
 		// wParam : 오브젝트 그룹
-		CGameObject* pObj = (CGameObject*)_event.lParam;
+		CObject* pObj = (CObject*)_event.lParam;
 		SINGLE(CSceneManager)->GetCurScene()->AddObject(pObj);
 		break;
 	}
@@ -22,7 +22,7 @@ void CEventManager::Excute(const tEvent& _event)
 	{
 		// 오브젝트를 Dead상태로 변경하고
 		// 삭제 예정 오브젝트들을 모아둔다.
-		CGameObject* pObj = (CGameObject*)_event.lParam;
+		CObject* pObj = (CObject*)_event.lParam;
 		if (!pObj->GetActive()) break;
 		pObj->SetActive(false);
 		m_vecDead.push_back(pObj);
@@ -54,7 +54,7 @@ void CEventManager::Update()
 	m_vecEvent.clear();
 }
 
-void CEventManager::EventCreateObject(CGameObject* _pObj)
+void CEventManager::EventCreateObject(CObject* _pObj)
 {
 	tEvent even = {};
 	even.eEvent = EVENT_TYPE::CREATE_OBJECT;
@@ -63,7 +63,7 @@ void CEventManager::EventCreateObject(CGameObject* _pObj)
 	AddEvent(even);
 }
 
-void CEventManager::EventDeleteObject(CGameObject* _pObj)
+void CEventManager::EventDeleteObject(CObject* _pObj)
 {
 	tEvent even = {};
 	even.eEvent = EVENT_TYPE::DELETE_OBJECT;

@@ -51,9 +51,9 @@ void CUIManager::SetFocusedUI(CUI* _pUI)
 	}
 
 	CScene* pCurScene = SINGLE(CSceneManager)->GetCurScene();
-	vector<CGameObject*>& vecUI = pCurScene->GetUIGroup();
+	vector<CObject*>& vecUI = pCurScene->GetUIGroup();
 
-	vector<CGameObject*>::iterator iter = vecUI.begin();
+	vector<CObject*>::iterator iter = vecUI.begin();
 	for (; iter != vecUI.end(); iter++)
 	{
 		if (_pUI == *iter)
@@ -116,7 +116,7 @@ CUI* CUIManager::GetTargetUI(CUI* _pParentUI)
 CUI* CUIManager::GetFocusedUI()
 {
 	CScene* pCurScene = SINGLE(CSceneManager)->GetCurScene();
-	vector<CGameObject*>& vecUI = pCurScene->GetUIGroup();
+	vector<CObject*>& vecUI = pCurScene->GetUIGroup();
 	CUI* pFocusedUI = m_pFocusedUI; // 포커싱 되어있던 UI를 넣어줌.
 
 	// 마우스가 눌린상태가 아니라면 이전에 포커싱한 UI를 반환한다.
@@ -125,8 +125,8 @@ CUI* CUIManager::GetFocusedUI()
 		return m_pFocusedUI;
 	}
 
-	vector<CGameObject*>::iterator targetiter	=	vecUI.end();	
-	vector<CGameObject*>::iterator iter			=	vecUI.begin();
+	vector<CObject*>::iterator targetiter	=	vecUI.end();	
+	vector<CObject*>::iterator iter			=	vecUI.begin();
 	for (; iter != vecUI.end(); iter++)
 	{
 		// 클릭이 된 상태이면서 해당 UI에 마우스가 올라가 있어야 한다.

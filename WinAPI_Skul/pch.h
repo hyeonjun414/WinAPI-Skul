@@ -26,7 +26,6 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #include "Logger.h"
 #include "enumClass.h"
 #include "struct.h"
-#include "SelectGDI.h"
 #include "function.h"
 
 #include "CSingleton.h"
@@ -42,6 +41,7 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #include "CCameraManager.h"
 #include "CUIManager.h"
 #include "CSoundManager.h"
+#include "CRenderManager.h"
 
 
 // 정의
@@ -65,7 +65,7 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #define RELATIVEPATH	SINGLE(CPathManager)->GetRelativePath()
 #define LOG(str) Logger::debug(str);
 #define CLONE(type) type* Clone() {return new type(*this);}
-
+#define RENDER		SINGLE(CRenderManager)
 
 // 이벤트
 #define CREATEOBJECT(type)	CEventManager::GetInst()->EventCreateObject(type)
