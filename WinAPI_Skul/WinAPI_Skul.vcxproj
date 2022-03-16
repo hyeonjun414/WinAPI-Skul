@@ -165,7 +165,7 @@
     <ClInclude Include="CPanelUI.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
-    <ClInclude Include="CPlayerState.h" />
+    <ClInclude Include="CState.h" />
     <ClInclude Include="CRenderManager.h" />
     <ClInclude Include="CResource.h" />
     <ClInclude Include="CResourceManager.h" />
@@ -174,10 +174,11 @@
     <ClInclude Include="CSingleton.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
-    <ClInclude Include="CSPlayerIdle.h" />
-    <ClInclude Include="CSPlayerMove.h" />
+    <ClInclude Include="CStateFall.h" />
+    <ClInclude Include="CStateIdle.h" />
+    <ClInclude Include="CStateJump.h" />
+    <ClInclude Include="CStateMove.h" />
     <ClInclude Include="CStartScene.h" />
-    <ClInclude Include="CState.h" />
     <ClInclude Include="CTextObj.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTile.h" />
@@ -213,7 +214,7 @@
     <ClCompile Include="CPanelUI.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
-    <ClCompile Include="CPlayerState.cpp" />
+    <ClCompile Include="CState.cpp" />
     <ClCompile Include="CRenderManager.cpp" />
     <ClCompile Include="CResource.cpp" />
     <ClCompile Include="CResourceManager.cpp" />
@@ -222,10 +223,11 @@
     <ClCompile Include="CSingleton.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
-    <ClCompile Include="CSPlayerIdle.cpp" />
-    <ClCompile Include="CSPlayerMove.cpp" />
+    <ClCompile Include="CStateFall.cpp" />
+    <ClCompile Include="CStateIdle.cpp" />
+    <ClCompile Include="CStateJump.cpp" />
+    <ClCompile Include="CStateMove.cpp" />
     <ClCompile Include="CStartScene.cpp" />
-    <ClCompile Include="CState.cpp" />
     <ClCompile Include="CTextObj.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTile.cpp" />

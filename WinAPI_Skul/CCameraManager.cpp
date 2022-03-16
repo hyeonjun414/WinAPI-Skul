@@ -57,7 +57,7 @@ void CCameraManager::Update()
 		}
 		else
 		{
-			SetLookAt(m_pTargetObj->GetPos());
+			SetLookAt(m_pTargetObj->GetPos()+Vec2(0,-100));
 		}
 	}
 

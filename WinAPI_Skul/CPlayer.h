@@ -12,7 +12,7 @@ enum class PLAYER_STATE
 };
 
 class CD2DImage;
-class CPlayerState;
+class CState;
 
 class CPlayer :
     public CObject
@@ -24,7 +24,7 @@ private:
     int     m_iCollCount;
 
 public:
-    CPlayerState* m_pState;
+    CState* m_pState;
 
 public :
     CPlayer();
@@ -36,9 +36,11 @@ public :
     virtual void    Update();
     virtual void    Render();
 
-
     virtual void	OnCollision(CCollider* _pOther) ;
     virtual void	OnCollisionEnter(CCollider* _pOther);
     virtual void	OnCollisionExit(CCollider* _pOther);
+
+    void            AddCollCount(int _i)    { m_iCollCount += _i; }
+    int             GetCollCount()          { return m_iCollCount; }
 };
 

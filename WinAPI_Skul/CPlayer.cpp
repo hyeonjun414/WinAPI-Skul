@@ -5,8 +5,8 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CAnimation.h"
-#include "CPlayerState.h"
-#include "CSPlayerIdle.h"
+#include "CState.h"
+#include "CStateIdle.h"
 
 CPlayer::CPlayer()
 {
@@ -57,12 +57,14 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
 	m_pAnimator->SetAllAnimOffset(Vec2(0,30));
 
-	m_pState = new CSPlayerIdle();
+	m_pState = new CStateIdle();
+	m_pState->Enter(this);
 
 }
 
 CPlayer::~CPlayer()
 {
+	delete m_pState;
 }
 
 void CPlayer::Init()
@@ -71,72 +73,27 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
-	m_pState->HandleInput(this);
+	CState* pState = m_pState->HandleInput(this);
+	if (nullptr != pState)
+	{
+		m_pState->Exit(this);
+		delete m_pState;
+		m_pState = pState;
+		m_pState->Enter(this);
+	}
+
 	m_pState->Update(this);
-	if (m_bIsGravity && !m_bIsFloor) m_vVelocity.y -= 700 * DT;
-	m_vPos.y += -m_vVelocity.y * DT;
-	
-	if (m_vVelocity.y > 0)
-	{
-		m_bIsJumping = true;
-		GetAnimator()->Play(L"Player_Jump", true);
-	}
-	else
-	{
-		if (m_vVelocity.y < -1)
-		{
-			GetAnimator()->Play(L"Player_Fall", true);
-		}
-		if(m_vVelocity.y < -200)
-		{
-			GetAnimator()->Play(L"Player_FallRepeat", true);
-		}
-		m_bIsJumping = false;
-	}
-	//if (KEYCHECK(KEY::A) == KEY_STATE::HOLD)
-	//{
-	//	// 왼쪽
-	//	m_vPos.x -= 300 * DT;
-	//	m_bIsRight = false;
-	//	if (m_bIsFloor && !m_bIsJumping)
-	//		GetAnimator()->Play(L"Player_Move", true);
-	//}
-	//if (KEYCHECK(KEY::A) == KEY_STATE::AWAY)
-	//{
-	//	m_bIsRight = false;
-	//	if (m_bIsFloor && !m_bIsJumping)
-	//		GetAnimator()->Play(L"Player_Idle", true);
-	//}
-	//if (KEYCHECK(KEY::D) == KEY_STATE::HOLD)
-	//{
-	//	// 오른쪽
-	//	m_vPos.x += 300 * DT;
-	//	m_bIsRight = true;
-	//	if(m_bIsFloor && !m_bIsJumping)
-	//		GetAnimator()->Play(L"Player_Move", true);
-	//}
-	//if (KEYCHECK(KEY::D) == KEY_STATE::AWAY)
-	//{
-	//	m_bIsRight = true;
-	//	if (m_bIsFloor && !m_bIsJumping)
-	//		GetAnimator()->Play(L"Player_Idle", true);
-	//}
 
-	if (KEYCHECK(KEY::SPACE) == KEY_STATE::TAP && m_bIsFloor)
-	{
-		m_vVelocity.y += 500;
+	//if (KEYTAP(KEY::X))
+	//{
+	//	GetAnimator()->PlayAndNextAnim(L"Player_AttackA", false, L"Player_Idle");
 
-	}
-	if (KEYTAP(KEY::X))
-	{
-		GetAnimator()->PlayAndNextAnim(L"Player_AttackA", false, L"Player_Idle");
+	//}
+	//if (KEYTAP(KEY::C))
+	//{
+	//	GetAnimator()->PlayAndNextAnim(L"Player_AttackB", false, L"Player_Idle");
 
-	}
-	if (KEYTAP(KEY::C))
-	{
-		GetAnimator()->PlayAndNextAnim(L"Player_AttackB", false, L"Player_Idle");
-
-	}
+	//}
 
 	GetAnimator()->Update();
 }
@@ -148,43 +105,16 @@ void CPlayer::Render()
 
 void CPlayer::OnCollision(CCollider* _pOther)
 {
-	if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE &&
-		m_vPos.y > _pOther->GetFinalPos().y)
-	{
-		if (m_vPos.x < _pOther->GetFinalPos().x)
-			m_vPos.x = _pOther->GetFinalPos().x - _pOther->GetScale().x / 2 - m_pCollider->GetScale().x / 2;
-		else
-			m_vPos.x = _pOther->GetFinalPos().x + _pOther->GetScale().x / 2 + m_pCollider->GetScale().x / 2;
-	}
+	m_pState->OnCollision(this, _pOther);
 }
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	m_iCollCount++;
-	if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE && !m_bIsJumping && m_iCollCount == 1 &&
-		m_vPos.y < _pOther->GetFinalPos().y)
-	{
-
-		LOG(L"바닥 충돌");
-		
-		m_vVelocity.y = 0;
-
-		m_vPos.y = _pOther->GetFinalPos().y - _pOther->GetScale().y / 2 + 1;
-		m_bIsFloor = true;
-		GetAnimator()->Play(L"Player_Idle", true);
-	}
+	m_pState->OnCollisionEnter(this, _pOther);
 }
 
 void CPlayer::OnCollisionExit(CCollider* _pOther)
 {
-	m_iCollCount--;
-	if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE && m_iCollCount == 0 &&
-		m_vPos.y < _pOther->GetFinalPos().y)
-	{
-
-		LOG(L"바닥 충돌 해제");
-		
-		m_bIsFloor = false;
-	}
+	m_pState->OnCollisionExit(this, _pOther);
 }
 

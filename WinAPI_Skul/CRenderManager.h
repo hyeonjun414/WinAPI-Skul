@@ -21,6 +21,7 @@ private:
 	ID2D1Bitmap* m_pBitmap;
 
 	IDWriteTextFormat* m_pTextFormat;
+	ID2D1SolidColorBrush* m_pBrush;
 
 public:
 	void Init();
