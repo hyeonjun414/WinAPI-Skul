@@ -48,7 +48,7 @@ void CAnimation::Update()
 	}
 }
 
-void CAnimation::Render()
+void CAnimation::Render(bool _bIsRight)
 {
 	if (m_bFinish) return; // 애니메이션이 끝났다면 렌더도 진행하지 않는다.
 
@@ -58,18 +58,35 @@ void CAnimation::Render()
 
 	// 오브젝트의 위치값에 더해 애니메이션의 위치 오프셋 값을 더해준다.
 	vPos += m_vecFrame[m_iCurFrame].vOffset;
+	if (_bIsRight)
+	{
+		RENDER->RenderFrame(
+			m_pImg,
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			m_vecFrame[m_iCurFrame].vLT.x,
+			m_vecFrame[m_iCurFrame].vLT.y,
+			m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+			m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			1.0f);
+	}
+	else
+	{
+		RENDER->RenderRevFrame(
+			m_pImg,
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			m_vecFrame[m_iCurFrame].vLT.x,
+			m_vecFrame[m_iCurFrame].vLT.y,
+			m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+			m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			1.0f);
+	}
 
-	RENDER->RenderFrame(
-		m_pImg,
-		vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x / 2.f, // 좌상단 위치 찾기
-		vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y / 2.f,
-		vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x / 2.f + m_vecFrame[m_iCurFrame].vSliceSize.x, // 프레임 크기만큼 출력
-		vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y / 2.f + m_vecFrame[m_iCurFrame].vSliceSize.y,
-		m_vecFrame[m_iCurFrame].vLT.x, 
-		m_vecFrame[m_iCurFrame].vLT.y,
-		m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
-		m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
-		1.0f);
 }
 
 void CAnimation::Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)

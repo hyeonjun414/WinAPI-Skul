@@ -106,7 +106,7 @@ void CKeyManager::Update()
 		if (ptPos.x < 0 || ptPos.x > WINSIZEX ||
 			ptPos.y < 0 || ptPos.y > WINSIZEY)
 		{
-			m_vCurMousePos = Vec2(WINSIZEX / 2, WINSIZEY / 2);
+			//m_vCurMousePos = Vec2(WINSIZEX / 2, WINSIZEY / 2);
 		}
 		else
 		{

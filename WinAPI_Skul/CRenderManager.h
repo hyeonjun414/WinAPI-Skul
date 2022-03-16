@@ -29,7 +29,7 @@ public:
 	void RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,
 		float srcX, float srcY, float srcW, float srcH, float _alpha);
 	void RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,
-		float srcX, float srcY, float srcW, float srcH);
+		float srcX, float srcY, float srcW, float srcH, float _alpha);
 
 	void RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize = 12.f, COLORREF color = RGB(0, 0, 0));
 	void RenderRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0));

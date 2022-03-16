@@ -8,6 +8,7 @@
 #define IDD_ABOUTBOX                    103
 #define IDM_ABOUT                       104
 #define IDM_EXIT                        105
+#define IDC_POINTER_COPY                105
 #define IDI_WINAPISKUL                  107
 #define IDI_SMALL                       108
 #define IDC_WINAPISKUL                  109
@@ -20,7 +21,6 @@
 #define IDC_BTN_LOAD                    1004
 #define IDC_BTN_SIZE                    1005
 #define IDC_BTN_TILE                    1006
-#define IDC_CHECK1                      1007
 #define IDC_CHECK_COLL                  1007
 #define IDC_STATIC                      -1
 
@@ -29,7 +29,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
-#define _APS_NEXT_RESOURCE_VALUE        130
+#define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           110

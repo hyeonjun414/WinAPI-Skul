@@ -30,6 +30,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 실행된 프로세스의 시
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
+    //ShowCursor(false);
 
     // 해당 지역으로 설정
     setlocale(LC_ALL, "Korean");

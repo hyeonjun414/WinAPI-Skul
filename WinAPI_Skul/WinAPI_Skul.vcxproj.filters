@@ -46,6 +46,9 @@
     <Filter Include="03.GameObject\UI">
       <UniqueIdentifier>{014b1227-f121-4153-a5d2-682d8ce6bcf9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.GameObject\Object\Player">
+      <UniqueIdentifier>{bc7112fc-79d6-447d-90f4-f816d0c037c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,11 +165,29 @@
     <ClInclude Include="CToolScene.h">
       <Filter>04.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayer.h">
-      <Filter>03.GameObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="CInGameScene.h">
       <Filter>04.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CUICursor.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CTextObj.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>06.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerState.h">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CSPlayerIdle.h">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CSPlayerMove.h">
+      <Filter>03.GameObject\Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,11 +284,29 @@
     <ClCompile Include="CToolScene.cpp">
       <Filter>04.Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayer.cpp">
-      <Filter>03.GameObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="CInGameScene.cpp">
       <Filter>04.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CUICursor.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextObj.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>06.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerState.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSPlayerIdle.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CSPlayerMove.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

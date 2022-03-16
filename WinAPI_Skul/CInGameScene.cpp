@@ -50,12 +50,12 @@ void CInGameScene::Enter()
 
 	CImageObj* BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"InGameSceneBG",
-		L"texture\\background.bmp", false);
+		L"texture\\bg.png", false);
 	CREATEOBJECT(BgObj);
 
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"InGameSceneTile",
-		L"texture\\map1.png", true);
+		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
 	

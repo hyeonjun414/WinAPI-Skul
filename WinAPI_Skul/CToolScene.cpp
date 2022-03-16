@@ -70,27 +70,11 @@ void CToolScene::Enter()
 
 	CImageObj* BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"InGameSceneTile",
-		L"texture\\map1.png", true);
+		L"texture\\stage01.png", true);
 	AddObject(BgObj);
 
 	CreateTile(0, 0);
 
-	// UI »ý¼º
-
-	//CPanelUI* pUI = new CPanelUI(OBJ_TYPE::UI);
-	//pUI->SetPos(Vec2(WINSIZEX / 2, WINSIZEY / 2));
-	//pUI->SetCameraAffected(false);
-	//AddObject(pUI);
-
-	//CButtonUI* pChildUI = new CButtonUI(OBJ_TYPE::UI);
-	//pChildUI->SetPos(Vec2(25,25));
-	//pChildUI->SetScale(Vec2(50, 50));
-	//pChildUI->SetClickCallBack(test, 0,0);
-	//pUI->AddChild(pChildUI);
-
-	//CPanelUI* pUI2 = pUI->Clone();
-	//pUI2->SetPos(Vec2(WINSIZEX / 2 -300, WINSIZEY / 2));
-	//AddObject(pUI2);
 }
 
 void CToolScene::Exit()

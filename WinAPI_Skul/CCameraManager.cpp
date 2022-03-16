@@ -26,7 +26,7 @@ void CCameraManager::CalDiff()
 	float fDist = (m_vLookAt - m_vPrevLookAt).Length();
 
 	// 시간이 지나면, 도착한것으로 간주
-	if (m_fTime <= m_fFlowTime || (m_vLookAt - m_vPrevLookAt).Length() < 2 || fDist == 0)
+	if (m_fTime <= m_fFlowTime || fDist < 2 )
 	{
 		m_vCurLookAt = m_vLookAt;
 	}
@@ -38,7 +38,7 @@ void CCameraManager::CalDiff()
 		m_vDiff = m_vCurLookAt - vCenter;
 		m_vPrevLookAt = m_vCurLookAt;
 	}
-	CheckBoundary();
+	
 }
 
 void CCameraManager::Init()
@@ -63,6 +63,8 @@ void CCameraManager::Update()
 
 	// 화면 중앙과 카메라 LookAt 좌표 사이의 차이 계산
 	CalDiff();
+
+	CheckBoundary();
 
 }
 
@@ -111,26 +113,25 @@ void CCameraManager::Render()
 
 void CCameraManager::CheckBoundary()
 {
-	if (m_vLookAt.x - m_vCamSize.x / 2 <= 0)
+	if (m_vCurLookAt.x - m_vCamSize.x / 2 < 0)
 	{
-		m_vLookAt.x = m_vCamSize.x / 2;
-		//m_vCurLookAt.x = m_vLookAt.x;
+		m_vCurLookAt.x = m_vCamSize.x / 2;
 	}
-	if (m_vLookAt.x + m_vCamSize.x / 2 >= m_vWorldSize.x)
+	if (m_vCurLookAt.x + m_vCamSize.x / 2 > m_vWorldSize.x)
 	{
-		m_vLookAt.x = m_vWorldSize.x - m_vCamSize.x / 2;
-		//m_vCurLookAt.x = m_vLookAt.x;
+		m_vCurLookAt.x = m_vWorldSize.x - m_vCamSize.x / 2;
 	}
-	if (m_vLookAt.y - m_vCamSize.y / 2 <= 0)
+	if (m_vCurLookAt.y - m_vCamSize.y / 2 < 0)
 	{
-		m_vLookAt.y = m_vCamSize.y / 2;
-		//m_vCurLookAt.x = m_vLookAt.x;
+		m_vCurLookAt.y = m_vCamSize.y / 2;
 	}
-	if (m_vLookAt.y + m_vCamSize.y / 2 >= m_vWorldSize.y)
+	if (m_vCurLookAt.y + m_vCamSize.y / 2 > m_vWorldSize.y)
 	{
-		m_vLookAt.y = m_vWorldSize.y - m_vCamSize.y / 2;
-		//m_vCurLookAt.x = m_vLookAt.x;
+		m_vCurLookAt.y = m_vWorldSize.y - m_vCamSize.y / 2;
 	}
+
+	m_vDiff = m_vCurLookAt - m_vCamSize/2;
+
 }
 
 void CCameraManager::Scroll(Vec2 vec, float velocity)

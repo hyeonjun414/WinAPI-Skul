@@ -2,6 +2,7 @@
 #include "CStartScene.h"
 #include "CSound.h"
 #include "CImageObj.h"
+#include "CUICursor.h"
 
 CStartScene::CStartScene()
 {
@@ -60,6 +61,9 @@ void CStartScene::Enter()
 	CImageObj* imageObj = new CImageObj();
 	imageObj->SetObjGroup(OBJ_TYPE::IMAGE);
 	CREATEOBJECT(imageObj);
+
+	CUICursor* cursor = new CUICursor(OBJ_TYPE::UI);
+	CREATEOBJECT(cursor);
 
 	CCameraManager::GetInst()->SetLookAt(Vec2(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }

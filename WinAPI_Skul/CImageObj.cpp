@@ -50,13 +50,12 @@ void CImageObj::Render()
     }
     else
     {
-        pos += SINGLE(CCameraManager)->GetCurLookAt() - Vec2(WINSIZEX/2, WINSIZEY/2);
         SINGLE(CRenderManager)->RenderImage(
             m_pImg,
-            pos.x,
-            pos.y,
-            pos.x + WINSIZEX,
-            pos.y + WINSIZEY,
+            m_vPos.x,
+            m_vPos.y,
+            m_vPos.x + WINSIZEX,
+            m_vPos.y + WINSIZEY,
             1.f);
     }
 

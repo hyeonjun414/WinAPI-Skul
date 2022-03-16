@@ -12,6 +12,7 @@ protected:
 	OBJ_TYPE		m_eType;		// 오브젝트 타입
 	bool			m_bIsActive;	// 활성화 여부
 	bool			m_bIsGravity;	// 중력 적용 여부
+	bool			m_bIsRight;		// 오브젝트의 방향이 어딘지
 
 	Vec2			m_vPos;			// 위치
 	Vec2			m_vRenderPos;	// 화면상 출력위치
@@ -38,6 +39,7 @@ public:
 	void			SetObjGroup(OBJ_TYPE _eObjType)		{ m_eType = _eObjType; }
 	void			SetActive(bool _active)				{ m_bIsActive = _active; }
 	void			SetGravity(bool _active)			{ m_bIsGravity = _active; }
+	void			SetObjDir(bool _bDir)				{ m_bIsRight = _bDir; }
 	void			SetPos(Vec2 _pos)					{ m_vPos = _pos; }
 	void			SetScale(Vec2 _scale)				{ m_vScale = _scale; }
 	void			SetCollider(CCollider* _pColl)		{ m_pCollider = _pColl; }
@@ -47,6 +49,7 @@ public:
 	OBJ_TYPE		GetObjGroup()	{ return m_eType; }
 	bool			GetActive()		{ return m_bIsActive; }
 	bool			GetGravity()	{ return m_bIsGravity; }
+	bool			GetObjDir()		{ return m_bIsRight; }
 	Vec2			GetPos()		{ return m_vPos; }
 	Vec2			GetRenderPos()	{ return m_vRenderPos; }
 	Vec2			GetScale()		{ return m_vScale; }

@@ -66,6 +66,7 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #define LOG(str) Logger::debug(str);
 #define CLONE(type) type* Clone() {return new type(*this);}
 #define RENDER		SINGLE(CRenderManager)
+#define MOUSEPOS	SINGLE(CKeyManager)->GetMousePos()
 
 // 이벤트
 #define CREATEOBJECT(type)	CEventManager::GetInst()->EventCreateObject(type)

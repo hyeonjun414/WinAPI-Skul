@@ -28,13 +28,21 @@ void CAnimator::Update()
 		{
 			m_pCurAnim->SetFrame(0);
 		}
+		else if(!m_bRepeat && m_pCurAnim->IsFinish() && nullptr != m_pNextAnim )
+		{
+			m_pCurAnim->SetFrame(0);
+			m_pCurAnim = m_pNextAnim;
+			m_pNextAnim = nullptr;
+			m_pCurAnim->SetFrame(0);
+			m_bRepeat = true;
+		}
 	}
 }
 
-void CAnimator::Render()
+void CAnimator::Render(bool _bIsRight)
 {
 	if (nullptr != m_pCurAnim)
-		m_pCurAnim->Render();
+		m_pCurAnim->Render(_bIsRight);
 }
 
 
@@ -72,14 +80,23 @@ void CAnimator::Play(const wstring& _strName, bool _bRepeat)
 	m_bRepeat = _bRepeat;
 }
 
-void CAnimator::SetAllAnimOffset()
+void CAnimator::PlayAndNextAnim(const wstring& _strName, bool _bRepeat, const wstring& _strNextName)
+{
+	if (m_pCurAnim == FindAnimation(_strName)) return;
+	m_pCurAnim = FindAnimation(_strName);
+	m_pNextAnim = FindAnimation(_strNextName);
+	m_pCurAnim->m_iCurFrame = 0;
+	m_bRepeat = _bRepeat;
+}
+
+void CAnimator::SetAllAnimOffset(Vec2 _vOffset)
 {
 	map<wstring, CAnimation*>::iterator iter = m_mapAnim.begin();
 	for (; iter != m_mapAnim.end(); iter++)
 	{
 		for (int i = 0; i < iter->second->GetMaxFrame(); i++)
 		{
-			iter->second->GetFrame(i).vOffset = Vec2(0.f, -m_pOwner->GetScale().y / 2);
+			iter->second->GetFrame(i).vOffset = Vec2(0.f, -m_pOwner->GetScale().y / 2) + _vOffset;
 		}
 
 	}

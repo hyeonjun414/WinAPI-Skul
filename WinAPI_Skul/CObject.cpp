@@ -47,6 +47,8 @@ CObject::~CObject()
 {
 	if (nullptr != m_pCollider)
 		delete m_pCollider;
+	if (nullptr != m_pAnimator)
+		delete m_pAnimator;
 }
 
 void CObject::Init()
@@ -74,7 +76,7 @@ void CObject::ComponentRender()
 		m_pCollider->Render();
 
 	if (nullptr != m_pAnimator)
-		m_pAnimator->Render();
+		m_pAnimator->Render(m_bIsRight);
 }
 
 void CObject::CreateCollider()

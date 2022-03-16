@@ -30,6 +30,7 @@ private:
 	float			m_fEffectDuration;			// 카메라 효과 수행시간
 	float			m_fCurTime;					// 카메라 효과가 시작되고 지나간 시간
 
+
 private:
 	void	CalDiff(); // 이전 프레임과 현재 프레임의 카메라 위치를 보간하는 함수
 

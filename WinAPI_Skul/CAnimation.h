@@ -21,7 +21,7 @@ public:
 	~CAnimation();
 
 	void	Update();
-	void	Render();
+	void	Render(bool _bIsRight);
 	 
 	void	Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount);
 
