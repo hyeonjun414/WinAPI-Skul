@@ -10,7 +10,7 @@ enum class OBJ_TYPE
 	TEXT,
 	TILE,
 	
-	
+	MAPOBJECT,
 	MONSTER,
 	PLAYER,
 	EFFECT,

@@ -56,9 +56,8 @@ void CStateIdle::Enter(CObject* _pObj)
     {
     case OBJ_TYPE::PLAYER:
     {
-        m_bIsFloor = true;
-        CPlayer* _pPlayer = (CPlayer*)_pObj;
-        _pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+        CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->GetAnimator()->Play(L"Player_Idle", true);
     }
     break;
     }

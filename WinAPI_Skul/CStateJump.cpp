@@ -2,10 +2,14 @@
 #include "CStateJump.h"
 #include "CStateIdle.h"
 #include "CStateFall.h"
+#include "CStateDash.h"
+#include "CStateJumpAttack.h"
+
 
 #include "CPlayer.h"
 #include "CAnimator.h"
 #include "CCollider.h"
+#include "CEffect.h"
 
 CState* CStateJump::HandleInput(CObject* _pObj)
 {
@@ -18,6 +22,14 @@ CState* CStateJump::HandleInput(CObject* _pObj)
         {
             pPlayer->m_bCanDoubleJump = false;
             return new CStateJump();
+        }
+        if (KEYTAP(KEY::Z))
+        {
+            return new CStateDash();
+        }
+        if (KEYTAP(KEY::X))
+        {
+            return new CStateJumpAttack();
         }
         if (pPlayer->GetVelocity().y <= 0)
             return new CStateFall();
@@ -61,6 +73,18 @@ void CStateJump::Enter(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->GetAnimator()->Play(L"Player_Jump", true);
         pPlayer->m_vVelocity.y = 700;
+        if (!pPlayer->m_bCanDoubleJump)
+        {
+            CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Jump_Smoke", L"texture\\effect\\doublejump_smoke.png",
+                1, 96, pPlayer->GetObjDir());
+            CREATEOBJECT(eft);
+            eft->SetPos(pPlayer->GetPos() + Vec2(0, -20));
+            SINGLE(CSoundManager)->Play(L"JumpAir");
+        }
+        else
+        {
+            SINGLE(CSoundManager)->Play(L"Jump");
+        }
     }
     break;
     }
@@ -69,5 +93,5 @@ void CStateJump::Enter(CObject* _pObj)
 void CStateJump::Exit(CObject* _pObj)
 {
     CPlayer* pPlayer = (CPlayer*)_pObj;
-    pPlayer->m_bIsGround = false;
+    //pPlayer->m_bIsGround = false;
 }

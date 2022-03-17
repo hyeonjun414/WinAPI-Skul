@@ -207,6 +207,15 @@
     <ClInclude Include="CEffect.h">
       <Filter>03.GameObject\Object</Filter>
     </ClInclude>
+    <ClInclude Include="CGameManager.h">
+      <Filter>01.Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CGate.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -339,6 +348,15 @@
       <Filter>04.Component\State</Filter>
     </ClCompile>
     <ClCompile Include="CEffect.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp">
+      <Filter>01.Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CGate.cpp">
       <Filter>03.GameObject\Object</Filter>
     </ClCompile>
   </ItemGroup>

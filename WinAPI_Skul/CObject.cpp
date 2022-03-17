@@ -72,11 +72,11 @@ void CObject::FinalUpdate()
 
 void CObject::ComponentRender()
 {
-	if (nullptr != m_pCollider && SINGLE(CCore)->GetDebugMode())
-		m_pCollider->Render();
-
 	if (nullptr != m_pAnimator)
 		m_pAnimator->Render(m_bIsRight);
+
+	if (nullptr != m_pCollider && SINGLE(CCore)->GetDebugMode())
+		m_pCollider->Render();
 }
 
 void CObject::CreateCollider()

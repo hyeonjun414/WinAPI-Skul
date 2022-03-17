@@ -8,6 +8,7 @@
 #include "CPlayer.h"
 #include "CAnimator.h"
 #include "CCollider.h"
+#include "CEffect.h"
 
 CState* CStateDash::HandleInput(CObject* _pObj) {
     switch (_pObj->GetObjGroup())
@@ -37,7 +38,14 @@ void CStateDash::Update(CObject* _pObj) {
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
         // 플레이어가 바라보고 있는 방향으로 일정 거리만큼 빠른 속도로 이동
-        pPlayer->m_vPos.x += pPlayer->m_bIsRight ? 1 : -1 * m_fDashSpeed * DT;
+        if (pPlayer->m_bIsRight)
+        {
+            pPlayer->m_vPos.x += m_fDashSpeed * DT;
+        }
+        else
+        {
+            pPlayer->m_vPos.x -= m_fDashSpeed * DT;
+        }
         m_iCurMoveDist += m_fDashSpeed * DT;
       
     }
@@ -51,11 +59,18 @@ void CStateDash::Enter(CObject* _pObj)
     {
     case OBJ_TYPE::PLAYER:
     {
-        m_iDist = 150;
+        m_iDist = 200;
         m_iCurMoveDist = 0;
         m_fDashSpeed = 700;
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->m_vPos.y -= 1;
+        pPlayer->m_vVelocity.y = 0;
         pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+        CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
+            1, 96, pPlayer->GetObjDir());
+        CREATEOBJECT(eft);
+        eft->SetPos(pPlayer->GetPos()+Vec2(0,-20));
+        SINGLE(CSoundManager)->Play(L"Dash");
     }
     break;
     }

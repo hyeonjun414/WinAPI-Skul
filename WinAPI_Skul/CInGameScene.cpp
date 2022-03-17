@@ -6,6 +6,7 @@
 #include "CCollider.h"
 #include "CD2DImage.h"
 #include "CEffect.h"
+#include "CGate.h"
 
 CInGameScene::CInGameScene()
 {
@@ -25,12 +26,6 @@ void CInGameScene::Update()
 {
 	CScene::Update();
 
-	if (KEYCHECK(KEY::LBTN) == KEY_STATE::TAP)
-	{
-		Vec2 vLookAt = SINGLE(CKeyManager)->GetMousePos();
-		vLookAt = SINGLE(CCameraManager)->GetRealPos(vLookAt);
-		SINGLE(CCameraManager)->SetLookAt(vLookAt);
-	}
 }
 
 void CInGameScene::Enter()
@@ -59,15 +54,32 @@ void CInGameScene::Enter()
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 5, 96);
+	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 96, true);
+	EftObj->SetPos(Vec2(100, 800));
 	CREATEOBJECT(EftObj);
+
+	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100,128, true);
+	EftObj->SetPos(Vec2(250, 800));
+	CREATEOBJECT(EftObj);
+
+	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 128, true);
+	EftObj->SetPos(Vec2(400, 800));
+	CREATEOBJECT(EftObj);
+
+
+	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	CREATEOBJECT(gateObj);
 
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
 	strPath += L"texture\\tile\\Map\\tile.tile";
 	LoadTile(strPath);
 
+	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
+	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 }
 
 void CInGameScene::Exit()

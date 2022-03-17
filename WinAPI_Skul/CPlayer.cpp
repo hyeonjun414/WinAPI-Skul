@@ -24,7 +24,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_bCanDoubleJump = false;
 	m_bCanSecondDash = true;
 
-	m_fDashRechargeTime = 1.f;
+	m_fDashRechargeTime = 2.f;
 	m_fDashRehargeCurTime = 0.f;
 
 	SetScale(Vec2(96, 96));
@@ -33,6 +33,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y/4));
 	m_pCollider->SetScale(Vec2(GetScale()/2));
 
+	
 	CreateAnimator();
 	CD2DImage* pImg;
 	// 애니메이터 만들기
@@ -61,9 +62,11 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Dash", L"texture\\player\\dash_skul.png");
 	GetAnimator()->CreateAnimation(L"Player_Dash", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
 		Vec2(96, 0.f), 1.0f, 1);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_JumpAttack", L"texture\\player\\jumpattack_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_JumpAttack", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
+		Vec2(96, 0.f), 0.125f, 4);
 
 
-	GetAnimator()->Play(L"Player_Idle", true);
 
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
 	m_pAnimator->SetAllAnimOffset(Vec2(0,30));
@@ -71,11 +74,24 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_pState = new CStateIdle();
 	m_pState->Enter(this);
 
+	SINGLE(CSoundManager)->AddSound(L"Jump", L"sound\\Default_Jump.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"JumpAir", L"sound\\Default_Jump_Air.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"AttackA", L"sound\\Legacy_AttackA.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"AttackB", L"sound\\Legacy_AttackB.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
+
+
+
 }
 
 CPlayer::~CPlayer()
 {
 	delete m_pState;
+
+	if (nullptr != SINGLE(CCameraManager)->GetTarget())
+	{
+		SINGLE(CCameraManager)->SetTarget(nullptr);
+	}
 }
 
 void CPlayer::Init()
@@ -97,7 +113,7 @@ void CPlayer::Update()
 
 	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
 	// 만약 세컨드대시가 비활성화된 경우 재충전을 시작한다.
-	if (!m_bCanSecondDash)
+	if (!m_bCanSecondDash && m_bIsGround)
 	{
 		m_fDashRehargeCurTime += DT;
 		if (m_fDashRehargeCurTime >= m_fDashRechargeTime)
@@ -119,10 +135,9 @@ void CPlayer::OnCollision(CCollider* _pOther)
     CPlayer* pPlayer = (CPlayer*)this;
     if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
     {
-        CCollider* pCol = pPlayer->GetCollider();
-        Vec2 pos1 = pCol->GetFinalPos();
+        Vec2 pos1 = m_pCollider->GetFinalPos();
         Vec2 pos2 = _pOther->GetFinalPos();
-        Vec2 size1 = pCol->GetScale();
+        Vec2 size1 = m_pCollider->GetScale();
         Vec2 size2 = _pOther->GetScale();
         if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
         {

@@ -10,6 +10,7 @@ private:
     int     m_iAttackCount;
 
     bool    m_bAttackInput;
+    bool    m_bIsSecondAttack;
 public:
 
     CStateAttack() {}

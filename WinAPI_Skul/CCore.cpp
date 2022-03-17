@@ -22,6 +22,7 @@ void CCore::Init()
 	m_hDC = GetDC(hWnd);
 
 	// 매니저 클래스 초기화 ( 타임, 키, 경로, 사운드, 장면, 충돌, 카메라 )
+	SINGLE(CGameManager)->Init();
 	SINGLE(CTimeManager)->Init();
 	SINGLE(CKeyManager)->Init();
 	SINGLE(CPathManager)->Init();
@@ -45,6 +46,8 @@ void CCore::Update()
 	SINGLE(CCollisionManager)->Update();
 	SINGLE(CCameraManager)->Update();
 	SINGLE(CUIManager)->Update();
+
+	SINGLE(CGameManager)->Update();
 	
 	// 디버그 모드 키 ( 콜라이더 그리기 여부를 결정 )
 	if (KEYTAP(KEY::CTRL))

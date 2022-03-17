@@ -24,7 +24,6 @@ CState* CStateAttack::HandleInput(CObject* _pObj) {
             m_bAttackInput = true;
 
         
-        
         return nullptr;
     }
     break;
@@ -46,10 +45,23 @@ void CStateAttack::Update(CObject* _pObj) {
             m_fAttackLimitTime += m_fAttackDelay;
         }
 
-        if (1 == m_iAttackCount)
+        if (1 == m_iAttackCount && !m_bIsSecondAttack)
         {
+            m_bIsSecondAttack = true;
             pPlayer->GetAnimator()->Play(L"Player_AttackB", true);
+            SINGLE(CSoundManager)->Play(L"AttackB");
+            if (KEYHOLD(KEY::LEFT))
+            {
+                pPlayer->m_bIsRight = false;
+                pPlayer->m_vPos.x -= 30;
+            }
+            if (KEYHOLD(KEY::RIGHT))
+            {
+                pPlayer->m_bIsRight = true;
+                pPlayer->m_vPos.x += 30;
+            }
         }
+
     }
     break;
     }
@@ -66,8 +78,21 @@ void CStateAttack::Enter(CObject* _pObj)
         m_fAttackLimitTime = m_fAttackDelay;
         m_iAttackCount = 0;
         m_fFlowTime = 0;
+        m_bIsSecondAttack = false;
         m_bAttackInput = false;
         pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
+        SINGLE(CSoundManager)->Play(L"AttackA");
+
+        if (KEYHOLD(KEY::LEFT))
+        {
+            pPlayer->m_bIsRight = false;
+            pPlayer->m_vPos.x -= 30;
+        }
+        if (KEYHOLD(KEY::RIGHT))
+        {
+            pPlayer->m_bIsRight = true;
+            pPlayer->m_vPos.x += 30;
+        }
     }
     break;
     }

@@ -21,6 +21,7 @@ void CSoundManager::Init()
 
 	result = m_pSystem->init(32, FMOD_INIT_NORMAL, nullptr);
 	assert(!result);
+
 }
 
 void CSoundManager::Update()
@@ -41,7 +42,6 @@ void CSoundManager::Play(wstring _keyName)
 	map<wstring, CSound*>::iterator iter = m_mapSound.find(_keyName);
 	if (iter == m_mapSound.end()) 
 		return;
-
 	iter->second->Play();
 
 }

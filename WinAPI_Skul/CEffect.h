@@ -8,7 +8,7 @@ private:
 	float m_fDuration;
 public:
     CEffect();
-	CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, float _fDuration, int  _imgSize);
+	CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, float _fDuration, int  _imgSize, bool _dir);
 	~CEffect();
 
 

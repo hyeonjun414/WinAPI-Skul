@@ -159,7 +159,10 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEventManager.h" />
+    <ClInclude Include="CGameManager.h" />
+    <ClInclude Include="CGate.h" />
     <ClInclude Include="CInGameScene.h" />
+    <ClInclude Include="CMonster.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CImageObj.h" />
     <ClInclude Include="CKeyManager.h" />
@@ -212,7 +215,10 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEventManager.cpp" />
+    <ClCompile Include="CGameManager.cpp" />
+    <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CInGameScene.cpp" />
+    <ClCompile Include="CMonster.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CImageObj.cpp" />
     <ClCompile Include="CKeyManager.cpp" />

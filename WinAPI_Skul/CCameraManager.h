@@ -32,20 +32,21 @@ private:
 
 
 private:
-	void	CalDiff(); // 이전 프레임과 현재 프레임의 카메라 위치를 보간하는 함수
+	void		CalDiff(); // 이전 프레임과 현재 프레임의 카메라 위치를 보간하는 함수
 
 public:
-	void	Init();
-	void	Update();
-	void	Render();
+	void		Init();
+	void		Update();
+	void		Render();
 
-	void	SetLookAt(Vec2 _vLook);
-	void	SetWorldSize(Vec2 _vWorldSize)		{ m_vWorldSize = _vWorldSize; }
-	void	SetTarget(CObject* _pTarget)	{ m_pTargetObj = _pTarget; }
-	Vec2	GetLookAt()							{ return m_vLookAt; }
-	Vec2	GetCurLookAt()						{ return m_vCurLookAt; }
-	Vec2	GetRenderPos(Vec2 _vObjPos)			{ return _vObjPos - m_vDiff; }
-	Vec2	GetRealPos(Vec2 _vRenderPos)		{ return _vRenderPos + m_vDiff; }
+	void		SetLookAt(Vec2 _vLook);
+	void		SetWorldSize(Vec2 _vWorldSize)		{ m_vWorldSize = _vWorldSize; }
+	void		SetTarget(CObject* _pTarget)		{ m_pTargetObj = _pTarget; }
+	Vec2		GetLookAt()							{ return m_vLookAt; }
+	Vec2		GetCurLookAt()						{ return m_vCurLookAt; }
+	Vec2		GetRenderPos(Vec2 _vObjPos)			{ return _vObjPos - m_vDiff; }
+	Vec2		GetRealPos(Vec2 _vRenderPos)		{ return _vRenderPos + m_vDiff; }
+	CObject*	GetTarget()							{ return m_pTargetObj; }
 
 	void	CheckBoundary();					// 현재 맵의 크기를 기준으로 카메라가 영역을 벗어나지 않도록 만드는 함수
 	void	Scroll(Vec2 vec, float velocity);	// 키 입력을 받아 카메라 위치를 이동하는 함수
