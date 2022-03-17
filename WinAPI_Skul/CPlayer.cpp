@@ -15,10 +15,11 @@ CPlayer::CPlayer()
 CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
 {
-	m_bIsFloor = false;
+	m_bIsGround = false;
 	m_bIsJumping = false;
 	m_bIsRight = true;
 	m_iCollCount = 0;
+	m_vVelocity = Vec2(300, 0);
 
 	SetScale(Vec2(96, 96));
 	// Collider ¸¸µé±â
@@ -84,16 +85,7 @@ void CPlayer::Update()
 
 	m_pState->Update(this);
 
-	//if (KEYTAP(KEY::X))
-	//{
-	//	GetAnimator()->PlayAndNextAnim(L"Player_AttackA", false, L"Player_Idle");
 
-	//}
-	//if (KEYTAP(KEY::C))
-	//{
-	//	GetAnimator()->PlayAndNextAnim(L"Player_AttackB", false, L"Player_Idle");
-
-	//}
 
 	GetAnimator()->Update();
 }
@@ -105,16 +97,67 @@ void CPlayer::Render()
 
 void CPlayer::OnCollision(CCollider* _pOther)
 {
-	m_pState->OnCollision(this, _pOther);
+	//m_pState->OnCollision(this, _pOther);
+
+    CPlayer* pPlayer = (CPlayer*)this;
+    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
+    {
+        CCollider* pCol = pPlayer->GetCollider();
+        Vec2 pos1 = pCol->GetFinalPos();
+        Vec2 pos2 = _pOther->GetFinalPos();
+        Vec2 size1 = pCol->GetScale();
+        Vec2 size2 = _pOther->GetScale();
+        if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
+        {
+            if (pos1.x <= pos2.x - size2.x / 2)
+            {
+                pPlayer->m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;
+            }
+            else if (pos1.x >= pos2.x + size2.x / 2)
+            {
+                pPlayer->m_vPos.x = pos2.x + (size1.x + size2.x) / 2;
+
+            }
+        }
+    }
 }
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	m_pState->OnCollisionEnter(this, _pOther);
+	//m_pState->OnCollisionEnter(this, _pOther);
+    CPlayer* pPlayer = (CPlayer*)this;
+    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
+    {
+		Vec2 vLeftPos = m_pCollider->GetFinalPos();
+		Vec2 vLeftScale = m_pCollider->GetScale();
+		Vec2 vRightPos = _pOther->GetFinalPos();
+		Vec2 vRightScale = _pOther->GetScale();
+		pPlayer->m_iCollCount++;
+		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-3) / 2.f)
+		{
+			
+			if (pPlayer->m_iCollCount > 0)
+				pPlayer->m_bIsGround = true;
+		}
+
+
+    }
 }
 
 void CPlayer::OnCollisionExit(CCollider* _pOther)
 {
-	m_pState->OnCollisionExit(this, _pOther);
+	//m_pState->OnCollisionExit(this, _pOther);
+
+    CPlayer* pPlayer = (CPlayer*)this;
+    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
+    {
+		pPlayer->m_iCollCount--;
+		if (pPlayer->m_iCollCount <= 0)
+		{
+			pPlayer->m_iCollCount = 0;
+			pPlayer->m_bIsGround = false;
+		}
+
+    }
 }
 

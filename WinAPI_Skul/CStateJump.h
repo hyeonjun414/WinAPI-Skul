@@ -3,9 +3,6 @@
 class CStateJump :
     public CState
 {
-private:
-    Vec2 m_vVelocity;
-
 public:
     CStateJump() {}
 
@@ -15,9 +12,9 @@ public:
     virtual void Enter(CObject* _pObj);
     virtual void Exit(CObject* _pObj);
 
-    virtual void	OnCollision(CObject* _pObj, CCollider* _pOther) {}
-    virtual void	OnCollisionEnter(CObject* _pObj, CCollider* _pOther) {}
-    virtual void	OnCollisionExit(CObject* _pObj, CCollider* _pOther) {}
+    virtual void	OnCollision(CObject* _pObj, CCollider* _pOther);
+    virtual void	OnCollisionEnter(CObject* _pObj, CCollider* _pOther);
+    virtual void	OnCollisionExit(CObject* _pObj, CCollider* _pOther);
 
 };
 

@@ -28,6 +28,13 @@ typedef struct Vector2
 	{
 		x = (float)_pt.x;
 		y = (float)_pt.y;
+		return *this;
+	}
+	Vector2& operator=(int _i)
+	{
+		x = (float)_i;
+		y = (float)_i;
+		return *this;
 	}
 
 	Vector2 operator+(const Vector2& _other)

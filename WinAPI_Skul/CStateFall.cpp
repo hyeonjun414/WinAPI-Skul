@@ -16,11 +16,8 @@ CState* CStateFall::HandleInput(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        if (KEYTAP(KEY::SPACE))
-        {
 
-        }
-        if (m_bIsFloor)
+        if (pPlayer->IsGround())
             return new CStateIdle();
         return nullptr;
     }
@@ -39,22 +36,21 @@ void CStateFall::Update(CObject* _pObj)
         if (KEYHOLD(KEY::LEFT))
         {
             pPlayer->SetObjDir(false);
-            pPlayer->SetPos(pPlayer->GetPos() + Vec2(-300 * DT, 0));
+            pPlayer->m_vPos.x -= pPlayer->m_vVelocity.x * DT;
         }
         if (KEYHOLD(KEY::RIGHT))
         {
             pPlayer->SetObjDir(true);
-            pPlayer->SetPos(pPlayer->GetPos() + Vec2(300 * DT, 0));
+            pPlayer->m_vPos.x += pPlayer->m_vVelocity.x * DT;
         }
+        pPlayer->m_vVelocity.y -= 700 * DT;
+        pPlayer->m_vPos.y -= pPlayer->m_vVelocity.y * DT;
 
-        m_vVelocity.y -= 700 * DT;
-        pPlayer->SetPos(pPlayer->GetPos() + Vec2(0, -m_vVelocity.y * DT));
-
-        if (m_vVelocity.y < -1)
+        if (pPlayer->m_vVelocity.y < -1)
         {
             pPlayer->GetAnimator()->Play(L"Player_Fall", true);
         }
-        if (m_vVelocity.y < -200)
+        if (pPlayer->m_vVelocity.y < -200)
         {
             pPlayer->GetAnimator()->Play(L"Player_FallRepeat", true);
         }
@@ -70,7 +66,6 @@ void CStateFall::Enter(CObject* _pObj)
     {
     case OBJ_TYPE::PLAYER:
     {
-        m_vVelocity.y = 0;
         m_bIsFloor = false;
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->GetAnimator()->Play(L"Player_Fall", true);
@@ -81,6 +76,47 @@ void CStateFall::Enter(CObject* _pObj)
 
 void CStateFall::Exit(CObject* _pObj)
 {
+    switch (_pObj->GetObjGroup())
+    {
+    case OBJ_TYPE::PLAYER:
+    {
+        CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->m_vVelocity.y = 0;
+    }
+    break;
+    }
+}
+
+void CStateFall::OnCollision(CObject* _pObj, CCollider* _pOther)
+{
+    switch (_pObj->GetObjGroup())
+    {
+    case OBJ_TYPE::PLAYER:
+    {
+        CPlayer* pPlayer = (CPlayer*)_pObj;
+        if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
+        {
+            CCollider* pCol = pPlayer->GetCollider();
+            Vec2 pos1 = pCol->GetFinalPos();
+            Vec2 pos2 = _pOther->GetFinalPos();
+            Vec2 size1 = pCol->GetScale();
+            Vec2 size2 = _pOther->GetScale();
+            if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
+            {
+                if (pos1.x <= pos2.x - size2.x / 2)
+                {
+                    pPlayer->m_vPos.x = pos2.x + (-size1.x - size2.x) / 2 -1;
+                }
+                else if (pos1.x >= pos2.x + size2.x / 2)
+                {
+                    pPlayer->m_vPos.x = pos2.x + (size1.x + size2.x) / 2 +1;
+
+                }
+            }
+        }
+    }
+    break;
+    }
 }
 
 void CStateFall::OnCollisionEnter(CObject* _pObj, CCollider* _pOther)
@@ -92,7 +128,31 @@ void CStateFall::OnCollisionEnter(CObject* _pObj, CCollider* _pOther)
         CPlayer* pPlayer = (CPlayer*)_pObj;
         if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
         {
-                m_bIsFloor = true;
+            pPlayer->m_iCollCount++;
+            if (pPlayer->m_iCollCount > 0)
+                pPlayer->m_bIsGround = true;
+        }
+    }
+    break;
+    }
+}
+
+
+void CStateFall::OnCollisionExit(CObject* _pObj, CCollider* _pOther)
+{
+    switch (_pObj->GetObjGroup())
+    {
+    case OBJ_TYPE::PLAYER:
+    {
+        CPlayer* pPlayer = (CPlayer*)_pObj;
+        if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
+        {
+            pPlayer->m_iCollCount--;
+            if (pPlayer->m_iCollCount <= 0)
+            {
+                pPlayer->m_iCollCount = 0;
+                pPlayer->m_bIsGround = false;
+            }
         }
     }
     break;
