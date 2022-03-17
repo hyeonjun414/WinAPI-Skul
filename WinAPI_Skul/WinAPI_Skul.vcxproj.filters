@@ -195,6 +195,18 @@
     <ClInclude Include="CStateFall.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
+    <ClInclude Include="CStateAttack.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateDash.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateJumpAttack.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -316,6 +328,18 @@
     </ClCompile>
     <ClCompile Include="CStateFall.cpp">
       <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateAttack.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateDash.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateJumpAttack.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>03.GameObject\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

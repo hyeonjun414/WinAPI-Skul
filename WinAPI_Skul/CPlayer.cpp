@@ -21,6 +21,12 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_iCollCount = 0;
 	m_vVelocity = Vec2(300, 0);
 
+	m_bCanDoubleJump = false;
+	m_bCanSecondDash = true;
+
+	m_fDashRechargeTime = 1.f;
+	m_fDashRehargeCurTime = 0.f;
+
 	SetScale(Vec2(96, 96));
 	// Collider 만들기
 	CreateCollider();
@@ -51,6 +57,10 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_AttackB", L"texture\\player\\attackB_skul.png");
 	GetAnimator()->CreateAnimation(L"Player_AttackB", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
 		Vec2(96, 0.f), 0.125f, 4);
+
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Dash", L"texture\\player\\dash_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Dash", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
+		Vec2(96, 0.f), 1.0f, 1);
 
 
 	GetAnimator()->Play(L"Player_Idle", true);
@@ -85,7 +95,14 @@ void CPlayer::Update()
 
 	m_pState->Update(this);
 
-
+	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
+	// 만약 세컨드대시가 비활성화된 경우 재충전을 시작한다.
+	if (!m_bCanSecondDash)
+	{
+		m_fDashRehargeCurTime += DT;
+		if (m_fDashRehargeCurTime >= m_fDashRechargeTime)
+			m_bCanSecondDash = true;
+	}
 
 	GetAnimator()->Update();
 }
@@ -137,7 +154,10 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		{
 			
 			if (pPlayer->m_iCollCount > 0)
+			{
 				pPlayer->m_bIsGround = true;
+				m_bCanDoubleJump = true;
+			}
 		}
 
 

@@ -5,6 +5,7 @@
 #include "CTexture.h"
 #include "CCollider.h"
 #include "CD2DImage.h"
+#include "CEffect.h"
 
 CInGameScene::CInGameScene()
 {
@@ -58,7 +59,8 @@ void CInGameScene::Enter()
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	
+	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 5, 96);
+	CREATEOBJECT(EftObj);
 
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
 	strPath += L"texture\\tile\\Map\\tile.tile";

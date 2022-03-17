@@ -65,7 +65,7 @@ public:
 	virtual void	OnCollisionEnter(CCollider* _pOther) {};
 	virtual void	OnCollisionExit(CCollider* _pOther) {};
 
-	virtual CObject* Clone() = 0;
+	virtual CObject* Clone() { return nullptr; }
 
 
 	

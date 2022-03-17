@@ -21,11 +21,21 @@ class CPlayer :
     friend class CStateMove;
     friend class CStateJump;
     friend class CStateFall;
+    friend class CStateAttack;
+    friend class CStateJumpAttack;
+    friend class CStateDash;
+
 private:
     Vec2    m_vVelocity;
     bool    m_bIsGround;
     bool    m_bIsJumping;
     int     m_iCollCount;
+
+    bool    m_bCanDoubleJump;
+    bool    m_bCanSecondDash;
+
+    float   m_fDashRechargeTime;
+    float   m_fDashRehargeCurTime;
 
 public:
     CState* m_pState;

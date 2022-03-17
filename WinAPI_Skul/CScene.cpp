@@ -149,7 +149,7 @@ void CScene::LoadTile(const wstring& _strPath)
 
 	UINT	xCount = 0;
 	UINT	yCount = 0;
-
+	UINT	tileCount = 0;
 	fread(&xCount, sizeof(UINT), 1, pFile);
 	fread(&yCount, sizeof(UINT), 1, pFile);
 
@@ -158,6 +158,8 @@ void CScene::LoadTile(const wstring& _strPath)
 	const vector<CObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
 	for (UINT i = 0; i < vecTile.size(); i++)
 	{
+		// 위치 정보를 넣어줌.
+		// 충돌 정보가 있다면 충돌체도 생성.
 		((CTile*)vecTile[i])->Load(pFile);
 	}
 

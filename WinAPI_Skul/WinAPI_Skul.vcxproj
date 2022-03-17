@@ -157,6 +157,7 @@
     <ClInclude Include="CCollisionManager.h" />
     <ClInclude Include="CCore.h" />
     <ClInclude Include="CD2DImage.h" />
+    <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEventManager.h" />
     <ClInclude Include="CInGameScene.h" />
     <ClInclude Include="CObject.h" />
@@ -174,9 +175,12 @@
     <ClInclude Include="CSingleton.h" />
     <ClInclude Include="CSound.h" />
     <ClInclude Include="CSoundManager.h" />
+    <ClInclude Include="CStateAttack.h" />
+    <ClInclude Include="CStateDash.h" />
     <ClInclude Include="CStateFall.h" />
     <ClInclude Include="CStateIdle.h" />
     <ClInclude Include="CStateJump.h" />
+    <ClInclude Include="CStateJumpAttack.h" />
     <ClInclude Include="CStateMove.h" />
     <ClInclude Include="CStartScene.h" />
     <ClInclude Include="CTextObj.h" />
@@ -206,6 +210,7 @@
     <ClCompile Include="CCollisionManager.cpp" />
     <ClCompile Include="CCore.cpp" />
     <ClCompile Include="CD2DImage.cpp" />
+    <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEventManager.cpp" />
     <ClCompile Include="CInGameScene.cpp" />
     <ClCompile Include="CObject.cpp" />
@@ -223,9 +228,12 @@
     <ClCompile Include="CSingleton.cpp" />
     <ClCompile Include="CSound.cpp" />
     <ClCompile Include="CSoundManager.cpp" />
+    <ClCompile Include="CStateAttack.cpp" />
+    <ClCompile Include="CStateDash.cpp" />
     <ClCompile Include="CStateFall.cpp" />
     <ClCompile Include="CStateIdle.cpp" />
     <ClCompile Include="CStateJump.cpp" />
+    <ClCompile Include="CStateJumpAttack.cpp" />
     <ClCompile Include="CStateMove.cpp" />
     <ClCompile Include="CStartScene.cpp" />
     <ClCompile Include="CTextObj.cpp" />

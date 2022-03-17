@@ -10,11 +10,10 @@ enum class OBJ_TYPE
 	TEXT,
 	TILE,
 	
-	PLAYER,
+	
 	MONSTER,
-	BULLET_PLAYER,
-	BULLET_ENEMY,
-	MISSILE,
+	PLAYER,
+	EFFECT,
 
 
 	UI,
@@ -31,6 +30,16 @@ enum class SCENE_TYPE
 	STAGE_02,
 
 	SIZE,
+};
+
+enum class TILE_TYPE
+{
+	NONE,
+	GROUND,
+	PLATFORM,
+	WALL,
+
+	SIZW,
 };
 
 // е╟ ╩Себ
