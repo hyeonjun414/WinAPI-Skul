@@ -45,6 +45,12 @@ void CAnimator::Render(bool _bIsRight)
 		m_pCurAnim->Render(_bIsRight);
 }
 
+void CAnimator::Render_Without_Obj()
+{
+	if (nullptr != m_pCurAnim)
+		m_pCurAnim->Render_Without_Obj();
+}
+
 
 void CAnimator::CreateAnimation(const wstring& _strName, CD2DImage* _pImg, Vec2 _vLeftTop,
 								Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)

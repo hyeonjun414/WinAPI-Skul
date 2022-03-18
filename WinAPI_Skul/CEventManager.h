@@ -24,7 +24,7 @@ public:
 	void EventCreateObject(CObject* _pObj);
 	void EventDeleteObject(CObject* _pObj);
 	void EventChangeScene(SCENE_TYPE _eSceneType);
-
+	void EventGamePlay(bool _bIsPlay);
 
 };
 

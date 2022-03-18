@@ -23,7 +23,6 @@ typedef struct Vector2
 		this->x = x;
 		this->y = y;
 	}
-
 	Vector2& operator=(POINT _pt)
 	{
 		x = (float)_pt.x;

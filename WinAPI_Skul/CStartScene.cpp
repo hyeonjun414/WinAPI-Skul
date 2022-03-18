@@ -45,21 +45,25 @@ void CStartScene::Update()
 void CStartScene::Render()
 {
 	CScene::Render();
-	RENDER->RenderText(L"스페이스바를 누르면 시작합니다",
-		WINSIZEX,
-		WINSIZEY+300,
-		0,
-		0,
-		20,
-		RGB(255,255,255));
+	
 }
 
 void CStartScene::Enter()
 {
+	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
 
-	CImageObj* imageObj = new CImageObj();
-	imageObj->SetObjGroup(OBJ_TYPE::IMAGE);
+	CImageObj* imageObj = nullptr;
+	imageObj = new CImageObj(OBJ_TYPE::IMAGE, L"StartSceneBG", L"texture\\Title_Art.png", false);
+	CREATEOBJECT(imageObj);
+
+	imageObj = new CImageObj(OBJ_TYPE::IMAGE, L"StartSceneLogo", L"texture\\Title_Logo.png", false);
+	imageObj->SetPos(Vec2(WINSIZEX / 2 - imageObj->GetScale().x / 2, WINSIZEY / 2 - imageObj->GetScale().y / 2));
+	CREATEOBJECT(imageObj);
+
+	imageObj = new CImageObj(OBJ_TYPE::IMAGE, L"StartSceneText", L"texture\\startscene_text.png", false);
+	imageObj->SetEffectType(IMG_EFFECT::FLICKER);
+	imageObj->SetPos(Vec2(WINSIZEX / 2 - imageObj->GetScale().x / 2, WINSIZEY / 2 - imageObj->GetScale().y / 2+150));
 	CREATEOBJECT(imageObj);
 
 	CUICursor* cursor = new CUICursor(OBJ_TYPE::UI);

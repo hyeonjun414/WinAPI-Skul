@@ -256,8 +256,8 @@ INT_PTR CALLBACK TileWndProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 
 			CTexture* pTex = SINGLE(CResourceManager)->FindTexture(L"Tile");
 
-			UINT iWidth = pTex->Width();
-			UINT iHeight = pTex->Height();
+			UINT iWidth = pTex->GetWidth();
+			UINT iHeight = pTex->GetHeight();
 
 			UINT iMaxY = iHeight / CTile::SIZE_TILE;
 			UINT iMaxX = iWidth / CTile::SIZE_TILE;

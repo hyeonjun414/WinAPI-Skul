@@ -73,6 +73,7 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #define CREATEOBJECT(type)	CEventManager::GetInst()->EventCreateObject(type)
 #define DELETEOBJECT(type)	CEventManager::GetInst()->EventDeleteObject(type)
 #define CHANGESCENE(type)	CEventManager::GetInst()->EventChangeScene(type)
+#define GAMEPLAY(type)	CEventManager::GetInst()->EventGamePlay(type)
 
 // 외부 변수 참조 -> 외부 클래스에 변수가 존재함을 알림.
 extern HINSTANCE	hInst;

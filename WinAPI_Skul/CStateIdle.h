@@ -4,8 +4,6 @@
 class CStateIdle :
     public CState
 {
-private:
-    bool m_bIsFloor;
 public:
     CStateIdle() {}
 

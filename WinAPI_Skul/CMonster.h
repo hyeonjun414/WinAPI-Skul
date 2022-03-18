@@ -7,7 +7,7 @@ private:
     
 public:
     CMonster();
-    CMonster(OBJ_TYPE _objGroup);
+    CMonster(OBJ_TYPE _eType);
     virtual ~CMonster();
 
     virtual void        Init();

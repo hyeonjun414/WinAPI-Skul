@@ -34,6 +34,11 @@ void CEventManager::Excute(const tEvent& _event)
 		SINGLE(CUIManager)->SetFocusedUI(nullptr);
 		break;
 	}
+	case EVENT_TYPE::PLAY_AND_PAUSE:
+	{
+		SINGLE(CGameManager)->SetGamePlay((bool)_event.lParam);
+		break;
+	}
 	}
 }
 
@@ -77,6 +82,15 @@ void CEventManager::EventChangeScene(SCENE_TYPE _eSceneType)
 	tEvent even = {};
 	even.eEvent = EVENT_TYPE::SCENE_CHANGE;
 	even.lParam = (DWORD_PTR)_eSceneType;
+
+	AddEvent(even);
+}
+
+void CEventManager::EventGamePlay(bool _bIsPlay)
+{
+	tEvent even = {};
+	even.eEvent = EVENT_TYPE::PLAY_AND_PAUSE;
+	even.lParam = (DWORD_PTR)_bIsPlay;
 
 	AddEvent(even);
 }

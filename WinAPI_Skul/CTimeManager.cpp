@@ -7,7 +7,7 @@ CTimeManager::CTimeManager() :
 	m_llFrequency{},
 	m_uiFPS(0),
 	m_dDT(0),
-	m_uiPlayTime(0)
+	m_fPlayTime(0)
 {}
 
 CTimeManager::~CTimeManager()
@@ -34,10 +34,12 @@ void CTimeManager::Update()
 	// 1초에 몇번 업데이트를 하나.
 	++updateCount;
 	updateOneSecond += m_dDT;
+
+	m_fPlayTime += DT;
+
 	if (updateOneSecond >= 1.0)
 	{
 		m_uiFPS = updateCount;
-		m_uiPlayTime++;
 		m_bIsSecond = true;
 
 		updateOneSecond = 0;

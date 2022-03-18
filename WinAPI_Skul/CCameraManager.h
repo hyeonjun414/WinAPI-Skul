@@ -3,6 +3,7 @@
 
 class CObject;
 class CD2DImage;
+class CAnimator;
 
 class CCameraManager
 {
@@ -30,6 +31,9 @@ private:
 	float			m_fEffectDuration;			// 카메라 효과 수행시간
 	float			m_fCurTime;					// 카메라 효과가 시작되고 지나간 시간
 
+	// 컴포넌트
+	CAnimator*		m_pAnimator;				// 로딩에 사용할 애니메이터
+
 
 private:
 	void		CalDiff(); // 이전 프레임과 현재 프레임의 카메라 위치를 보간하는 함수
@@ -51,9 +55,12 @@ public:
 	void	CheckBoundary();					// 현재 맵의 크기를 기준으로 카메라가 영역을 벗어나지 않도록 만드는 함수
 	void	Scroll(Vec2 vec, float velocity);	// 키 입력을 받아 카메라 위치를 이동하는 함수
 
+	void	CreateAnimator();
+
 	// 카메라 효과들
 	void	FadeIn(float _duration);
 	void	FadeOut(float _duration);
+	void	LodingAnimation(float _duration);
 
 };
 

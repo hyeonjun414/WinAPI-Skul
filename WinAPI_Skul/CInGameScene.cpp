@@ -30,13 +30,13 @@ void CInGameScene::Update()
 
 void CInGameScene::Enter()
 {
+	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
 	obj->SetPos(Vec2(WINSIZEX / 2, WINSIZEY / 2));
 	obj->SetScale(Vec2(50, 50));
-	obj->SetGravity(true);
 	CREATEOBJECT(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
@@ -46,7 +46,8 @@ void CInGameScene::Enter()
 
 	CImageObj* BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"InGameSceneBG",
-		L"texture\\bg.png", false);
+		L"texture\\bg.png", true);
+	BgObj->SetDepth(100.0f);
 	CREATEOBJECT(BgObj);
 
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
@@ -54,15 +55,15 @@ void CInGameScene::Enter()
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 96, true);
+	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 0.5, 96, true);
 	EftObj->SetPos(Vec2(100, 800));
 	CREATEOBJECT(EftObj);
 
-	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100,128, true);
+	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100, 0.5, 128, true);
 	EftObj->SetPos(Vec2(250, 800));
 	CREATEOBJECT(EftObj);
 
-	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 128, true);
+	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 0.5, 128, true);
 	EftObj->SetPos(Vec2(400, 800));
 	CREATEOBJECT(EftObj);
 

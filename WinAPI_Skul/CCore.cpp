@@ -41,10 +41,11 @@ void CCore::Update()
 	SINGLE(CTimeManager)->Update();
 	SINGLE(CKeyManager)->Update();
 	SINGLE(CSoundManager)->Update();
-
 	SINGLE(CSceneManager)->Update();
 	SINGLE(CCollisionManager)->Update();
+
 	SINGLE(CCameraManager)->Update();
+	
 	SINGLE(CUIManager)->Update();
 
 	SINGLE(CGameManager)->Update();

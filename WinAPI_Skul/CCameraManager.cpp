@@ -3,6 +3,7 @@
 #include "CObject.h"
 #include "CTexture.h"
 #include "CD2DImage.h"
+#include "CAnimator.h"
 
 CCameraManager::CCameraManager() :
 	m_vLookAt(Vec2(WINSIZEX / 2.f, WINSIZEY / 2.f)),
@@ -16,6 +17,10 @@ CCameraManager::CCameraManager() :
 	m_fPreSpeed(m_fSpeed),
 	m_fAccel(0)
 {
+	CreateAnimator();
+	CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Loding", L"texture\\scene_loding.png");
+	m_pAnimator->CreateAnimation(L"Loding", pImg, Vec2(0.f, 0.f), Vec2(64.f, 64.f),
+		Vec2(64, 0.f), 0.06f, 8);
 }
 CCameraManager::~CCameraManager() {}
 
@@ -49,6 +54,10 @@ void CCameraManager::Init()
 
 void CCameraManager::Update()
 {
+	m_pAnimator->Update();
+
+	if (!SINGLE(CGameManager)->GetGamePlay()) return;
+
 	if (m_pTargetObj)
 	{
 		if (!m_pTargetObj->GetActive())
@@ -66,6 +75,7 @@ void CCameraManager::Update()
 
 	CheckBoundary();
 
+	
 }
 
 void CCameraManager::SetLookAt(Vec2 _vLook)
@@ -91,6 +101,17 @@ void CCameraManager::Render()
 		m_eEffect = CAM_EFFECT::NONE;
 		return;
 	}
+	if (CAM_EFFECT::LODING_IMAGE == m_eEffect)
+	{
+		RENDER->RenderImage(m_pImg,
+			0,
+			0,
+			(float)m_pImg->GetWidth(),
+			(float)m_pImg->GetHeight(), 1.0f);
+		m_pAnimator->Play(L"Loding", true);
+		m_pAnimator->Render_Without_Obj();
+		return;
+	}
 
 	float fRatio = m_fCurTime / m_fEffectDuration;
 	float iAlpha;
@@ -107,8 +128,8 @@ void CCameraManager::Render()
 	RENDER->RenderImage(m_pImg,
 		0,
 		0,
-		m_pImg->GetWidth(),
-		m_pImg->GetHeight(), iAlpha);
+		(float)m_pImg->GetWidth(),
+		(float)m_pImg->GetHeight(), iAlpha);
 }
 
 void CCameraManager::CheckBoundary()
@@ -143,6 +164,11 @@ void CCameraManager::Scroll(Vec2 vec, float velocity)
 	m_vDiff = m_vCurLookAt - vCenter;
 }
 
+void CCameraManager::CreateAnimator()
+{
+	m_pAnimator = new CAnimator;
+}
+
 void CCameraManager::FadeIn(float _duration)
 {
 	m_eEffect = CAM_EFFECT::FADE_IN;
@@ -153,6 +179,13 @@ void CCameraManager::FadeIn(float _duration)
 void CCameraManager::FadeOut(float _duration)
 {
 	m_eEffect = CAM_EFFECT::FADE_OUT;
+	m_fEffectDuration = _duration;
+	m_fCurTime = 0.f;
+}
+
+void CCameraManager::LodingAnimation(float _duration)
+{
+	m_eEffect = CAM_EFFECT::LODING_IMAGE;
 	m_fEffectDuration = _duration;
 	m_fCurTime = 0.f;
 }

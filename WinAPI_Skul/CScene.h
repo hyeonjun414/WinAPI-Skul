@@ -13,7 +13,7 @@ protected:
 	UINT					m_iTileX;		// 해당 씬의 타일 가로 개수
 	UINT					m_iTileY;		// 해당 씬의 타일 세로 개수
 
-	unsigned int			m_iTime;
+	float					m_fTime;
 	bool					m_bIsChange;
 
 public:
@@ -46,7 +46,7 @@ public:
 	void			RenderTile();
 
 	void			ChangeNextScene(SCENE_TYPE _eType);
-	void			DelayChange(UINT _iTime);
+	void			DelayChange(float _fTime);
 protected:
 	void			ClearObject();
 };

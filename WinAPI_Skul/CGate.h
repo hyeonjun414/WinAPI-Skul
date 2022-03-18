@@ -1,7 +1,7 @@
 #pragma once
-#include "CObject.h"
+#include "CMapObject.h"
 class CGate :
-    public CObject
+    public CMapObject
 {
 public:
     CGate();

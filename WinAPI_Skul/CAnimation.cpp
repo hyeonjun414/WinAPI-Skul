@@ -89,6 +89,24 @@ void CAnimation::Render(bool _bIsRight)
 
 }
 
+void CAnimation::Render_Without_Obj()
+{
+	if (m_bFinish) return; // 애니메이션이 끝났다면 렌더도 진행하지 않는다.
+
+	RENDER->RenderFrame(
+		m_pImg,
+		WINSIZEX/2 - m_vecFrame[m_iCurFrame].vSliceSize.x,
+		WINSIZEY/2 - m_vecFrame[m_iCurFrame].vSliceSize.y,
+		WINSIZEX/2 + m_vecFrame[m_iCurFrame].vSliceSize.x,
+		WINSIZEY/2 + m_vecFrame[m_iCurFrame].vSliceSize.y,
+		m_vecFrame[m_iCurFrame].vLT.x,
+		m_vecFrame[m_iCurFrame].vLT.y,
+		m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+		m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+		1.0f);
+
+}
+
 void CAnimation::Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount)
 {
 	m_pImg = _pImg;

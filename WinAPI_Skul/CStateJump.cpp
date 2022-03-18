@@ -23,8 +23,9 @@ CState* CStateJump::HandleInput(CObject* _pObj)
             pPlayer->m_bCanDoubleJump = false;
             return new CStateJump();
         }
-        if (KEYTAP(KEY::Z))
+        if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
         {
+            pPlayer->m_bCanDash = false;
             return new CStateDash();
         }
         if (KEYTAP(KEY::X))
@@ -37,6 +38,7 @@ CState* CStateJump::HandleInput(CObject* _pObj)
     }
     break;
     }
+    return nullptr;
 }
 
 void CStateJump::Update(CObject* _pObj)
@@ -76,7 +78,7 @@ void CStateJump::Enter(CObject* _pObj)
         if (!pPlayer->m_bCanDoubleJump)
         {
             CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Jump_Smoke", L"texture\\effect\\doublejump_smoke.png",
-                1, 96, pPlayer->GetObjDir());
+                0.5,0.5, 96, pPlayer->GetObjDir());
             CREATEOBJECT(eft);
             eft->SetPos(pPlayer->GetPos() + Vec2(0, -20));
             SINGLE(CSoundManager)->Play(L"JumpAir");

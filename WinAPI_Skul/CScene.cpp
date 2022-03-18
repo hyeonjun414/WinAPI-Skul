@@ -34,14 +34,18 @@ CScene::~CScene()
 
 void CScene::Update()
 {
-	for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
+	if (SINGLE(CGameManager)->GetGamePlay())
 	{
-		for (unsigned int j = 0; j < m_vecObjectList[i].size(); j++)
+		for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
 		{
-			if (m_vecObjectList[i][j]->GetActive())
-				m_vecObjectList[i][j]->Update();
+			for (unsigned int j = 0; j < m_vecObjectList[i].size(); j++)
+			{
+				if (m_vecObjectList[i][j]->GetActive())
+					m_vecObjectList[i][j]->Update();
+			}
 		}
 	}
+
 
 	if (m_bIsChange)
 		DelayChange(SINGLE(CTimeManager)->GetPlayTime());
@@ -198,16 +202,16 @@ void CScene::ChangeNextScene(SCENE_TYPE _eType)
 {
 	if (m_bIsChange)
 		return;
-
-	SINGLE(CCameraManager)->FadeOut(1.0f);
+	SINGLE(CCameraManager)->LodingAnimation(2.0f);
+	//SINGLE(CCameraManager)->FadeOut(1.0f);
 	m_eNextScene = _eType;
 	m_bIsChange = true;
-	m_iTime = SINGLE(CTimeManager)->GetPlayTime();
+	m_fTime = SINGLE(CTimeManager)->GetPlayTime();
 }
 
-void CScene::DelayChange(UINT _iTime)
+void CScene::DelayChange(float _iTime)
 {
-	if (m_iTime + 1 <= _iTime)
+	if (m_fTime + 1.f <= _iTime)
 	{
 		CHANGESCENE(m_eNextScene);
 		m_eNextScene = SCENE_TYPE::NONE;

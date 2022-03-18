@@ -12,6 +12,9 @@ enum class OBJ_TYPE
 	
 	MAPOBJECT,
 	MONSTER,
+	MONSTER_MELEE,
+	MONSTER_RANGE,
+	MONSTER_BOSS,
 	PLAYER,
 	EFFECT,
 
@@ -69,28 +72,13 @@ enum class KEY
 	SIZE
 };
 
-// 그리기에 사용할 브러쉬와 펜 그룹
-enum class BRUSH_TYPE
-{
-	HOLLOW,
-
-	SIZE
-};
-enum class PEN_TYPE
-{
-	RED,
-	GREEN,
-	BLUE,
-
-	SIZE
-};
-
 // 이벤트 타입
 enum class EVENT_TYPE
 {
 	CREATE_OBJECT,
 	DELETE_OBJECT,
 	SCENE_CHANGE,
+	PLAY_AND_PAUSE,
 
 	SIZE
 };
@@ -100,6 +88,16 @@ enum class CAM_EFFECT
 {
 	FADE_IN,
 	FADE_OUT,
+	LODING_IMAGE,
 
+
+	NONE,
+};
+
+// 이미지 효과
+enum class IMG_EFFECT
+{
+	FLICKER,
+	
 	NONE,
 };

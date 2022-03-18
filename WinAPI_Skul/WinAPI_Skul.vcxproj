@@ -162,7 +162,11 @@
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGate.h" />
     <ClInclude Include="CInGameScene.h" />
+    <ClInclude Include="CMapObject.h" />
     <ClInclude Include="CMonster.h" />
+    <ClInclude Include="CMonsterBoss.h" />
+    <ClInclude Include="CMonsterMelee.h" />
+    <ClInclude Include="CMonsterRange.h" />
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CImageObj.h" />
     <ClInclude Include="CKeyManager.h" />
@@ -218,7 +222,11 @@
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CInGameScene.cpp" />
+    <ClCompile Include="CMapObject.cpp" />
     <ClCompile Include="CMonster.cpp" />
+    <ClCompile Include="CMonsterBoss.cpp" />
+    <ClCompile Include="CMonsterMelee.cpp" />
+    <ClCompile Include="CMonsterRange.cpp" />
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CImageObj.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
@@ -267,6 +275,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

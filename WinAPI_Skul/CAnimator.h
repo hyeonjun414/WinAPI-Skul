@@ -19,6 +19,7 @@ public:
 
 	void Update();
 	void Render(bool _bIsRight);
+	void Render_Without_Obj();
 
 	void CreateAnimation( // 특정 애니메이션을 생성
 		const wstring&	_strName,			// 애니메이션 이름

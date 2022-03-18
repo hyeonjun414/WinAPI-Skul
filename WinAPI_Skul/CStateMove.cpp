@@ -25,8 +25,9 @@ CState* CStateMove::HandleInput(CObject* _pObj) {
         {
             return new CStateIdle();
         }
-        if (KEYTAP(KEY::Z))
+        if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
         {
+            pPlayer->m_bCanDash = false;
             return new CStateDash();
         }
         if (KEYTAP(KEY::X))
@@ -43,6 +44,7 @@ CState* CStateMove::HandleInput(CObject* _pObj) {
     }
     break;
     }
+    return nullptr;
 }
 void CStateMove::Update(CObject* _pObj) {
 
@@ -74,7 +76,6 @@ void CStateMove::Enter(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        m_bIsFloor = true;
         pPlayer->GetAnimator()->Play(L"Player_Move", true);
     }
     break;

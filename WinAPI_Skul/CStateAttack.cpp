@@ -28,6 +28,7 @@ CState* CStateAttack::HandleInput(CObject* _pObj) {
     }
     break;
     }
+    return nullptr;
 }
 void CStateAttack::Update(CObject* _pObj) {
     switch (_pObj->GetObjGroup())
@@ -86,12 +87,12 @@ void CStateAttack::Enter(CObject* _pObj)
         if (KEYHOLD(KEY::LEFT))
         {
             pPlayer->m_bIsRight = false;
-            pPlayer->m_vPos.x -= 30;
+            pPlayer->m_vPos.x -= 20;
         }
         if (KEYHOLD(KEY::RIGHT))
         {
             pPlayer->m_bIsRight = true;
-            pPlayer->m_vPos.x += 30;
+            pPlayer->m_vPos.x += 20;
         }
     }
     break;

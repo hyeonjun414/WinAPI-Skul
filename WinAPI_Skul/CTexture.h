@@ -17,8 +17,8 @@ public:
     void        Load(const wstring& _strFilePath);
     void        Create(UINT _width, UINT _height);
 
-    UINT        Width() { return m_bmpInfo.bmWidth; }
-    UINT        Height() { return m_bmpInfo.bmHeight; }
+    UINT        GetWidth() { return m_bmpInfo.bmWidth; }
+    UINT        GetHeight() { return m_bmpInfo.bmHeight; }
 
     HDC         GetDC() { return m_hDC; }
     HBITMAP     GetBitmap() { return m_hBMP; }

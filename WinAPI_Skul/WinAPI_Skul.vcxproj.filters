@@ -37,9 +37,6 @@
     <Filter Include="03.GameObject\UI">
       <UniqueIdentifier>{014b1227-f121-4153-a5d2-682d8ce6bcf9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.GameObject\Object\Player">
-      <UniqueIdentifier>{bc7112fc-79d6-447d-90f4-f816d0c037c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="05.Scene">
       <UniqueIdentifier>{e83aa916-e208-46ff-8d34-cfab586b3868}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,15 @@
     </Filter>
     <Filter Include="04.Component\State">
       <UniqueIdentifier>{a07a585d-ecc9-4412-a750-6857eb0a1b54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\Monster">
+      <UniqueIdentifier>{c93368f1-7ab3-4263-af9d-e55414aefac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\Player">
+      <UniqueIdentifier>{bc7112fc-79d6-447d-90f4-f816d0c037c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\MapObject">
+      <UniqueIdentifier>{869bb6a3-1e1a-4bd6-9850-0b402b21653e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,11 +216,23 @@
     <ClInclude Include="CGameManager.h">
       <Filter>01.Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>03.GameObject\Object</Filter>
+    <ClInclude Include="CMonsterBoss.h">
+      <Filter>03.GameObject\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterRange.h">
+      <Filter>03.GameObject\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterMelee.h">
+      <Filter>03.GameObject\Object\Monster</Filter>
     </ClInclude>
     <ClInclude Include="CGate.h">
-      <Filter>03.GameObject\Object</Filter>
+      <Filter>03.GameObject\Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CMapObject.h">
+      <Filter>03.GameObject\Object\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>03.GameObject\Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -353,11 +371,23 @@
     <ClCompile Include="CGameManager.cpp">
       <Filter>01.Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>03.GameObject\Object</Filter>
+    <ClCompile Include="CMonsterBoss.cpp">
+      <Filter>03.GameObject\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterMelee.cpp">
+      <Filter>03.GameObject\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterRange.cpp">
+      <Filter>03.GameObject\Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="CGate.cpp">
-      <Filter>03.GameObject\Object</Filter>
+      <Filter>03.GameObject\Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CMapObject.cpp">
+      <Filter>03.GameObject\Object\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>03.GameObject\Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,5 +405,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
 </Project>

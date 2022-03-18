@@ -28,8 +28,9 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
             pPlayer->SetObjDir(true);
             return new CStateMove();
         }
-        if (KEYTAP(KEY::Z))
+        if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
         {
+            pPlayer->m_bCanDash = false;
             return new CStateDash();
         }
         if (KEYTAP(KEY::C))
@@ -46,6 +47,7 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
     }
         break;
     }
+    return nullptr;
 }
 void CStateIdle::Update(CObject* _pPlayer) {
 }

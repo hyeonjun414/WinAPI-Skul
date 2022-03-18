@@ -28,14 +28,18 @@ class CPlayer :
 private:
     Vec2    m_vVelocity;
     bool    m_bIsGround;
-    bool    m_bIsJumping;
     int     m_iCollCount;
 
     bool    m_bCanDoubleJump;
     bool    m_bCanSecondDash;
+    bool    m_bCanDash;
 
-    float   m_fDashRechargeTime;
-    float   m_fDashRehargeCurTime;
+    float   m_fDashCoolTime;
+    float   m_fDashCurTime;
+
+    float   m_fSecondDashCoolTime;
+    float   m_fSecondDashCurTime;
+
 
 public:
     CState* m_pState;
@@ -53,9 +57,6 @@ public :
     virtual void	    OnCollision(CCollider* _pOther) ;
     virtual void	    OnCollisionEnter(CCollider* _pOther);
     virtual void	    OnCollisionExit(CCollider* _pOther);
-
-    void                AddCollCount(int _i)    { m_iCollCount += _i; }
-    int                 GetCollCount()          { return m_iCollCount; }
 
     void                SetVelocity(Vec2 _vVelocity)   { m_vVelocity = _vVelocity; }
     void                SetIsGround(bool _bIsGround)   { m_bIsGround = _bIsGround; }

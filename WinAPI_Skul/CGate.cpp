@@ -11,7 +11,7 @@ CGate::CGate()
 }
 
 CGate::CGate(OBJ_TYPE _eType):
-	CObject(_eType)
+	CMapObject(_eType)
 {
 	SetPos(Vec2(250, 1105));
 
@@ -56,6 +56,7 @@ void CGate::OnCollision(CCollider* _pOther)
 			SINGLE(CSoundManager)->Stop(L"Ch1Bgm");
 			pPlayer->SetVelocity(Vec2(0, 0));
 			pPlayer->SetIsGround(true);
+			GAMEPLAY(false);
 		}
 	}
 }

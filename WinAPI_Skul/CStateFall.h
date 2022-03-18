@@ -4,7 +4,6 @@ class CStateFall :
     public CState
 {
 private:
-    bool m_bIsFloor;
 public:
     CStateFall() {}
 

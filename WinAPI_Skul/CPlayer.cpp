@@ -16,16 +16,19 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
 {
 	m_bIsGround = false;
-	m_bIsJumping = false;
 	m_bIsRight = true;
 	m_iCollCount = 0;
 	m_vVelocity = Vec2(300, 0);
 
 	m_bCanDoubleJump = false;
 	m_bCanSecondDash = true;
+	m_bCanDash = true;
 
-	m_fDashRechargeTime = 2.f;
-	m_fDashRehargeCurTime = 0.f;
+	m_fSecondDashCoolTime = 2.f;
+	m_fSecondDashCurTime = 0.f;
+
+	m_fDashCoolTime = 1.f;
+	m_fDashCurTime = 0.f;
 
 	SetScale(Vec2(96, 96));
 	// Collider 만들기
@@ -113,11 +116,26 @@ void CPlayer::Update()
 
 	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
 	// 만약 세컨드대시가 비활성화된 경우 재충전을 시작한다.
-	if (!m_bCanSecondDash && m_bIsGround)
+	if (!m_bCanSecondDash)
 	{
-		m_fDashRehargeCurTime += DT;
-		if (m_fDashRehargeCurTime >= m_fDashRechargeTime)
+		m_fSecondDashCurTime += DT;
+		if (m_fSecondDashCurTime >= m_fSecondDashCoolTime)
+		{
 			m_bCanSecondDash = true;
+			m_fSecondDashCurTime = 0.f;
+
+		}
+	}
+
+	if (!m_bCanDash)
+	{
+		m_fDashCurTime += DT;
+		if (m_fDashCurTime >= m_fDashCoolTime)
+		{
+			m_bCanDash = true;
+			m_fSecondDashCurTime = 0.f;
+
+		}
 	}
 
 	GetAnimator()->Update();
@@ -143,11 +161,11 @@ void CPlayer::OnCollision(CCollider* _pOther)
         {
             if (pos1.x <= pos2.x - size2.x / 2)
             {
-                pPlayer->m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;
+				pPlayer->m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;//Player->m_vVelocity.x* DT;
             }
             else if (pos1.x >= pos2.x + size2.x / 2)
             {
-                pPlayer->m_vPos.x = pos2.x + (size1.x + size2.x) / 2;
+				pPlayer->m_vPos.x = pos2.x + (size1.x + size2.x) / 2;//Player->m_vVelocity.x* DT;
 
             }
         }
@@ -165,13 +183,15 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		Vec2 vRightPos = _pOther->GetFinalPos();
 		Vec2 vRightScale = _pOther->GetScale();
 		pPlayer->m_iCollCount++;
-		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-3) / 2.f)
+		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-10) / 2.f)
 		{
 			
-			if (pPlayer->m_iCollCount > 0)
+			if (pPlayer->m_iCollCount > 0 && 
+				vLeftPos.y <= vRightPos.y - vRightScale.x/2)
 			{
 				pPlayer->m_bIsGround = true;
 				m_bCanDoubleJump = true;
+				m_vPos.y = _pOther->GetFinalPos().y - _pOther->GetScale().y / 2 + 1;
 			}
 		}
 

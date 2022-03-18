@@ -30,6 +30,7 @@ CState* CStateDash::HandleInput(CObject* _pObj) {
     }
     break;
     }
+    return nullptr;
 }
 void CStateDash::Update(CObject* _pObj) {
     switch (_pObj->GetObjGroup())
@@ -67,7 +68,7 @@ void CStateDash::Enter(CObject* _pObj)
         pPlayer->m_vVelocity.y = 0;
         pPlayer->GetAnimator()->Play(L"Player_Dash", true);
         CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
-            1, 96, pPlayer->GetObjDir());
+            1, 1, 96, pPlayer->GetObjDir());
         CREATEOBJECT(eft);
         eft->SetPos(pPlayer->GetPos()+Vec2(0,-20));
         SINGLE(CSoundManager)->Play(L"Dash");
@@ -78,4 +79,15 @@ void CStateDash::Enter(CObject* _pObj)
 
 void CStateDash::Exit(CObject* _pObj)
 {
+    switch (_pObj->GetObjGroup())
+    {
+    case OBJ_TYPE::PLAYER:
+    {
+        CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->m_bCanDash = false;
+        pPlayer->m_fDashCurTime = 0;
+    }
+    break;
+    }
+
 }

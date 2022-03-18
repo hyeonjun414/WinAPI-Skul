@@ -76,10 +76,10 @@ void CUI::Render(HDC _hDC)
 	if (m_bLbtnDown)
 	{
 		RENDER->RenderFillRectangle(
-			(int)(vPos.x),
-			(int)(vPos.y),
-			(int)(vPos.x + vScale.x),
-			(int)(vPos.y + vScale.y));
+			vPos.x,
+			vPos.y,
+			vPos.x + vScale.x,
+			vPos.y + vScale.y);
 			
 	}
 	else

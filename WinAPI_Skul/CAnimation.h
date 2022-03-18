@@ -22,6 +22,7 @@ public:
 
 	void	Update();
 	void	Render(bool _bIsRight);
+	void	Render_Without_Obj();
 	 
 	void	Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2 _vStep, float _fFrameTime, UINT _iFrameCount);
 

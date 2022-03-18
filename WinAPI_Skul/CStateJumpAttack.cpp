@@ -23,6 +23,7 @@ CState* CStateJumpAttack::HandleInput(CObject* _pObj)
     }
     break;
     }
+    return nullptr;
 }
 
 void CStateJumpAttack::Update(CObject* _pObj)

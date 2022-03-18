@@ -5,7 +5,6 @@ class CStateMove :
     public CState
 {
 private:
-    bool m_bIsFloor;
 public:
     CStateMove(){}
 

@@ -29,6 +29,7 @@ CState* CStateFall::HandleInput(CObject* _pObj)
     }
     break;
     }
+    return nullptr;
 }
 
 void CStateFall::Update(CObject* _pObj)
@@ -72,7 +73,6 @@ void CStateFall::Enter(CObject* _pObj)
     {
     case OBJ_TYPE::PLAYER:
     {
-        m_bIsFloor = false;
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->GetAnimator()->Play(L"Player_Fall", true);
     }
