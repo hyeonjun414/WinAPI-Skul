@@ -7,7 +7,7 @@ enum class OBJ_TYPE
 	DEFAULT,
 
 	IMAGE,
-	TEXT,
+	
 	TILE,
 	
 	MAPOBJECT,
@@ -19,7 +19,7 @@ enum class OBJ_TYPE
 	PLAYER_ATTACK,
 	EFFECT,
 	ATTACK,
-
+	TEXT,
 
 	UI,
 	SIZE,
@@ -108,5 +108,13 @@ enum class IMG_EFFECT
 {
 	FLICKER,
 	
+	NONE,
+};
+
+// 텍스트 효과
+enum class TEXT_EFFECT
+{
+	BOUNCE,
+
 	NONE,
 };

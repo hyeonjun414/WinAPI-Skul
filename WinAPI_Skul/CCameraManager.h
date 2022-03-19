@@ -63,5 +63,7 @@ public:
 	void	FadeOut(float _duration);
 	void	LodingAnimation(float _duration);
 
+	void	MiniMapRender();
+
 };
 

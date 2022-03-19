@@ -31,6 +31,8 @@ void CCore::Init()
 	SINGLE(CSceneManager)->Init();
 	SINGLE(CCollisionManager)->Init();
 	SINGLE(CCameraManager)->Init();
+
+	srand((UINT)time(NULL));
 }
 
 void CCore::Update()
@@ -68,7 +70,7 @@ void CCore::Render()
 	// 오른쪽 상단에 FPS 표시
 	WCHAR strFPS[6];
 	swprintf_s(strFPS, L"%5d", CTimeManager::GetInst()->GetFPS());
-	RENDER->RenderText(strFPS, WINSIZEX - 50, 10, WINSIZEX, 50, 16, RGB(255, 255, 255));
+	RENDER->RenderText(strFPS, WINSIZEX - 100, 20, WINSIZEX, 50, 20, RGB(0, 0, 0));
 
 	RENDER->GetRenderTarget()->EndDraw();
 }

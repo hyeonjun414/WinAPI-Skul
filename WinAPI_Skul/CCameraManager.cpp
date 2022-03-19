@@ -4,6 +4,7 @@
 #include "CTexture.h"
 #include "CD2DImage.h"
 #include "CAnimator.h"
+#include "CScene.h"
 
 CCameraManager::CCameraManager() :
 	m_vLookAt(Vec2(WINSIZEX / 2.f, WINSIZEY / 2.f)),
@@ -94,6 +95,9 @@ void CCameraManager::SetLookAt(Vec2 _vLook)
 
 void CCameraManager::Render()
 {
+	MiniMapRender();
+
+
 	// 카메라 효과가 시작되었을때만 렌더가 작동한다.
 	if (CAM_EFFECT::NONE == m_eEffect)
 		return;
@@ -191,5 +195,26 @@ void CCameraManager::LodingAnimation(float _duration)
 	m_eEffect = CAM_EFFECT::LODING_IMAGE;
 	m_fEffectDuration = _duration;
 	m_fCurTime = 0.f;
+}
+
+void CCameraManager::MiniMapRender()
+{
+	const vector<CObject*>* vecObject = SINGLE(CSceneManager)->GetCurScene()->GetAllObject();
+	for (size_t i = (UINT)OBJ_TYPE::TILE; i < (UINT)OBJ_TYPE::PLAYER_ATTACK; i++)
+	{
+		for (size_t j = 0; j < vecObject[i].size(); j++)
+		{
+			Vec2 vPos = vecObject[i][j]->GetPos();
+			vPos.x *= 0.07f;
+			vPos.y *= 0.085f;
+			vPos += Vec2(WINSIZEX- 242, WINSIZEY- 142);
+			RENDER->RenderFillRectangle(
+				vPos.x,
+				vPos.y,
+				vPos.x + 5,
+				vPos.y + 6,
+				RGB(255-(i*20),100+i*20,255));
+		}
+	}
 }
 

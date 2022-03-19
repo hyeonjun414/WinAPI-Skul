@@ -172,6 +172,7 @@
     <ClInclude Include="CObject.h" />
     <ClInclude Include="CImageObj.h" />
     <ClInclude Include="CKeyManager.h" />
+    <ClInclude Include="CUIImage.h" />
     <ClInclude Include="CUIPanel.h" />
     <ClInclude Include="CPathManager.h" />
     <ClInclude Include="CPlayer.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="CUI.h" />
     <ClInclude Include="CUICursor.h" />
     <ClInclude Include="CUIManager.h" />
+    <ClInclude Include="CUIText.h" />
     <ClInclude Include="CUITileBtn.h" />
     <ClInclude Include="enumClass.h" />
     <ClInclude Include="framework.h" />
@@ -238,6 +240,7 @@
     <ClCompile Include="CObject.cpp" />
     <ClCompile Include="CImageObj.cpp" />
     <ClCompile Include="CKeyManager.cpp" />
+    <ClCompile Include="CUIImage.cpp" />
     <ClCompile Include="CUIPanel.cpp" />
     <ClCompile Include="CPathManager.cpp" />
     <ClCompile Include="CPlayer.cpp" />
@@ -269,6 +272,7 @@
     <ClCompile Include="CUI.cpp" />
     <ClCompile Include="CUICursor.cpp" />
     <ClCompile Include="CUIManager.cpp" />
+    <ClCompile Include="CUIText.cpp" />
     <ClCompile Include="CUITileBtn.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

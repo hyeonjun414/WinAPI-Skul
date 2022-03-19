@@ -2,35 +2,32 @@
 #include "CTextObj.h"
 #include "CD2DImage.h"
 
-CTextObj::CTextObj() :
-    m_bRenderStyle(false)
-{
-    m_pImg = SINGLE(CResourceManager)->LoadD2DImage(L"test", L"texture\\startscene_bg.bmp");
-    SetPos(Vec2(0, 0));
-    SetScale(Vec2(m_pImg->GetWidth() * 2.f, m_pImg->GetHeight() * 2.f));
-}
 
-CTextObj::CTextObj(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, bool _renderStyle)
+CTextObj::CTextObj(OBJ_TYPE _eType, const wstring& _strText, TEXT_EFFECT _eEffect):
+    CObject(_eType),
+    m_strText(_strText),
+    m_fDuration(1.5f),
+    m_fCurTime(0.f)
 {
-    m_pImg = SINGLE(CResourceManager)->LoadD2DImage(_strImgName, _strImgPath);
-    SetPos(Vec2(0, 0));
-    SetScale(Vec2(m_pImg->GetWidth() * 2.f, m_pImg->GetHeight() * 2.f));
-    m_bRenderStyle = _renderStyle;
+    m_vVelocity.y = 700;
+    m_vVelocity.x = (rand() % 200) - 100;
 }
 
 CTextObj::~CTextObj()
 {
 }
-
-CTextObj* CTextObj::Clone()
-{
-    return nullptr;
-}
-
 void CTextObj::Update()
 {
-}
+    m_fCurTime += DT;
 
+    m_vPos.y -= m_vVelocity.y * DT;
+    m_vPos.x += m_vVelocity.x * DT;
+    m_vVelocity.y -= 1000 * DT;
+    
+    
+    if (m_fCurTime >= m_fDuration)
+        DELETEOBJECT(this);
+}
 void CTextObj::Render()
 {
     Vec2 pos = GetPos();
@@ -38,12 +35,13 @@ void CTextObj::Render()
     pos = SINGLE(CCameraManager)->GetRenderPos(pos);
 
     pos += SINGLE(CCameraManager)->GetCurLookAt() - Vec2(WINSIZEX / 2, WINSIZEY / 2);
-    SINGLE(CRenderManager)->RenderImage(
-        m_pImg,
-        pos.x,
-        pos.y,
-        pos.x + WINSIZEX,
-        pos.y + WINSIZEY,
-        1.f);
+    RENDER->RenderText(
+        m_strText,
+        GetRenderPos().x,
+        GetRenderPos().y,
+        GetRenderPos().x+100,
+        GetRenderPos().y+100,
+        25.f,
+        RGB(255.f,150.f,150.f));
 
 }

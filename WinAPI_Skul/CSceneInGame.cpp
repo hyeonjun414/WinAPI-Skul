@@ -9,6 +9,8 @@
 #include "CGate.h"
 #include "CEnemy.h"
 #include "CEnemyMelee.h"
+#include "CUIImage.h"
+#include "CUIText.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -78,17 +80,17 @@ void CSceneInGame::Enter()
 	CREATEOBJECT(monsterMelee);
 
 
-	CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 0.5, 96, true);
-	EftObj->SetPos(Vec2(100, 800));
-	CREATEOBJECT(EftObj);
+	//CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 0.5, 96, true);
+	//EftObj->SetPos(Vec2(100, 800));
+	//CREATEOBJECT(EftObj);
 
-	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100, 0.5, 128, true);
-	EftObj->SetPos(Vec2(250, 800));
-	CREATEOBJECT(EftObj);
+	//EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100, 0.5, 128, true);
+	//EftObj->SetPos(Vec2(250, 800));
+	//CREATEOBJECT(EftObj);
 
-	EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 0.5, 128, true);
-	EftObj->SetPos(Vec2(400, 800));
-	CREATEOBJECT(EftObj);
+	//EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 0.5, 128, true);
+	//EftObj->SetPos(Vec2(400, 800));
+	//CREATEOBJECT(EftObj);
 
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
@@ -101,6 +103,50 @@ void CSceneInGame::Enter()
 	SINGLE(CSoundManager)->AddSound(L"Attack", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
 	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+
+	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
+	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
+	pUI->SetScaleRate(Vec2(2.f, 2.f));
+	pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
+	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png");
+	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	pUIChild->SetScaleRate(Vec2(232.f, 2.f));
+	pUIChild->SetPos(Vec2(88, 90));
+	pUI->AddChild(pUIChild);
+	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
+	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	pUIChild->SetScaleRate(Vec2(4.f, 4.f));
+	pUIChild->SetPos(Vec2(15, 10));
+	pUI->AddChild(pUIChild);
+	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Skill_SkullThrowing", L"texture\\ui\\SkullThrowing.png");
+	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
+	pUIChild->SetPos(Vec2(115, 30));
+	pUI->AddChild(pUIChild);
+	pUIChild = new CUIImage(OBJ_TYPE::UI, L"PlayerUI_Btn_A", L"texture\\ui\\A.png");
+	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
+	pUIChild->SetPos(Vec2(127, 15));
+	pUI->AddChild(pUIChild);
+	CREATEOBJECT(pUI);
+
+	pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
+	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
+	pUI->SetScaleRate(Vec2(2.f, 2.f));
+	pUI->SetPos(Vec2(0,0));
+	CUIText* pTimer = new CUIText(OBJ_TYPE::UI);
+	pTimer->SetPos(Vec2(20, 5));
+	pTimer->SetScale(Vec2(100, 30));
+	SINGLE(CGameManager)->SetTimer(pTimer);
+	pUI->AddChild(pTimer);
+	CREATEOBJECT(pUI);
+
+	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_2.png");
+	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
+	pUI->SetScaleRate(Vec2(1.f, 1.f));
+	pUI->SetPos(Vec2(WINSIZEX- (float)pUI->GetImage()->GetWidth(), WINSIZEY- (float)pUI->GetImage()->GetHeight()));
+	CREATEOBJECT(pUI);
+
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);

@@ -57,6 +57,7 @@ void CGate::OnCollision(CCollider* _pOther)
 			pPlayer->SetVelocity(Vec2(0, 0));
 			pPlayer->SetIsGround(true);
 			GAMEPLAY(false);
+			SINGLE(CGameManager)->SetTimer(nullptr);
 		}
 	}
 }

@@ -23,6 +23,7 @@ private:
 	IDWriteTextFormat* m_pTextFormat;
 	ID2D1SolidColorBrush* m_pBrush;
 
+
 public:
 	void Init();
 

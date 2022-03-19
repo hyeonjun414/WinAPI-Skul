@@ -35,6 +35,7 @@ public:
 	UINT			GetTileX() { return m_iTileX; }
 	UINT			GetTileY() { return m_iTileY; }
 	const vector<CObject*>& GetGroupObject(OBJ_TYPE _eType) { return m_vecObjectList[(UINT)_eType]; }
+	const vector<CObject*>* GetAllObject() { return m_vecObjectList; }
 	vector<CObject*>& GetUIGroup() { return m_vecObjectList[(UINT)OBJ_TYPE::UI]; }
 
 	void			AddObject(CObject* _pObj);

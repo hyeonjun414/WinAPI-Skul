@@ -85,6 +85,12 @@ typedef struct Vector2
 		y *= _other.y;
 		return *this;
 	}
+	Vector2& operator*=(float _f)
+	{
+		x *= _f;
+		y *= _f;
+		return *this;
+	}
 
 	Vector2& operator/=(const Vector2& _other)
 	{

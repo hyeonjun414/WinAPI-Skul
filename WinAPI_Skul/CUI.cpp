@@ -9,8 +9,6 @@ CUI::CUI(OBJ_TYPE _eType):
 	m_bLbtnDown(false)
 
 {
-	SetPos(Vec2(100, 100));
-	SetScale(Vec2(100, 100));
 }
 
 CUI::CUI(const CUI& _origin):

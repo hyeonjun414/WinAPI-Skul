@@ -258,6 +258,12 @@
     <ClInclude Include="CUITileBtn.h">
       <Filter>03.GameObject\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CUIImage.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIText.h">
+      <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -429,6 +435,12 @@
       <Filter>04.Component\State</Filter>
     </ClCompile>
     <ClCompile Include="CUITileBtn.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIImage.cpp">
+      <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIText.cpp">
       <Filter>03.GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>

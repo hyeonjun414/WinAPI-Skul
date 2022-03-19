@@ -3,6 +3,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 #include "CEffect.h"
+#include "CTextObj.h"
 
 CFuncAttack::CFuncAttack(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
 	float _fDuration, float _fPlayTime, int _imgSize, bool _dir):
@@ -54,6 +55,9 @@ void CFuncAttack::OnCollisionEnter(CCollider* _pOther)
 {
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::ENEMY_MELEE)
 	{
+		CTextObj* pObj = new CTextObj(OBJ_TYPE::TEXT, L"1010", TEXT_EFFECT::BOUNCE);
+		pObj->SetPos((m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+		CREATEOBJECT(pObj);
 		SINGLE(CSoundManager)->Play(L"Attack");
 		GetEffect()->EffectPlay((m_pCollider->GetFinalPos()+ _pOther->GetFinalPos())/2);
 	}

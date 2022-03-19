@@ -34,8 +34,10 @@ void CRenderManager::Init()
 			D2D1_PRESENT_OPTIONS::D2D1_PRESENT_OPTIONS_IMMEDIATELY ),
 		&m_pRenderTarget);
 
+	
 	// 브러쉬 생성
 	m_pRenderTarget->CreateSolidColorBrush(D2D1::ColorF(0, 0, 0), & m_pBrush);
+
 
 	// 지정한 윈도우의 클라이언트 영역에 그림을 그리기 위한 Render Target을 생성
 	// WICImagingFactory 생성
@@ -96,9 +98,9 @@ void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, floa
 void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, COLORREF color)
 {
 	m_pWriteFactory->CreateTextFormat(
-		L"굴림",
+		L"Visitor TT1 BRK",
 		NULL,
-		DWRITE_FONT_WEIGHT_NORMAL,
+		DWRITE_FONT_WEIGHT_SEMI_BOLD,
 		DWRITE_FONT_STYLE_NORMAL,
 		DWRITE_FONT_STRETCH_NORMAL,
 		fontSize,
@@ -107,7 +109,7 @@ void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW,
 
 	m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
 	m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
+	
 	int red = color & 0xFF;
 	int green = (color >> 8) & 0xFF;
 	int blue = (color >> 16) & 0xFF;

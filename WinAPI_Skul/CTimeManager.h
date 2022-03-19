@@ -20,7 +20,7 @@ public:
 	void			SetPlayTime(float _playTime) { m_fPlayTime = _playTime; }
 
 	bool			GetIsSec()		{ return m_bIsSecond; }
-	float			GetPlayTime()	{ return m_fPlayTime; }	// 1프레임에 몇 초가 걸렸는지 확인
+	float			GetPlayTime()	{ return m_fPlayTime; }	
 	unsigned int	GetFPS()		{ return m_uiFPS; }			// 1초에 몇번의 프레임이 나오는지 확인
 	double			GetDT()			{ return m_dDT; }			// 1프레임에 몇 초가 걸렸는지 확인
 	

@@ -3,19 +3,20 @@
 class CTextObj :
     public CObject
 {
-	CD2DImage* m_pImg;
-	bool		m_bRenderStyle;
+protected:
+    wstring     m_strText;
+    Vec2        m_vVelocity;
+    float       m_fCurTime;
+    float       m_fDuration;
 
 public:
-	CTextObj();
-	CTextObj(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, bool _renderStyle);
-	~CTextObj();
+    CTextObj(OBJ_TYPE _eType, const wstring& _strText, TEXT_EFFECT _eEffect);
+    virtual ~CTextObj();
 
+    virtual void Update();
+    virtual void Render();
 
-	CD2DImage* GetImage() { return m_pImg; }
-
-	virtual CTextObj* Clone();
-	virtual void Update();
-	virtual void Render();
+    void                SetText(const wstring& _text)   { m_strText = _text; }
+    const wstring&      GetText()                       { return m_strText; }
 };
 
