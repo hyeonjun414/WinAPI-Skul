@@ -2,6 +2,7 @@
 #include "CScene.h"
 #include "CObject.h"
 #include "CTile.h"
+#include "CCollider.h"
 
 CScene::CScene() :
 	m_strName{},
@@ -66,7 +67,7 @@ void CScene::Render()
 {
 	for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
 	{
-		if ((UINT)OBJ_TYPE::TILE == i && m_vecObjectList[i].size() != 0)
+		if ((UINT)OBJ_TYPE::TILE == i)
 		{
 			RenderTile();
 			continue;
@@ -91,18 +92,18 @@ void CScene::Render()
 
 void CScene::AddObject(CObject* _pObj)
 {
-	m_vecObjectList[(int)_pObj->GetObjGroup()].push_back(_pObj);
+	m_vecObjectList[(int)_pObj->GetObjType()].push_back(_pObj);
 }
 
 void CScene::EraseObject(CObject* _pObj)
 {
-	vector<CObject*>::iterator iter = m_vecObjectList[(int)_pObj->GetObjGroup()].begin();
+	vector<CObject*>::iterator iter = m_vecObjectList[(int)_pObj->GetObjType()].begin();
 
-	for (; iter != m_vecObjectList[(int)_pObj->GetObjGroup()].end();)
+	for (; iter != m_vecObjectList[(int)_pObj->GetObjType()].end();)
 	{
 		if (*iter == _pObj)
 		{
-			iter = m_vecObjectList[(int)_pObj->GetObjGroup()].erase(iter);
+			iter = m_vecObjectList[(int)_pObj->GetObjType()].erase(iter);
 			delete _pObj;
 			break;
 		}
@@ -122,49 +123,41 @@ void CScene::DeleteGroup(OBJ_TYPE _group)
 	m_vecObjectList[(UINT)_group].clear();
 }
 
-void CScene::CreateTile(UINT _xSize, UINT _ySize)
+void CScene::CScene::LoadTile(const wstring& strPath)
 {
 	DeleteGroup(OBJ_TYPE::TILE);
 
-	m_iTileX = _xSize;
-	m_iTileY = _ySize;
-
-	CD2DImage* pTileTex = SINGLE(CResourceManager)->LoadD2DImage(L"Tile", L"texture\\Tile\\tilemap.bmp");
-	CTexture* pTileTex2 = SINGLE(CResourceManager)->LoadTexture(L"Tile", L"texture\\Tile\\tilemap.bmp");
-
-	for (UINT i = 0; i < _ySize; i++)
-	{
-		for (UINT j = 0; j < _xSize; j++)
-		{
-			CTile* pTile = new CTile();
-			pTile->SetPos(Vec2((float)(j * CTile::SIZE_TILE), (float)(i * CTile::SIZE_TILE)));
-			pTile->SetImage(pTileTex);
-			AddObject(pTile);
-		}
-	}
-}
-
-void CScene::LoadTile(const wstring& _strPath)
-{
 	FILE* pFile = nullptr;
 
-	_wfopen_s(&pFile, _strPath.c_str(), L"rb");      // w : write, b : binary
+	_wfopen_s(&pFile, strPath.c_str(), L"rb");      // w : write, b : binary
 	assert(pFile);
 
-	UINT	xCount = 0;
-	UINT	yCount = 0;
-	UINT	tileCount = 0;
+	UINT xCount = 0;
+	UINT yCount = 0;
+	UINT tileCount = 0;
+
 	fread(&xCount, sizeof(UINT), 1, pFile);
 	fread(&yCount, sizeof(UINT), 1, pFile);
+	fread(&tileCount, sizeof(UINT), 1, pFile);
 
-	CreateTile(xCount, yCount);
+	CD2DImage* pImg = CResourceManager::GetInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
 
-	const vector<CObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
-	for (UINT i = 0; i < vecTile.size(); i++)
+	for (UINT i = 0; i < tileCount; i++)
 	{
-		// 위치 정보를 넣어줌.
-		// 충돌 정보가 있다면 충돌체도 생성.
-		((CTile*)vecTile[i])->Load(pFile);
+		CTile* newTile = new CTile;
+		newTile->Load(pFile);
+		newTile->SetImage(pImg);
+		newTile->SetPos(Vec2((float)(newTile->GetX() * CTile::SIZE_TILE),
+							(float)(newTile->GetY() * CTile::SIZE_TILE)));
+
+		if (TILE_TYPE::NONE != newTile->GetType())
+		{
+			newTile->CreateCollider();
+			newTile->GetCollider()->SetScale(Vec2(CTile::SIZE_TILE, CTile::SIZE_TILE));
+			newTile->GetCollider()->SetOffsetPos(Vec2(CTile::SIZE_TILE / 2.f, CTile::SIZE_TILE / 2.f));
+		}
+
+		AddObject(newTile);
 	}
 
 	fclose(pFile);
@@ -173,28 +166,9 @@ void CScene::LoadTile(const wstring& _strPath)
 void CScene::RenderTile()
 {
 	const vector<CObject*>& vecTile = GetGroupObject(OBJ_TYPE::TILE);
-
-	Vec2 vCamLook = SINGLE(CCameraManager)->GetCurLookAt();
-	Vec2 vLeftTop = vCamLook - Vec2(WINSIZEX, WINSIZEY) / 2;
-
-	UINT iLTX = (int)vLeftTop.x / CTile::SIZE_TILE;
-	UINT iLTY = (int)vLeftTop.y / CTile::SIZE_TILE;
-	UINT iLTIdx = m_iTileX * iLTY + iLTX;
-
-	UINT iClientWidth = (int)WINSIZEX / CTile::SIZE_TILE;
-	UINT iClientHeight = (int)WINSIZEY / CTile::SIZE_TILE;
-	for (UINT iCurY = iLTY; iCurY <= (iLTY + iClientHeight); ++iCurY)
+	for (UINT i = 0; i < vecTile.size(); i++)
 	{
-		for (UINT iCurX = iLTX; iCurX <= (iLTX + iClientWidth); ++iCurX)
-		{
-			if (iCurX < 0 || m_iTileX <= iCurX || iCurY < 0 || m_iTileY <= iCurY)
-			{
-				continue;
-			}
-			int iIdx = (m_iTileX * iCurY) + iCurX;
-
-			vecTile[iIdx]->Render();
-		}
+		vecTile[i]->Render();
 	}
 }
 

@@ -1,12 +1,12 @@
 #pragma once
 #include "CScene.h"
-class CInGameScene :
+class CSceneInGame :
     public CScene
 {
 public:
-    CInGameScene();
-    CInGameScene(wstring _sceneName, SCENE_TYPE _sceneType);
-    ~CInGameScene();
+    CSceneInGame();
+    CSceneInGame(wstring _sceneName, SCENE_TYPE _sceneType);
+    ~CSceneInGame();
 
     virtual void	Update();
     virtual void    Enter();

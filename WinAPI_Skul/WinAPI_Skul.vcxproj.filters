@@ -49,14 +49,20 @@
     <Filter Include="04.Component\State">
       <UniqueIdentifier>{a07a585d-ecc9-4412-a750-6857eb0a1b54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.GameObject\Object\Monster">
-      <UniqueIdentifier>{c93368f1-7ab3-4263-af9d-e55414aefac4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.GameObject\Object\Player">
       <UniqueIdentifier>{bc7112fc-79d6-447d-90f4-f816d0c037c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="03.GameObject\Object\MapObject">
       <UniqueIdentifier>{869bb6a3-1e1a-4bd6-9850-0b402b21653e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\Effect">
+      <UniqueIdentifier>{345ff831-5956-4731-83f2-b03b24f9adf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\Enemy">
+      <UniqueIdentifier>{c93368f1-7ab3-4263-af9d-e55414aefac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\FuncObj">
+      <UniqueIdentifier>{e10098c6-9452-4946-93bf-642246c0c767}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,20 +123,17 @@
     <ClInclude Include="CCollider.h">
       <Filter>04.Component</Filter>
     </ClInclude>
-    <ClInclude Include="CButtonUI.h">
+    <ClInclude Include="CUIButton.h">
       <Filter>03.GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="CUI.h">
       <Filter>03.GameObject\UI</Filter>
     </ClInclude>
-    <ClInclude Include="CPanelUI.h">
+    <ClInclude Include="CUIPanel.h">
       <Filter>03.GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="CTile.h">
       <Filter>03.GameObject\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>03.GameObject\Object</Filter>
     </ClInclude>
     <ClInclude Include="CScene.h">
       <Filter>05.Scene</Filter>
@@ -162,7 +165,7 @@
     <ClInclude Include="CRenderManager.h">
       <Filter>01.Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CStartScene.h">
+    <ClInclude Include="CSceneStart.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
     <ClInclude Include="CImageObj.h">
@@ -171,10 +174,10 @@
     <ClInclude Include="CD2DImage.h">
       <Filter>06.Resource</Filter>
     </ClInclude>
-    <ClInclude Include="CToolScene.h">
+    <ClInclude Include="CSceneTool.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CInGameScene.h">
+    <ClInclude Include="CSceneInGame.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
     <ClInclude Include="CUICursor.h">
@@ -210,20 +213,17 @@
     <ClInclude Include="CStateJumpAttack.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
-    <ClInclude Include="CEffect.h">
-      <Filter>03.GameObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="CGameManager.h">
       <Filter>01.Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterBoss.h">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClInclude Include="CEnemyBoss.h">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterRange.h">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClInclude Include="CEnemyRange.h">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterMelee.h">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClInclude Include="CEnemyMelee.h">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="CGate.h">
       <Filter>03.GameObject\Object\MapObject</Filter>
@@ -231,8 +231,32 @@
     <ClInclude Include="CMapObject.h">
       <Filter>03.GameObject\Object\MapObject</Filter>
     </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClInclude Include="CEnemy.h">
+      <Filter>03.GameObject\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CFuncAttack.h">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CFuncObj.h">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>03.GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateDie.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateAppear.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateTrace.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CUITileBtn.h">
+      <Filter>03.GameObject\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -284,20 +308,17 @@
     <ClCompile Include="CCollider.cpp">
       <Filter>04.Component</Filter>
     </ClCompile>
-    <ClCompile Include="CPanelUI.cpp">
+    <ClCompile Include="CUIPanel.cpp">
       <Filter>03.GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="CUI.cpp">
       <Filter>03.GameObject\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CButtonUI.cpp">
+    <ClCompile Include="CUIButton.cpp">
       <Filter>03.GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="CTile.cpp">
       <Filter>03.GameObject\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>03.GameObject\Object</Filter>
     </ClCompile>
     <ClCompile Include="CScene.cpp">
       <Filter>05.Scene</Filter>
@@ -320,16 +341,16 @@
     <ClCompile Include="CD2DImage.cpp">
       <Filter>06.Resource</Filter>
     </ClCompile>
-    <ClCompile Include="CStartScene.cpp">
+    <ClCompile Include="CSceneStart.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
     <ClCompile Include="CImageObj.cpp">
       <Filter>03.GameObject\Object</Filter>
     </ClCompile>
-    <ClCompile Include="CToolScene.cpp">
+    <ClCompile Include="CSceneTool.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameScene.cpp">
+    <ClCompile Include="CSceneInGame.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
     <ClCompile Include="CUICursor.cpp">
@@ -365,20 +386,17 @@
     <ClCompile Include="CStateJumpAttack.cpp">
       <Filter>04.Component\State</Filter>
     </ClCompile>
-    <ClCompile Include="CEffect.cpp">
-      <Filter>03.GameObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="CGameManager.cpp">
       <Filter>01.Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterBoss.cpp">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClCompile Include="CEnemyBoss.cpp">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterMelee.cpp">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClCompile Include="CEnemyMelee.cpp">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterRange.cpp">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClCompile Include="CEnemyRange.cpp">
+      <Filter>03.GameObject\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="CGate.cpp">
       <Filter>03.GameObject\Object\MapObject</Filter>
@@ -386,8 +404,32 @@
     <ClCompile Include="CMapObject.cpp">
       <Filter>03.GameObject\Object\MapObject</Filter>
     </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>03.GameObject\Object\Monster</Filter>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>03.GameObject\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CFuncAttack.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CFuncObj.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>03.GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateDie.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateAppear.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateTrace.cpp">
+      <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CUITileBtn.cpp">
+      <Filter>03.GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

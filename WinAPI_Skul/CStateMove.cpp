@@ -12,7 +12,7 @@
 #include "CCollider.h"
 
 CState* CStateMove::HandleInput(CObject* _pObj) {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -48,7 +48,7 @@ CState* CStateMove::HandleInput(CObject* _pObj) {
 }
 void CStateMove::Update(CObject* _pObj) {
 
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -71,7 +71,7 @@ void CStateMove::Update(CObject* _pObj) {
 
 void CStateMove::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {

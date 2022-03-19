@@ -13,9 +13,10 @@ private:
 	map<wstring, CResource*>		m_mapTex;
 	map<wstring, CSound*>			m_mapSound;
 
-	CSound* m_pBGM;							// BGM 리소스의 저장 변수
+	CSound*					m_pBGM;							// BGM 리소스의 저장 변수
 
 	map<wstring, CD2DImage*> m_mapD2DImg;	// D2D Image 리소스의 저장 자료구조
+	CD2DImage*				 m_pToolImage;
 
 public:
 	// 텍스쳐
@@ -32,6 +33,8 @@ public:
 
 	CD2DImage* FindD2DImage(const wstring& _strKey);
 	CD2DImage* LoadD2DImage(const wstring& _strKey, const wstring& _strRelativePath);	// D2DImage 불러오기 이미 있는 경우 있던 D2DImage 반환
+
+	CD2DImage* LoadToolD2DImage(const wstring& _strPath);
 };
 
                      

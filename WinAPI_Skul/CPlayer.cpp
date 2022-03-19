@@ -7,10 +7,8 @@
 #include "CAnimation.h"
 #include "CState.h"
 #include "CStateIdle.h"
-
-CPlayer::CPlayer()
-{
-}
+#include "CFuncAttack.h"
+#include "CTile.h"
 
 CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
@@ -23,6 +21,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_bCanDoubleJump = false;
 	m_bCanSecondDash = true;
 	m_bCanDash = true;
+	m_bCanJumpAttack = true;
 
 	m_fSecondDashCoolTime = 2.f;
 	m_fSecondDashCurTime = 0.f;
@@ -113,9 +112,92 @@ void CPlayer::Update()
 	}
 
 	m_pState->Update(this);
+	CoolTime();
 
+	GetAnimator()->Update();
+}
+
+void CPlayer::Render()
+{
+	ComponentRender();
+}
+
+void CPlayer::OnCollision(CCollider* _pOther)
+{
+	//m_pState->OnCollision(this, _pOther);
+
+    if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE )
+    {
+		CTile* pTile = (CTile*)_pOther->GetObj();
+		if (pTile->GetType() == TILE_TYPE::FLOATING) return;
+        Vec2 pos1 = m_pCollider->GetFinalPos();
+        Vec2 pos2 = _pOther->GetFinalPos();
+        Vec2 size1 = m_pCollider->GetScale();
+        Vec2 size2 = _pOther->GetScale();
+        if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
+        {
+            if (pos1.x <= pos2.x - size2.x / 2)
+            {
+				m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;//Player->m_vVelocity.x* DT;
+            }
+            else if (pos1.x >= pos2.x + size2.x / 2)
+            {
+				m_vPos.x = pos2.x + (size1.x + size2.x) / 2;//Player->m_vVelocity.x* DT;
+
+            }
+        }
+    }
+}
+
+void CPlayer::OnCollisionEnter(CCollider* _pOther)
+{
+	//m_pState->OnCollisionEnter(this, _pOther);
+    CPlayer* pPlayer = (CPlayer*)this;
+    if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+    {
+		Vec2 vLeftPos = m_pCollider->GetFinalPos();
+		Vec2 vLeftScale = m_pCollider->GetScale();
+		Vec2 vRightPos = _pOther->GetFinalPos();
+		Vec2 vRightScale = _pOther->GetScale();
+		pPlayer->m_iCollCount++;
+		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-10) / 2.f)
+		{
+			
+			if (pPlayer->m_iCollCount > 0 && 
+				vLeftPos.y <= vRightPos.y - vRightScale.x/2)
+			{
+				pPlayer->m_bIsGround = true;
+				m_bCanJumpAttack = true;
+				m_bCanDoubleJump = true;
+				m_vVelocity.y = 0;
+				m_vPos.y = _pOther->GetFinalPos().y - _pOther->GetScale().y / 2 + 1;
+			}
+		}
+
+
+    }
+}
+
+void CPlayer::OnCollisionExit(CCollider* _pOther)
+{
+	//m_pState->OnCollisionExit(this, _pOther);
+
+    CPlayer* pPlayer = (CPlayer*)this;
+    if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+    {
+		pPlayer->m_iCollCount--;
+		if (pPlayer->m_iCollCount <= 0)
+		{
+			pPlayer->m_iCollCount = 0;
+			pPlayer->m_bIsGround = false;
+		}
+
+    }
+}
+
+void CPlayer::CoolTime()
+{
 	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
-	// 만약 세컨드대시가 비활성화된 경우 재충전을 시작한다.
 	if (!m_bCanSecondDash)
 	{
 		m_fSecondDashCurTime += DT;
@@ -133,86 +215,27 @@ void CPlayer::Update()
 		if (m_fDashCurTime >= m_fDashCoolTime)
 		{
 			m_bCanDash = true;
-			m_fSecondDashCurTime = 0.f;
-
 		}
 	}
-
-	GetAnimator()->Update();
 }
 
-void CPlayer::Render()
+void CPlayer::Attack()
 {
-	ComponentRender();
+	
+	CFuncAttack* pAttack = new CFuncAttack(OBJ_TYPE::PLAYER_ATTACK, L"Hit_Normal", L"texture\\effect\\hit_normal.png",
+		0.5f, 0.5f, 96, m_bIsRight);
+	pAttack->SetOwner(this);
+	pAttack->CreateAttackArea(this, Vec2(50, 0), Vec2(50, 100));
+	CREATEOBJECT(pAttack);
+
 }
 
-void CPlayer::OnCollision(CCollider* _pOther)
+void CPlayer::JumpAttack()
 {
-	//m_pState->OnCollision(this, _pOther);
-
-    CPlayer* pPlayer = (CPlayer*)this;
-    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
-    {
-        Vec2 pos1 = m_pCollider->GetFinalPos();
-        Vec2 pos2 = _pOther->GetFinalPos();
-        Vec2 size1 = m_pCollider->GetScale();
-        Vec2 size2 = _pOther->GetScale();
-        if (pos2.y - size2.y / 2 <= pos1.y && pos1.y <= pos2.y + size2.y / 2)
-        {
-            if (pos1.x <= pos2.x - size2.x / 2)
-            {
-				pPlayer->m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;//Player->m_vVelocity.x* DT;
-            }
-            else if (pos1.x >= pos2.x + size2.x / 2)
-            {
-				pPlayer->m_vPos.x = pos2.x + (size1.x + size2.x) / 2;//Player->m_vVelocity.x* DT;
-
-            }
-        }
-    }
-}
-
-void CPlayer::OnCollisionEnter(CCollider* _pOther)
-{
-	//m_pState->OnCollisionEnter(this, _pOther);
-    CPlayer* pPlayer = (CPlayer*)this;
-    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
-    {
-		Vec2 vLeftPos = m_pCollider->GetFinalPos();
-		Vec2 vLeftScale = m_pCollider->GetScale();
-		Vec2 vRightPos = _pOther->GetFinalPos();
-		Vec2 vRightScale = _pOther->GetScale();
-		pPlayer->m_iCollCount++;
-		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-10) / 2.f)
-		{
-			
-			if (pPlayer->m_iCollCount > 0 && 
-				vLeftPos.y <= vRightPos.y - vRightScale.x/2)
-			{
-				pPlayer->m_bIsGround = true;
-				m_bCanDoubleJump = true;
-				m_vPos.y = _pOther->GetFinalPos().y - _pOther->GetScale().y / 2 + 1;
-			}
-		}
-
-
-    }
-}
-
-void CPlayer::OnCollisionExit(CCollider* _pOther)
-{
-	//m_pState->OnCollisionExit(this, _pOther);
-
-    CPlayer* pPlayer = (CPlayer*)this;
-    if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::TILE)
-    {
-		pPlayer->m_iCollCount--;
-		if (pPlayer->m_iCollCount <= 0)
-		{
-			pPlayer->m_iCollCount = 0;
-			pPlayer->m_bIsGround = false;
-		}
-
-    }
+	CFuncAttack* pAttack = new CFuncAttack(OBJ_TYPE::PLAYER_ATTACK, L"Hit_Normal", L"texture\\effect\\hit_normal.png",
+		0.5f, 0.5f, 96, m_bIsRight);
+	pAttack->SetOwner(this);
+	pAttack->CreateAttackArea(this, Vec2(50, 50), Vec2(50, 70));
+	CREATEOBJECT(pAttack);
 }
 

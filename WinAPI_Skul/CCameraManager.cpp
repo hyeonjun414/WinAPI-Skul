@@ -22,7 +22,11 @@ CCameraManager::CCameraManager() :
 	m_pAnimator->CreateAnimation(L"Loding", pImg, Vec2(0.f, 0.f), Vec2(64.f, 64.f),
 		Vec2(64, 0.f), 0.06f, 8);
 }
-CCameraManager::~CCameraManager() {}
+CCameraManager::~CCameraManager() 
+{
+	if (nullptr != m_pAnimator)
+		delete m_pAnimator;
+}
 
 void CCameraManager::CalDiff()
 {
@@ -43,7 +47,6 @@ void CCameraManager::CalDiff()
 		m_vDiff = m_vCurLookAt - vCenter;
 		m_vPrevLookAt = m_vCurLookAt;
 	}
-	
 }
 
 void CCameraManager::Init()

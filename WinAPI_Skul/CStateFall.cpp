@@ -4,6 +4,7 @@
 #include "CStateIdle.h"
 #include "CStateJump.h"
 #include "CStateFall.h"
+#include "CStateJumpAttack.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -11,7 +12,7 @@
 
 CState* CStateFall::HandleInput(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -19,6 +20,11 @@ CState* CStateFall::HandleInput(CObject* _pObj)
 
         if (pPlayer->IsGround())
             return new CStateIdle();
+
+        if (KEYTAP(KEY::X) && pPlayer->m_bCanJumpAttack)
+        {
+            return new CStateJumpAttack();
+        }
 
         if (KEYTAP(KEY::C) && pPlayer->m_bCanDoubleJump)
         {
@@ -34,7 +40,7 @@ CState* CStateFall::HandleInput(CObject* _pObj)
 
 void CStateFall::Update(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -69,7 +75,7 @@ void CStateFall::Update(CObject* _pObj)
 
 void CStateFall::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -82,12 +88,11 @@ void CStateFall::Enter(CObject* _pObj)
 
 void CStateFall::Exit(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        pPlayer->m_vVelocity.y = 0;
     }
     break;
     }

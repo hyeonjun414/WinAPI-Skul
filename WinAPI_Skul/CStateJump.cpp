@@ -13,7 +13,7 @@
 
 CState* CStateJump::HandleInput(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -28,7 +28,7 @@ CState* CStateJump::HandleInput(CObject* _pObj)
             pPlayer->m_bCanDash = false;
             return new CStateDash();
         }
-        if (KEYTAP(KEY::X))
+        if (KEYTAP(KEY::X) && pPlayer->m_bCanJumpAttack)
         {
             return new CStateJumpAttack();
         }
@@ -43,7 +43,7 @@ CState* CStateJump::HandleInput(CObject* _pObj)
 
 void CStateJump::Update(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -68,7 +68,7 @@ void CStateJump::Update(CObject* _pObj)
 
 void CStateJump::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {

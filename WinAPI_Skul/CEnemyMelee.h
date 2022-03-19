@@ -1,14 +1,14 @@
 #pragma once
-#include "CObject.h"
-class CMonster :
-    public CObject
+#include "CEnemy.h"
+class CEnemyMelee :
+    public CEnemy
 {
-private:
-    
+    friend class CStateIdle;
+    friend class CStateDie;
+    friend class CStateTrace;
 public:
-    CMonster();
-    CMonster(OBJ_TYPE _eType);
-    virtual ~CMonster();
+    CEnemyMelee(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType);
+    virtual ~CEnemyMelee();
 
     virtual void        Init();
     virtual void        Update();

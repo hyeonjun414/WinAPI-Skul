@@ -86,6 +86,16 @@ void CAnimation::Render(bool _bIsRight)
 			m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
 			1.0f);
 	}
+	if (SINGLE(CCore)->GetDebugMode())
+	{
+		RENDER->RenderRectangle(
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			RGB(255, 255, 255)
+		);
+	}
 
 }
 

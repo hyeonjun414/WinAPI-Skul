@@ -47,7 +47,7 @@ void CGate::Render()
 
 void CGate::OnCollision(CCollider* _pOther)
 {
-	if (_pOther->GetObj()->GetObjGroup() == OBJ_TYPE::PLAYER)
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
 	{
 		CPlayer* pPlayer = (CPlayer*)_pOther->GetObj();
 		if (KEYTAP(KEY::F))

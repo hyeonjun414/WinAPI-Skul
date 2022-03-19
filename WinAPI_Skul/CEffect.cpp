@@ -3,16 +3,14 @@
 #include "CD2DImage.h"
 #include "CAnimator.h"
 
-CEffect::CEffect():
-	m_fCurTime(0),
-	m_fDuration(0)
-{
-}
 
-CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, float _fDuration, float _fPlayTime, int _imgSize, bool _dir):
+CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
+				float _fDuration, float _fPlayTime, int _imgSize, bool _dir):
 	CObject(_eType),
 	m_fCurTime(0),
-	m_fDuration(_fDuration)
+	m_fDuration(_fDuration),
+	m_strKey(_strImgName),
+	m_bIsPlay(true)
 {
 
 	CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(_strImgName, _strImgPath);
@@ -25,30 +23,39 @@ CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, floa
 
 	m_pAnimator->CreateAnimation(_strImgName, pImg, Vec2(0, 0), Vec2(imgDiviedSizeX, imgSizeY),
 		Vec2(imgDiviedSizeX, 0), (float)(_fPlayTime/imgCountX), imgCountX);
+	m_pAnimator->Play(_strImgName, true);
 	SetScale(Vec2(imgDiviedSizeX, imgSizeY));
 	
-	m_pAnimator->Play(_strImgName, true);
 }
 
 CEffect::~CEffect()
 {
 }
 
-void CEffect::Init()
-{
-}
-
 void CEffect::Update()
 {
-	m_fCurTime += DT;
+	if (m_bIsPlay)
+	{
+		m_fCurTime += DT;
 
-	if (m_fCurTime >= m_fDuration)
-		DELETEOBJECT(this);
+		if (m_fCurTime >= m_fDuration)
+			DELETEOBJECT(this);
 
-	GetAnimator()->Update();
+		GetAnimator()->Update();
+	}
 }
 
 void CEffect::Render()
 {
-	ComponentRender();
+	if (m_bIsPlay)
+	{
+		ComponentRender();
+	}
+}
+
+void CEffect::EffectPlay(Vec2 _vPos)
+{
+	m_bIsPlay = true;
+	SetPos(_vPos);
+	//m_pAnimator->Play(m_strKey, false);
 }

@@ -18,3 +18,4 @@ void CGameManager::Update()
 	}
 
 }
+

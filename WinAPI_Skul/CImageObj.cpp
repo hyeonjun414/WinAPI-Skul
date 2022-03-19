@@ -68,8 +68,12 @@ void CImageObj::Render()
     Vec2 pos = GetPos();
     Vec2 scale = GetScale();
     Vec2 renderPos = SINGLE(CCameraManager)->GetRenderPos(pos);
-    if(0 != m_fDepthLevel)
-        renderPos = pos + (renderPos - pos) / (int)m_fDepthLevel;
+    if (0 != m_fDepthLevel)
+    {
+        renderPos.x = pos.x + (renderPos.x - pos.x) / (int)m_fDepthLevel;
+        renderPos.y = pos.y + (renderPos.y - pos.y) / (int)m_fDepthLevel;
+    }
+        
     
     if (m_bRenderStyle)
     {
@@ -84,7 +88,7 @@ void CImageObj::Render()
     }
     else
     {
-        SINGLE(CRenderManager)->RenderImage(
+        RENDER->RenderImage(
             m_pImg,
             m_vPos.x,
             m_vPos.y,

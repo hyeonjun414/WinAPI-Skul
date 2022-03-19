@@ -8,7 +8,10 @@ CTile::CTile(OBJ_TYPE _eObjType):
 	CObject(_eObjType)
 {
 	m_pImg = nullptr;
+	m_iX = 0;
+	m_iY = 0;
 	m_iIdx = 0;
+	m_eType = TILE_TYPE::NONE;
 	SetScale(Vec2(SIZE_TILE, SIZE_TILE));
 }
 
@@ -43,6 +46,8 @@ void CTile::Render()
 
 	Vec2 vScale = GetScale();
 
+
+
 	if (m_iIdx != 0)
 	{
 		RENDER->RenderFrame(
@@ -51,10 +56,10 @@ void CTile::Render()
 			vRenderPos.y,
 			vRenderPos.x + vScale.x,
 			vRenderPos.y + vScale.y,
-			(float)(iCurX * SIZE_TILE),
-			(float)(iCurY * SIZE_TILE),
-			(float)((iCurX+1) * SIZE_TILE),
-			(float)((iCurY+1) * SIZE_TILE), 1.0f
+			(float)(iCurX * vScale.x),
+			(float)(iCurY * vScale.y),
+			(float)((iCurX + 1) * vScale.x),
+			(float)((iCurY + 1) * vScale.y), 1.0f
 		);
 	}
 	else if (SINGLE(CCore)->GetDebugMode())
@@ -77,19 +82,21 @@ void CTile::Render()
 
 void CTile::Save(FILE* _pFile)
 {
+	fwrite(&m_iX, sizeof(int), 1, _pFile);
+	fwrite(&m_iY, sizeof(bool), 1, _pFile);
 	fwrite(&m_iIdx, sizeof(int), 1, _pFile);
-	fwrite(&m_bIsColl, sizeof(bool), 1, _pFile);
+
+	int type = (int)m_eType;
+	fwrite(&type, sizeof(int), 1, _pFile);
 }
 
 void CTile::Load(FILE* _pFile)
 {
+	fread(&m_iX, sizeof(int), 1, _pFile);
+	fread(&m_iY, sizeof(bool), 1, _pFile);
 	fread(&m_iIdx, sizeof(int), 1, _pFile);
-	fread(&m_bIsColl, sizeof(bool), 1, _pFile);
 
-	if (m_bIsColl)
-	{
-		CreateCollider();
-		m_pCollider->SetOffsetPos(GetScale() / 2);
-		m_pCollider->SetScale(GetScale());
-	}
+	int type;
+	fread(&type, sizeof(int), 1, _pFile);
+	m_eType = (TILE_TYPE)type;
 }

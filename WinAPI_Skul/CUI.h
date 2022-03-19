@@ -22,11 +22,11 @@ public:
     virtual void    Init();
     virtual void    Update();
     virtual void    FinalUpdate();
-    virtual void    Render(HDC _hDC);
+    virtual void    Render();
 
     void            UpdateChild();
     void            FinalUpdateChild();
-    void            RenderChild(HDC _hDC);
+    void            RenderChild();
 
     virtual void    MouseOn();
     virtual void    MouseLbtnDown();

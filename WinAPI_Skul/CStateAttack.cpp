@@ -10,7 +10,7 @@
 #include "CCollider.h"
 
 CState* CStateAttack::HandleInput(CObject* _pObj) {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -31,7 +31,7 @@ CState* CStateAttack::HandleInput(CObject* _pObj) {
     return nullptr;
 }
 void CStateAttack::Update(CObject* _pObj) {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -51,6 +51,7 @@ void CStateAttack::Update(CObject* _pObj) {
             m_bIsSecondAttack = true;
             pPlayer->GetAnimator()->Play(L"Player_AttackB", true);
             SINGLE(CSoundManager)->Play(L"AttackB");
+            
             if (KEYHOLD(KEY::LEFT))
             {
                 pPlayer->m_bIsRight = false;
@@ -61,6 +62,7 @@ void CStateAttack::Update(CObject* _pObj) {
                 pPlayer->m_bIsRight = true;
                 pPlayer->m_vPos.x += 30;
             }
+            pPlayer->Attack();
         }
 
     }
@@ -70,7 +72,7 @@ void CStateAttack::Update(CObject* _pObj) {
 
 void CStateAttack::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -83,6 +85,7 @@ void CStateAttack::Enter(CObject* _pObj)
         m_bAttackInput = false;
         pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
         SINGLE(CSoundManager)->Play(L"AttackA");
+        pPlayer->Attack();
 
         if (KEYHOLD(KEY::LEFT))
         {

@@ -11,15 +11,25 @@ enum class OBJ_TYPE
 	TILE,
 	
 	MAPOBJECT,
-	MONSTER,
-	MONSTER_MELEE,
-	MONSTER_RANGE,
-	MONSTER_BOSS,
+	ENEMY,
+	ENEMY_MELEE,
+	ENEMY_RANGE,
+	ENEMY_BOSS,
 	PLAYER,
+	PLAYER_ATTACK,
 	EFFECT,
+	ATTACK,
 
 
 	UI,
+	SIZE,
+};
+
+// 몬스터 그룹
+enum class ENEMY_TYPE
+{
+	BIG_KNIGHT,
+
 	SIZE,
 };
 
@@ -39,10 +49,9 @@ enum class TILE_TYPE
 {
 	NONE,
 	GROUND,
-	PLATFORM,
-	WALL,
+	FLOATING,
 
-	SIZW,
+	SIZE,
 };
 
 // 키 상태

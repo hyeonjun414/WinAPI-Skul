@@ -136,3 +136,4 @@ struct tAnimFrame
 	float	fFrameTime;		// 프레임 재생 시간
 };
 
+

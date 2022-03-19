@@ -1,12 +1,12 @@
 #pragma once
 #include "CScene.h"
-class CStartScene :
+class CSceneStart :
     public CScene
 {
 public:
-    CStartScene();
-    CStartScene(wstring _sceneName, SCENE_TYPE _sceneType);
-    ~CStartScene();
+    CSceneStart();
+    CSceneStart(wstring _sceneName, SCENE_TYPE _sceneType);
+    ~CSceneStart();
 
     virtual void    Update();
     virtual void    Render();

@@ -35,8 +35,9 @@ public:
 	void RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize = 12.f, COLORREF color = RGB(0, 0, 0));
 	void RenderRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0));
 	void RenderFillRectangle(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0));
-	void RenderEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0));
+	void RenderEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0), float strokeWidth = 1.f);
 	void RenderFillEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color = RGB(0, 0, 0));
+	void RenderLine(Vec2 startPoint, Vec2 endPoint, COLORREF color = RGB(0, 0, 0), float strokeWidth = 1.f);
 
 	ID2D1Bitmap* GetBitmap();
 	ID2D1HwndRenderTarget* GetRenderTarget();

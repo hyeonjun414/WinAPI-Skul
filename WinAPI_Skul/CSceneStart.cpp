@@ -1,26 +1,26 @@
 #include "pch.h"
-#include "CStartScene.h"
+#include "CSceneStart.h"
 #include "CSound.h"
 #include "CImageObj.h"
 #include "CUICursor.h"
 
-CStartScene::CStartScene()
+CSceneStart::CSceneStart()
 {
 	m_strName = L"";
 	m_eType = SCENE_TYPE::NONE;
 }
 
-CStartScene::CStartScene(wstring _sceneName, SCENE_TYPE _sceneType):
+CSceneStart::CSceneStart(wstring _sceneName, SCENE_TYPE _sceneType):
 	CScene(_sceneName, _sceneType)
 {
 }
 
-CStartScene::~CStartScene()
+CSceneStart::~CSceneStart()
 {
 }
 
 
-void CStartScene::Update()
+void CSceneStart::Update()
 {
 	CScene::Update();
 	// 스페이스바를 누르면 게임 시작
@@ -32,23 +32,15 @@ void CStartScene::Update()
 	{
 		ChangeNextScene(SCENE_TYPE::TOOL);
 	}
-	if (KEYTAP(KEY::C))
-	{
-		SINGLE(CCameraManager)->FadeIn(1.0f);
-	}
-	if (KEYTAP(KEY::V))
-	{
-		SINGLE(CCameraManager)->FadeOut(1.0f);
-	}
 }
 
-void CStartScene::Render()
+void CSceneStart::Render()
 {
 	CScene::Render();
 	
 }
 
-void CStartScene::Enter()
+void CSceneStart::Enter()
 {
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
@@ -72,7 +64,7 @@ void CStartScene::Enter()
 	CCameraManager::GetInst()->SetLookAt(Vec2(WINSIZEX / 2.f, WINSIZEY / 2.f));
 }
 
-void CStartScene::Exit()
+void CSceneStart::Exit()
 {
 	ClearObject();
 }

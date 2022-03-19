@@ -64,7 +64,7 @@ void CUI::FinalUpdate()
 	FinalUpdateChild();
 }
 
-void CUI::Render(HDC _hDC)
+void CUI::Render()
 {
 	Vec2 vPos = m_vFinalPos;
 	Vec2 vScale = m_vScale;
@@ -79,20 +79,35 @@ void CUI::Render(HDC _hDC)
 			vPos.x,
 			vPos.y,
 			vPos.x + vScale.x,
-			vPos.y + vScale.y);
-			
+			vPos.y + vScale.y,
+			RGB(255, 255, 255)
+		);
+		RENDER->RenderRectangle(
+			vPos.x,
+			vPos.y,
+			vPos.x + vScale.x,
+			vPos.y + vScale.y,
+			RGB(0, 255, 0));
 	}
 	else
 	{
-		Rectangle(_hDC,
-			(int)(vPos.x),
-			(int)(vPos.y),
-			(int)(vPos.x + vScale.x),
-			(int)(vPos.y + vScale.y));
+		RENDER->RenderFillRectangle(
+			vPos.x,
+			vPos.y,
+			vPos.x + vScale.x,
+			vPos.y + vScale.y,
+			RGB(255, 255, 255)
+		);
+		RENDER->RenderRectangle(
+			vPos.x,
+			vPos.y,
+			vPos.x + vScale.x,
+			vPos.y + vScale.y,
+			RGB(0, 0, 0));
 	}
 
 
-	RenderChild(_hDC);
+	RenderChild();
 }
 
 void CUI::UpdateChild()
@@ -111,11 +126,11 @@ void CUI::FinalUpdateChild()
 	}
 }
 
-void CUI::RenderChild(HDC _hDC)
+void CUI::RenderChild()
 {
 	for (size_t i = 0; i < m_vecChildUI.size(); i++)
 	{
-		m_vecChildUI[i]->Render(_hDC);
+		m_vecChildUI[i]->Render();
 	}
 }
 

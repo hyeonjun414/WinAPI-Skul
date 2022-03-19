@@ -41,7 +41,6 @@ public:
 	void			EraseObject(CObject* _pObj);
 	void			DeleteGroup(OBJ_TYPE _group);
 
-	void			CreateTile(UINT _xSize, UINT _ySize);
 	void			LoadTile(const wstring& _strPath);
 	void			RenderTile();
 

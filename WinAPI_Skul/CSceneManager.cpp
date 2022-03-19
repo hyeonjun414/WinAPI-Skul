@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CSceneManager.h"
 #include "CScene.h"
-#include "CStartScene.h"
-#include "CToolScene.h"
-#include "CInGameScene.h"
+#include "CSceneStart.h"
+#include "CSceneTool.h"
+#include "CSceneInGame.h"
 
 CSceneManager::CSceneManager():
 	m_arrScene{},
@@ -34,9 +34,9 @@ void CSceneManager::Render()
 void CSceneManager::Init()
 {
 
-	m_arrScene[(int)SCENE_TYPE::START] = new CStartScene(L"StartScene", SCENE_TYPE::START);
-	m_arrScene[(int)SCENE_TYPE::TOOL] = new CToolScene(L"ToolScene", SCENE_TYPE::TOOL);
-	m_arrScene[(int)SCENE_TYPE::STAGE_01] = new CInGameScene(L"Stage_01", SCENE_TYPE::STAGE_01);
+	m_arrScene[(int)SCENE_TYPE::START] = new CSceneStart(L"StartScene", SCENE_TYPE::START);
+	m_arrScene[(int)SCENE_TYPE::TOOL] = new CSceneTool(L"ToolScene", SCENE_TYPE::TOOL);
+	m_arrScene[(int)SCENE_TYPE::STAGE_01] = new CSceneInGame(L"Stage_01", SCENE_TYPE::STAGE_01);
 
 	m_pCurScene = m_arrScene[(int)SCENE_TYPE::START];
 	m_pCurScene->Enter();

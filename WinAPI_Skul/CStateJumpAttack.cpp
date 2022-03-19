@@ -12,12 +12,13 @@
 
 CState* CStateJumpAttack::HandleInput(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        if (m_fJumpAttackCurTime >= m_fJumpAttackLimitTime)
+        if (m_fJumpAttackCurTime >= m_fJumpAttackLimitTime ||
+            pPlayer->m_bIsGround)
             return new CStateIdle();
         return nullptr;
     }
@@ -28,7 +29,7 @@ CState* CStateJumpAttack::HandleInput(CObject* _pObj)
 
 void CStateJumpAttack::Update(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -53,14 +54,16 @@ void CStateJumpAttack::Update(CObject* _pObj)
 
 void CStateJumpAttack::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
         m_fJumpAttackLimitTime = 0.5f;
         m_fJumpAttackCurTime = 0.f;
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->m_bCanJumpAttack = false;
         pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+        pPlayer->JumpAttack();
         SINGLE(CSoundManager)->Play(L"AttackB");
     }
     break;

@@ -11,20 +11,23 @@
 #include "CEffect.h"
 
 CState* CStateDash::HandleInput(CObject* _pObj) {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
 
-        if (KEYTAP(KEY::Z) && pPlayer->m_bCanSecondDash)
-        {
-            pPlayer->m_bCanSecondDash = false;
-            return new CStateDash();
-        }
+        
 
         if (m_iCurMoveDist >= m_iDist)
             return new CStateIdle();
+
+        if (KEYTAP(KEY::Z) && pPlayer->m_bCanSecondDash)
+        {
+            pPlayer->m_bCanSecondDash = false;
+            LOG(L"두번째 대시");
+            return new CStateDash();
+        }
 
         return nullptr;
     }
@@ -33,7 +36,7 @@ CState* CStateDash::HandleInput(CObject* _pObj) {
     return nullptr;
 }
 void CStateDash::Update(CObject* _pObj) {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -56,7 +59,7 @@ void CStateDash::Update(CObject* _pObj) {
 
 void CStateDash::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {
@@ -79,7 +82,7 @@ void CStateDash::Enter(CObject* _pObj)
 
 void CStateDash::Exit(CObject* _pObj)
 {
-    switch (_pObj->GetObjGroup())
+    switch (_pObj->GetObjType())
     {
     case OBJ_TYPE::PLAYER:
     {

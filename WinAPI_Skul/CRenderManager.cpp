@@ -141,7 +141,7 @@ void CRenderManager::RenderFillRectangle(float dstX, float dstY, float dstW, flo
 	m_pRenderTarget->FillRectangle(m_imgRect, m_pBrush);
 }
 
-void CRenderManager::RenderEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color)
+void CRenderManager::RenderEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color, float strokeWidth)
 {
 	D2D1_ELLIPSE m_imgRect = { dstX, dstY, dstW, dstH };
 
@@ -149,10 +149,10 @@ void CRenderManager::RenderEllipse(float dstX, float dstY, float dstW, float dst
 	int green = (color >> 8) & 0xFF;
 	int blue = (color >> 16) & 0xFF;
 
-	m_pBrush->SetColor(ColorF(red / 255.f, green / 255.0f, blue / 255.0f));
-	m_pRenderTarget->DrawEllipse(m_imgRect, m_pBrush);
-}
+	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f, 1.f));
+	m_pRenderTarget->DrawEllipse(m_imgRect, m_pBrush, strokeWidth);
 
+}
 void CRenderManager::RenderFillEllipse(float dstX, float dstY, float dstW, float dstH, COLORREF color)
 {
 	D2D1_ELLIPSE m_imgRect = { dstX, dstY, dstW, dstH };
@@ -165,6 +165,18 @@ void CRenderManager::RenderFillEllipse(float dstX, float dstY, float dstW, float
 	m_pRenderTarget->FillEllipse(m_imgRect, m_pBrush);
 }
 
+void CRenderManager::RenderLine(Vec2 startPoint, Vec2 endPoint, COLORREF color, float strokeWidth)
+{
+	D2D1_POINT_2F start = { startPoint.x, startPoint.y };
+	D2D1_POINT_2F end = { endPoint.x, endPoint.y };
+
+	int red = color & 0xFF;
+	int green = (color >> 8) & 0xFF;
+	int blue = (color >> 16) & 0xFF;
+
+	m_pBrush->SetColor(D2D1::ColorF(red / 255.f, green / 255.0f, blue / 255.0f, 1.f));
+	m_pRenderTarget->DrawLine(start, end, m_pBrush, strokeWidth);
+}
 ID2D1Bitmap* CRenderManager::GetBitmap()
 {
 	return m_pBitmap;

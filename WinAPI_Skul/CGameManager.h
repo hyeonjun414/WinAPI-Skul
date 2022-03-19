@@ -19,5 +19,7 @@ public:
 	CObject*	GetPlayer()						{ return m_pPlayer; }
 	bool		GetGamePlay()					{ return m_bIsPlay; }
 
+
+
 };
 

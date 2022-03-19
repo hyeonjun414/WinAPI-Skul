@@ -1,29 +1,29 @@
 #include "pch.h"
-#include "CPanelUI.h"
+#include "CUIPanel.h"
 
-CPanelUI::CPanelUI(OBJ_TYPE _eType):
+CUIPanel::CUIPanel(OBJ_TYPE _eType):
 	CUI(_eType),
 	m_vDragStart{}
 {
 }
 
-CPanelUI::CPanelUI(const CPanelUI& _origin):
+CUIPanel::CUIPanel(const CUIPanel& _origin):
 	CUI(_origin),
 	m_vDragStart{}
 {
 
 }
 
-CPanelUI::~CPanelUI()
+CUIPanel::~CUIPanel()
 {
 }
 
-CPanelUI* CPanelUI::Clone()
+CUIPanel* CUIPanel::Clone()
 {
-	return new CPanelUI(*this);
+	return new CUIPanel(*this);
 }
 
-void CPanelUI::MouseOn()
+void CUIPanel::MouseOn()
 {
 	if (IsLbtnDown()) // 잡고있던 상황이면
 	{
@@ -37,11 +37,11 @@ void CPanelUI::MouseOn()
 	}
 }
 
-void CPanelUI::MouseLbtnDown()
+void CUIPanel::MouseLbtnDown()
 {
 	m_vDragStart = SINGLE(CKeyManager)->GetMousePos();
 }
 
-void CPanelUI::MouseLbtnUp()
+void CUIPanel::MouseLbtnUp()
 {
 }
