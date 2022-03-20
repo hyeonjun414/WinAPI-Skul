@@ -6,6 +6,8 @@
 #include "CStateFall.h"
 #include "CStateAttack.h"
 #include "CStateDash.h"
+#include "CStateSkill.h"
+#include "CStateAppear.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -24,6 +26,14 @@ CState* CStateMove::HandleInput(CObject* _pObj) {
         if (KEYAWAY(KEY::RIGHT))
         {
             return new CStateIdle();
+        }
+        if (KEYTAP(KEY::A) && pPlayer->m_bCanSkill)
+        {
+            return new CStateSkill();
+        }
+        if (KEYTAP(KEY::S) && !pPlayer->m_bCanSkill)
+        {
+            return new CStateAppear();
         }
         if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
         {
@@ -76,7 +86,12 @@ void CStateMove::Enter(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        pPlayer->GetAnimator()->Play(L"Player_Move", true);
+
+        
+        if (pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_Move", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_Move_Headless", true);
     }
     break;
     }

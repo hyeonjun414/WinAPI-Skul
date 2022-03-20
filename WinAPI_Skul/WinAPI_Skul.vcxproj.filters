@@ -243,9 +243,6 @@
     <ClInclude Include="CFuncObj.h">
       <Filter>03.GameObject\FuncObj</Filter>
     </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>03.GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="CStateDie.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
@@ -263,6 +260,12 @@
     </ClInclude>
     <ClInclude Include="CUIText.h">
       <Filter>03.GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CStateSkill.h">
+      <Filter>04.Component\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,9 +425,6 @@
     <ClCompile Include="CFuncObj.cpp">
       <Filter>03.GameObject\FuncObj</Filter>
     </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>03.GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="CStateDie.cpp">
       <Filter>04.Component\State</Filter>
     </ClCompile>
@@ -442,6 +442,12 @@
     </ClCompile>
     <ClCompile Include="CUIText.cpp">
       <Filter>03.GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateSkill.cpp">
+      <Filter>04.Component\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ CTextObj::CTextObj(OBJ_TYPE _eType, const wstring& _strText, TEXT_EFFECT _eEffec
     m_fCurTime(0.f)
 {
     m_vVelocity.y = 700;
-    m_vVelocity.x = (rand() % 200) - 100;
+    m_vVelocity.x = (float)((rand() % 200) - 100);
 }
 
 CTextObj::~CTextObj()
@@ -41,7 +41,7 @@ void CTextObj::Render()
         GetRenderPos().y,
         GetRenderPos().x+100,
         GetRenderPos().y+100,
-        25.f,
+        30.f,
         RGB(255.f,150.f,150.f));
 
 }

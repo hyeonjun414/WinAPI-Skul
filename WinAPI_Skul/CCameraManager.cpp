@@ -14,7 +14,7 @@ CCameraManager::CCameraManager() :
 	m_vPrevLookAt(m_vLookAt),
 	m_pTargetObj(nullptr),
 	m_fFlowTime(m_fTime),
-	m_fSpeed(500),
+	m_fSpeed(700),
 	m_fPreSpeed(m_fSpeed),
 	m_fAccel(0)
 {
@@ -87,7 +87,7 @@ void CCameraManager::SetLookAt(Vec2 _vLook)
 	m_vLookAt = _vLook;
 	float fMoveDist = (m_vLookAt - m_vPrevLookAt).Length();
 
-	m_fSpeed = fMoveDist / m_fTime;
+	m_fSpeed = fMoveDist / m_fTime * 2;
 	m_fFlowTime = 0.f;
 }
 
@@ -204,16 +204,62 @@ void CCameraManager::MiniMapRender()
 	{
 		for (size_t j = 0; j < vecObject[i].size(); j++)
 		{
+
 			Vec2 vPos = vecObject[i][j]->GetPos();
+			Vec2 vScale = vecObject[i][j]->GetScale();
 			vPos.x *= 0.07f;
 			vPos.y *= 0.085f;
+			vScale.y /= 2.f;
+			vScale.y *= 0.07f;
 			vPos += Vec2(WINSIZEX- 242, WINSIZEY- 142);
-			RENDER->RenderFillRectangle(
-				vPos.x,
-				vPos.y,
-				vPos.x + 5,
-				vPos.y + 6,
-				RGB(255-(i*20),100+i*20,255));
+			
+			switch (i)
+			{
+			case (UINT)OBJ_TYPE::PLAYER:
+			{
+				RENDER->RenderFillRectangle(
+					vPos.x,
+					vPos.y - vScale.y -5,
+					vPos.x + 5,
+					vPos.y +6 -5,
+					RGB(0, 255, 0));
+				break;
+			}
+			case (UINT)OBJ_TYPE::MAPOBJECT:
+			{
+				RENDER->RenderFillRectangle(
+					vPos.x,
+					vPos.y,
+					vPos.x + 5,
+					vPos.y + 6,
+					RGB(255,127, 0));
+				break;
+			}
+			
+			case (UINT)OBJ_TYPE::ENEMY:
+			case (UINT)OBJ_TYPE::ENEMY_MELEE:
+			case (UINT)OBJ_TYPE::ENEMY_RANGE:
+			{
+				RENDER->RenderFillRectangle(
+					vPos.x,
+					vPos.y - vScale.y -5,
+					vPos.x + 5,
+					vPos.y + 6 -5,
+					RGB(255, 0, 0));
+				break;			
+			}
+			
+			default:
+			{
+				RENDER->RenderFillRectangle(
+					vPos.x,
+					vPos.y,
+					vPos.x + 5,
+					vPos.y + 6,
+					RGB(255, 255, 255));
+				break;
+			}
+			}
 		}
 	}
 }

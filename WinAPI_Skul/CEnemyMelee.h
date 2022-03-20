@@ -6,6 +6,7 @@ class CEnemyMelee :
     friend class CStateIdle;
     friend class CStateDie;
     friend class CStateTrace;
+    friend class CStateFall;
 public:
     CEnemyMelee(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType);
     virtual ~CEnemyMelee();

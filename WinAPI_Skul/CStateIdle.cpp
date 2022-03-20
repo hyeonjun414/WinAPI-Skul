@@ -8,6 +8,8 @@
 #include "CStateDash.h"
 #include "CStateDie.h"
 #include "CStateTrace.h"
+#include "CStateSkill.h"
+#include "CStateAppear.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -32,6 +34,14 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
             pPlayer->SetObjDir(true);
             return new CStateMove();
         }
+        if (KEYTAP(KEY::A) && pPlayer->m_bCanSkill)
+        {
+            return new CStateSkill();
+        }
+        if (KEYTAP(KEY::S) && !pPlayer->m_bCanSkill)
+        {
+            return new CStateAppear();
+        }
         if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
         {
             pPlayer->m_bCanDash = false;
@@ -52,11 +62,14 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
     case OBJ_TYPE::ENEMY_MELEE:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        if (pEnemy->m_iHp <= 0)
+        if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
             return new CStateDie();
 
-        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400)
+        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 && pEnemy->m_bIsGround)
             return new CStateTrace();
+
+        if (!pEnemy->m_bIsGround)
+            return new CStateFall();
     }
     break;
     }
@@ -73,7 +86,11 @@ void CStateIdle::Enter(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+        if(pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_Idle_Headless", true);
+
     }
     break;
     case OBJ_TYPE::ENEMY_MELEE:

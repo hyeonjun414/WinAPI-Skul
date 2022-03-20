@@ -20,6 +20,8 @@ CState* CStateAppear::HandleInput(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        if (m_fCurTime >= m_fDuration)
+            return new CStateIdle();
     }
     break;
     case OBJ_TYPE::ENEMY_MELEE:
@@ -40,6 +42,7 @@ void CStateAppear::Update(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        m_fCurTime += DT;
     }
     break;
     case OBJ_TYPE::ENEMY_MELEE:
@@ -59,6 +62,10 @@ void CStateAppear::Enter(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        pPlayer->SkillB();
+        m_fCurTime = 0.f;
+        m_fDuration = 0.5f;
+        pPlayer->GetAnimator()->Play(L"Player_SkillRebone", true);
     }
     break;
     case OBJ_TYPE::ENEMY_MELEE:
@@ -66,7 +73,7 @@ void CStateAppear::Enter(CObject* _pObj)
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         m_fCurTime = 0.f;
         m_fDuration = 1.0f;
-        //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
+        
         pEnemy->GetAnimator()->Play(L"AppearEnemy", false);
     }
     break;

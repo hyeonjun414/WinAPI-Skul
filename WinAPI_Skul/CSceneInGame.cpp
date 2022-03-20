@@ -39,7 +39,7 @@ void CSceneInGame::Enter()
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
-	obj->SetPos(Vec2(400.f, 1100.f));
+	obj->SetPos(Vec2(400.f, 1000.f));
 	obj->SetScale(Vec2(50, 50));
 	CREATEOBJECT(obj);
 	SINGLE(CGameManager)->SetPlayer(obj);
@@ -76,7 +76,7 @@ void CSceneInGame::Enter()
 	CREATEOBJECT(BgObj);
 
 	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY_MELEE, ENEMY_TYPE::BIG_KNIGHT);
-	monsterMelee->SetPos(Vec2(600.f, 1140.f));
+	monsterMelee->SetPos(Vec2(600.f, 1100.f));
 	CREATEOBJECT(monsterMelee);
 
 
@@ -94,6 +94,11 @@ void CSceneInGame::Enter()
 
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetPos(Vec2(250, 1105));
+	CREATEOBJECT(gateObj);
+
+	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetPos(Vec2(2800, 1230));
 	CREATEOBJECT(gateObj);
 
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
@@ -137,22 +142,35 @@ void CSceneInGame::Enter()
 	CUIText* pTimer = new CUIText(OBJ_TYPE::UI);
 	pTimer->SetPos(Vec2(20, 5));
 	pTimer->SetScale(Vec2(100, 30));
+	pTimer->SetFontSize(15.f);
 	SINGLE(CGameManager)->SetTimer(pTimer);
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
 
-	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_2.png");
+	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_3.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(1.f, 1.f));
 	pUI->SetPos(Vec2(WINSIZEX- (float)pUI->GetImage()->GetWidth(), WINSIZEY- (float)pUI->GetImage()->GetHeight()));
+
+	pTimer = new CUIText(OBJ_TYPE::UI);
+	pTimer->SetPos(Vec2(145, 0));
+	pTimer->SetScale(Vec2(100, 30));
+	pTimer->SetText(L"0");
+	pTimer->SetFontSize(30.f);
+	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
+	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
 
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY_MELEE, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY_MELEE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY_MELEE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY_MELEE, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 }
 
 void CSceneInGame::Exit()

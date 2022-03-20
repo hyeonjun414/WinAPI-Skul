@@ -17,6 +17,7 @@ enum class OBJ_TYPE
 	ENEMY_BOSS,
 	PLAYER,
 	PLAYER_ATTACK,
+	PROJECTILE,
 	EFFECT,
 	ATTACK,
 	TEXT,
@@ -115,6 +116,15 @@ enum class IMG_EFFECT
 enum class TEXT_EFFECT
 {
 	BOUNCE,
+
+	NONE,
+};
+
+// 공격 타입
+enum class ATTACK_TYPE
+{
+	MELEE,
+	RANGE,
 
 	NONE,
 };

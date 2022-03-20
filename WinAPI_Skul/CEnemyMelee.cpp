@@ -42,13 +42,19 @@ void CEnemyMelee::Init()
 		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"DisappearEnemy", L"texture\\effect\\Enemy_Dead.png");
 		m_pAnimator->CreateAnimation(L"DisappearEnemy", pImg, Vec2(0, 0), Vec2(128, 128), Vec2(128, 0), 0.5f/6.f, 6);
 
+		SetScale(Vec2(160, 160));
+
 		CreateCollider();
-		m_pCollider->SetScale(Vec2(100, 120));
-		m_pCollider->SetOffsetPos(Vec2(0, 30));
 		
-		m_iHp = 10;
-		m_iDamage = 0;
-		m_vVelocity = Vec2(100.f, 0.f);
+		// 위치 세부 조정
+		m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y / 4));
+		m_pCollider->SetScale(Vec2(GetScale() / 2));
+		m_pAnimator->SetAllAnimOffset(Vec2(0, 0));
+
+
+		m_tEnemyInfo.m_iHp = 10;
+		m_tEnemyInfo.m_iDamage = 0;
+		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
 		m_pState = new CStateAppear();
 		m_pState->Enter(this);
@@ -72,10 +78,12 @@ void CEnemyMelee::Render()
 
 void CEnemyMelee::OnCollision(CCollider* _pOther)
 {
+	CEnemy::OnCollision(_pOther);
 }
 
 void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 {
+	CEnemy::OnCollisionEnter(_pOther);
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK)
 	{
 		CFuncObj* pAttack = (CFuncObj*)_pOther->GetObj();
@@ -91,10 +99,11 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 			SetObjDir(true);
 		}
 
-		m_iHp--;
+		m_tEnemyInfo.m_iHp--;
 	}
 }
 
 void CEnemyMelee::OnCollisionExit(CCollider* _pOther)
 {
+	CEnemy::OnCollisionExit(_pOther);
 }

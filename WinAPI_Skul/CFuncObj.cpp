@@ -12,6 +12,8 @@ CFuncObj::CFuncObj(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
 
 CFuncObj::~CFuncObj()
 {
+	if (nullptr != m_pEffect)
+		m_pEffect->SetPlay(false);
 }
 
 void CFuncObj::CreateEffect(wstring _strImgName, wstring _strImgPath,

@@ -3,8 +3,9 @@
 class CGate :
     public CMapObject
 {
+private:
+    bool m_bIsActivate;
 public:
-    CGate();
     CGate(OBJ_TYPE _eType);
     virtual ~CGate();
 

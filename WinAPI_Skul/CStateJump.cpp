@@ -73,7 +73,10 @@ void CStateJump::Enter(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        pPlayer->GetAnimator()->Play(L"Player_Jump", true);
+        if (pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_Jump", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_Jump_Headless", true);
         pPlayer->m_vVelocity.y = 700;
         if (!pPlayer->m_bCanDoubleJump)
         {

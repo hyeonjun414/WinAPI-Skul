@@ -18,7 +18,7 @@ void CUIText::Render()
 		GetFinalPos().y,
 		GetFinalPos().x + GetScale().x,
 		GetFinalPos().y + GetScale().y,
-		15.f,
+		m_fFontSize,
 		RGB(255.f,255.f,255.f));
 
 	RenderChild();

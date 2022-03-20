@@ -7,7 +7,7 @@ class CEffect;
 class CFuncObj :
     public CObject
 {
-private:
+protected:
     CObject* m_pOwner;
     CEffect* m_pEffect;
 

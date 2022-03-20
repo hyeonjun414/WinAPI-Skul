@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
+    <ClInclude Include="CStateSkill.h" />
     <ClInclude Include="CUIButton.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />
@@ -219,6 +220,7 @@
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
+    <ClCompile Include="CStateSkill.cpp" />
     <ClCompile Include="CUIButton.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCollider.cpp" />

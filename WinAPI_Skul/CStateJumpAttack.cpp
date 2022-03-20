@@ -62,7 +62,10 @@ void CStateJumpAttack::Enter(CObject* _pObj)
         m_fJumpAttackCurTime = 0.f;
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->m_bCanJumpAttack = false;
-        pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+        if (pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_JumpAttack_Headless", true);
         pPlayer->JumpAttack();
         SINGLE(CSoundManager)->Play(L"AttackB");
     }

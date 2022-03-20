@@ -29,6 +29,10 @@ void CGameManager::Update()
 		swprintf_s(strPlayTime, L"%02d : %02d : %02d", h, m, s);
 		m_pTimer->SetText(strPlayTime);
 	}
+	if (nullptr != m_pRemainEnemy)
+	{
+		m_pRemainEnemy->SetText(to_wstring(m_iRemainEnemyCount));
+	}
 
 }
 

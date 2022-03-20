@@ -23,7 +23,6 @@ CState* CStateAttack::HandleInput(CObject* _pObj) {
         if (KEYTAP(KEY::X))
             m_bAttackInput = true;
 
-        
         return nullptr;
     }
     break;
@@ -49,7 +48,10 @@ void CStateAttack::Update(CObject* _pObj) {
         if (1 == m_iAttackCount && !m_bIsSecondAttack)
         {
             m_bIsSecondAttack = true;
-            pPlayer->GetAnimator()->Play(L"Player_AttackB", true);
+            if (pPlayer->m_bCanSkill)
+                pPlayer->GetAnimator()->Play(L"Player_AttackB", true);
+            else
+                pPlayer->GetAnimator()->Play(L"Player_AttackB_Headless", true);
             SINGLE(CSoundManager)->Play(L"AttackB");
             
             if (KEYHOLD(KEY::LEFT))
@@ -83,7 +85,10 @@ void CStateAttack::Enter(CObject* _pObj)
         m_fFlowTime = 0;
         m_bIsSecondAttack = false;
         m_bAttackInput = false;
-        pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
+        if (pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_AttackA_Headless", true);
         SINGLE(CSoundManager)->Play(L"AttackA");
         pPlayer->Attack();
 

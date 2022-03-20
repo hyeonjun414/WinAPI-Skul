@@ -22,6 +22,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_bCanSecondDash = true;
 	m_bCanDash = true;
 	m_bCanJumpAttack = true;
+	m_bCanSkill = true;
 
 	m_fSecondDashCoolTime = 2.f;
 	m_fSecondDashCurTime = 0.f;
@@ -29,7 +30,11 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_fDashCoolTime = 1.f;
 	m_fDashCurTime = 0.f;
 
+	m_fSkillCoolTime = 5.0f;
+	m_fSkillCurTime = 0;
+
 	SetScale(Vec2(96, 96));
+
 	// Collider 만들기
 	CreateCollider();
 	m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y/4));
@@ -40,34 +45,47 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CD2DImage* pImg;
 	// 애니메이터 만들기
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Idle", L"texture\\player\\idle_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_Idle", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-									Vec2(96, 0.f), 0.15f, 4);
+	GetAnimator()->CreateAnimation(L"Player_Idle", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.15f, 4);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Move", L"texture\\player\\move_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_Move", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-									Vec2(96, 0.f), 0.1f, 8);
+	GetAnimator()->CreateAnimation(L"Player_Move", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 8);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Jump", L"texture\\player\\jump_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_Jump", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-									Vec2(96, 0.f), 0.1f, 2);
+	GetAnimator()->CreateAnimation(L"Player_Jump", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 2);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Fall", L"texture\\player\\fall_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_Fall", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-									Vec2(96, 0.f), 0.5f, 2);
+	GetAnimator()->CreateAnimation(L"Player_Fall", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.5f, 2);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_FallRepeat", L"texture\\player\\fallrepeat_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_FallRepeat", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-									Vec2(96, 0.f), 0.2f, 3);
+	GetAnimator()->CreateAnimation(L"Player_FallRepeat", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.2f, 3);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_AttackA", L"texture\\player\\attackA_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_AttackA", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-		Vec2(96, 0.f), 0.1f, 5);
+	GetAnimator()->CreateAnimation(L"Player_AttackA", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 5);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_AttackB", L"texture\\player\\attackB_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_AttackB", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-		Vec2(96, 0.f), 0.125f, 4);
-
+	GetAnimator()->CreateAnimation(L"Player_AttackB", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.125f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_SkillA", L"texture\\player\\skillA_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_SkillA", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.125f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_SkillB", L"texture\\player\\skillB_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_SkillB", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 1.f/9.f, 9);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Dash", L"texture\\player\\dash_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_Dash", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-		Vec2(96, 0.f), 1.0f, 1);
+	GetAnimator()->CreateAnimation(L"Player_Dash", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 1.0f, 1);
 	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_JumpAttack", L"texture\\player\\jumpattack_skul.png");
-	GetAnimator()->CreateAnimation(L"Player_JumpAttack", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),
-		Vec2(96, 0.f), 0.125f, 4);
-
+	GetAnimator()->CreateAnimation(L"Player_JumpAttack", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.125f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Idle_Headless", L"texture\\player\\idle_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Idle_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.15f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Move_Headless", L"texture\\player\\move_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Move_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 8);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Jump_Headless", L"texture\\player\\jump_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Jump_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 2);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Fall_Headless", L"texture\\player\\fall_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Fall_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.5f, 2);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_FallRepeat_Headless", L"texture\\player\\fallrepeat_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_FallRepeat_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.2f, 3);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_AttackA_Headless", L"texture\\player\\attackA_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_AttackA_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.1f, 5);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_AttackB_Headless", L"texture\\player\\attackB_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_AttackB_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.125f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_Dash_Headless", L"texture\\player\\dash_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_Dash_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 1.0f, 1);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_JumpAttack_Headless", L"texture\\player\\jumpattack_headless_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_JumpAttack_Headless", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f),Vec2(96, 0.f), 0.125f, 4);
+	pImg = SINGLE(CResourceManager)->LoadD2DImage(L"Player_SkillRebone", L"texture\\player\\skill_rebone_skul.png");
+	GetAnimator()->CreateAnimation(L"Player_SkillRebone", pImg, Vec2(0.f, 0.f), Vec2(96.f, 96.f), Vec2(96, 0.f), 0.5f/8.f, 8);
 
 
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
@@ -82,7 +100,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	SINGLE(CSoundManager)->AddSound(L"AttackB", L"sound\\Legacy_AttackB.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
 
-
+	GetPlayerInfo().m_iDamage = 1;
 
 }
 
@@ -113,7 +131,6 @@ void CPlayer::Update()
 
 	m_pState->Update(this);
 	CoolTime();
-
 	GetAnimator()->Update();
 }
 
@@ -173,9 +190,15 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 				m_vPos.y = _pOther->GetFinalPos().y - _pOther->GetScale().y / 2 + 1;
 			}
 		}
-
-
     }
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE &&
+		_pOther->GetObj()->GetName() == L"SkulHead")
+	{
+		DELETEOBJECT(_pOther->GetObj());
+		m_bCanSkill = true;
+		m_fSkillCurTime = 0.f;
+
+	}
 }
 
 void CPlayer::OnCollisionExit(CCollider* _pOther)
@@ -217,6 +240,16 @@ void CPlayer::CoolTime()
 			m_bCanDash = true;
 		}
 	}
+
+	if (!m_bCanSkill)
+	{
+		m_fSkillCurTime += DT;
+		if (m_fSkillCurTime >= m_fSkillCoolTime)
+		{
+			m_bCanSkill = true;
+
+		}
+	}
 }
 
 void CPlayer::Attack()
@@ -238,4 +271,97 @@ void CPlayer::JumpAttack()
 	pAttack->CreateAttackArea(this, Vec2(50, 50), Vec2(50, 70));
 	CREATEOBJECT(pAttack);
 }
+
+void CPlayer::SkillA()
+{
+	CFuncAttack* pAttack = new CFuncAttack(OBJ_TYPE::PROJECTILE, L"Skul_Head", L"texture\\effect\\skul_head.png",
+		5.f, 5.f, 16, m_bIsRight);
+	pAttack->SetOwner(this);
+	pAttack->CreateProjectile(this, L"SkulHead", Vec2(20, -GetScale().y/2 + 5), Vec2(20, 20), Vec2(700, 0));
+	m_pHead = pAttack;
+	CREATEOBJECT(pAttack);
+}
+
+void CPlayer::SkillB()
+{
+	SetPos(m_pHead->GetPos());
+	m_pHead = nullptr;
+}
+
+//void CPlayer::SetCurAnim()
+//{
+//	CPlayer* pPlayer = this;
+//	switch (m_eCurState)
+//	{
+//	case PLAYER_STATE::IDLE:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Idle_Headless", true);
+//	}
+//		break;
+//	case PLAYER_STATE::MOVE:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_Move", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Move_Headless", true);
+//	}
+//		break;
+//	case PLAYER_STATE::ATTACK:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_AttackA_Headless", true);
+//	}
+//		break;
+//	case PLAYER_STATE::JUMP:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_Jump", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Jump_Headless", true);
+//	}
+//		break;
+//	case PLAYER_STATE::FALL:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_Fall", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Fall_Headless", true);
+//
+//	}
+//		break;
+//	case PLAYER_STATE::SKILL:
+//	{
+//		pPlayer->GetAnimator()->Play(L"Player_SkillA", true);
+//	}
+//		break;
+//	case PLAYER_STATE::DASH:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Dash_Headless", true);
+//	}
+//		break;
+//	case PLAYER_STATE::JUMPATTACK:
+//	{
+//		if (pPlayer->m_bCanSkill)
+//			pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+//		else
+//			pPlayer->GetAnimator()->Play(L"Player_Headless_JumpAttack", true);
+//	}
+//		break;
+//	case PLAYER_STATE::REBONE:
+//	{
+//		pPlayer->GetAnimator()->Play(L"Player_SkillRebone", true);
+//	}
+//		break;
+//	default:
+//		break;
+//	}
+//}
 

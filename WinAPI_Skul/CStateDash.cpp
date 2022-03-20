@@ -69,7 +69,10 @@ void CStateDash::Enter(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->m_vPos.y -= 1;
         pPlayer->m_vVelocity.y = 0;
-        pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+        if (pPlayer->m_bCanSkill)
+            pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+        else
+            pPlayer->GetAnimator()->Play(L"Player_Dash_Headless", true);
         CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
             1, 1, 96, pPlayer->GetObjDir());
         CREATEOBJECT(eft);

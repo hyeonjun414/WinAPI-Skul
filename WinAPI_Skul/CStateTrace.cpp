@@ -28,8 +28,10 @@ CState* CStateTrace::HandleInput(CObject* _pObj)
         if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400)
             return new CStateIdle();
 
-        if (pEnemy->m_iHp <= 0)
+        if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
             return new CStateDie();
+        if (!pEnemy->m_bIsGround)
+            return new CStateFall();
     }
     break;
     }
@@ -51,12 +53,12 @@ void CStateTrace::Update(CObject* _pObj)
         if (PLAYERPOS.x > pEnemy->GetPos().x +1)
         {
             pEnemy->SetObjDir(true);
-            pEnemy->m_vPos.x += pEnemy->m_vVelocity.x * DT;
+            pEnemy->m_vPos.x += pEnemy->m_tEnemyInfo.m_vVelocity.x * DT;
         }
         else if(PLAYERPOS.x < pEnemy->GetPos().x -1)
         {
             pEnemy->SetObjDir(false);
-            pEnemy->m_vPos.x -= pEnemy->m_vVelocity.x * DT;
+            pEnemy->m_vPos.x -= pEnemy->m_tEnemyInfo.m_vVelocity.x * DT;
         }
     }
     break;
