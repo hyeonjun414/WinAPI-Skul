@@ -131,3 +131,4 @@ void CAnimation::Create(CD2DImage* _pImg, Vec2 _vLeftTop, Vec2 _vSliceSize, Vec2
 		m_vecFrame.push_back(frame);
 	}
 }
+

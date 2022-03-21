@@ -4,9 +4,9 @@
 #include "CAnimator.h"
 
 
-CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
-				float _fDuration, float _fPlayTime, int _imgSize, bool _dir):
-	CObject(_eType),
+CEffect::CEffect(wstring _strImgName, wstring _strImgPath,
+				float _fDuration, float _fInterval, bool _dir):
+	CObject(OBJ_TYPE::EFFECT),
 	m_fCurTime(0),
 	m_fDuration(_fDuration),
 	m_bIsPlay(true)
@@ -14,14 +14,14 @@ CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
 
 	CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(_strImgName, _strImgPath);
 	SetObjDir(_dir);
-	float imgSizeX = (float)pImg->GetWidth();
-	float imgSizeY = (float)pImg->GetHeight();
-	int imgCountX = (int)(imgSizeX / _imgSize);
-	float imgDiviedSizeX = imgSizeX / imgCountX;
+	float imgX = (float)pImg->GetWidth();
+	float imgY = (float)pImg->GetHeight();
+	int imgCountX = (int)(imgX / imgY);
+	float imgDiviedSizeX = imgX / imgCountX;
 	CreateAnimator();
 
-	m_pAnimator->CreateAnimation(_strImgName, pImg, Vec2(0, 0), Vec2(imgDiviedSizeX, imgSizeY),
-		Vec2(imgDiviedSizeX, 0), (float)(_fPlayTime/imgCountX), imgCountX);
+	m_pAnimator->CreateAnimation(_strImgName, pImg, Vec2(0, 0), Vec2(imgDiviedSizeX, imgY),
+		Vec2(imgDiviedSizeX, 0), (float)(_fInterval /imgCountX), imgCountX);
 	m_pAnimator->Play(_strImgName, true);
 	//SetScale(Vec2(imgDiviedSizeX, imgSizeY));
 	

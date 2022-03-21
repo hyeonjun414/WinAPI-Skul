@@ -10,7 +10,7 @@ private:
 	bool  m_bIsPlay;	// 이펙트를 재생시키기 위해 설정되어야하는 값
 
 public:
-	CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath, float _fDuration, float _fPlayTime, int  _imgSize, bool _dir);
+	CEffect(wstring _strImgName, wstring _strImgPath, float _fDuration, float _fInterval, bool _dir);
 	virtual ~CEffect();
 
 	virtual void Update();

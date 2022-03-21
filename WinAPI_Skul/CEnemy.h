@@ -4,12 +4,12 @@
 
 struct tEnemy_Info
 {
-    wstring m_strName;
-    int     m_iMaxHp;
-    int     m_iHp;
-    int     m_iDamage;
-    int     m_iSkillDamage;
+    int         m_iMaxHp;
+    int         m_iHp;
+    int         m_iDamage;
+    int         m_iSkillDamage;
     int         m_iDetectDist;
+    int         m_iAttackDist;
     Vec2        m_vVelocity;
     Vec2        m_vAttackPos;
     Vec2        m_vAttackArea;

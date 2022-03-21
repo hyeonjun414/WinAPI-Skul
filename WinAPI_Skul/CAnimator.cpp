@@ -2,6 +2,7 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CObject.h"
+#include "CD2DImage.h"
 
 CAnimator::CAnimator():
 	m_bRepeat(false),
@@ -64,6 +65,29 @@ void CAnimator::CreateAnimation(const wstring& _strName, CD2DImage* _pImg, Vec2 
 	pAnim->m_pAnimator = this;
 
 	pAnim->Create(_pImg, _vLeftTop, _vSliceSize, _vStep, _fFrameTime,_iFrameCount);
+
+	m_mapAnim.insert(make_pair(_strName, pAnim));
+}
+
+void CAnimator::CreateAnim(const wstring& _strName, const wstring& _strPath, float _fInterval)
+{
+	CAnimation* pAnim = FindAnimation(_strName);
+
+	assert(nullptr == pAnim);
+
+	CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(_strName, _strPath);
+
+	assert(pImg);
+
+	int imgX = pImg->GetWidth();
+	int imgY = pImg->GetHeight();
+	int imgCountX = imgX / imgY;
+
+	pAnim = new CAnimation;
+	pAnim->SetName(_strName);
+	pAnim->m_pAnimator = this;
+
+	pAnim->Create(pImg, Vec2(0,0), Vec2(imgY, imgY), Vec2(imgY, 0), _fInterval/imgCountX, imgCountX);
 
 	m_mapAnim.insert(make_pair(_strName, pAnim));
 }

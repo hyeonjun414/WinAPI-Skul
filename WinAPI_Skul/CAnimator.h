@@ -30,11 +30,17 @@ public:
 		float			_fFrameTime,		// 한 프레임 마다의 진행속도
 		UINT			_iFrameCount);		// 애니메이션을 수행할 프레임 개수
 
+	void CreateAnim(
+		const wstring& _strName,
+		const wstring& _strPath,
+		float _fInterval);
+
 	CAnimation* FindAnimation(const wstring& _strName);		// 특정 애니메이션을 찾는다.
 	void Play(const wstring& _strName, bool _bRepeat);				// 특정 애니메이션을 실행시킨다.
 	void PlayAndNextAnim(const wstring& _strName, bool _bRepeat, const wstring& _strNextName);
 	void SetAllAnimOffset(Vec2 _vOffset);
-
+	
+	CAnimation* GetCurAnim() { return m_pCurAnim; }
 
 	CObject* GetObj() { return m_pOwner; }
 };

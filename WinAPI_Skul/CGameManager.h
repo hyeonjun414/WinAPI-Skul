@@ -29,7 +29,9 @@ public:
 	CObject*	GetPlayer()								{ return m_pPlayer; }
 	bool		GetGamePlay()							{ return m_bIsPlay; }
 
+	void		CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos,
+							float _fDuration, float _fInterval, bool _bDir);
 
-
+	void		DamageText(const wstring& _strDamage, Vec2 _vPos);
 };
 

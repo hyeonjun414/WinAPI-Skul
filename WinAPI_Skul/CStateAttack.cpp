@@ -121,6 +121,7 @@ void CStateAttack::Enter(CObject* _pObj)
         m_fFlowTime = 0.f;
         pEnemy->GetAnimator()->Play(L"BigKnight_AttacKA", true);
         pEnemy->m_strCurState = L"Attack";
+        SINGLE(CSoundManager)->Play(L"AttackB");
         
     }
     break;

@@ -123,7 +123,7 @@ void CSceneInGame::Stage01Init()
 
 
 	// 사운드 설정
-	SINGLE(CSoundManager)->AddSound(L"Attack", L"sound\\arrow_hit.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
 	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
@@ -207,7 +207,7 @@ void CSceneInGame::Stage02Init()
 
 
 	// 사운드 설정
-	SINGLE(CSoundManager)->AddSound(L"Attack", L"sound\\arrow_hit.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
 	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 

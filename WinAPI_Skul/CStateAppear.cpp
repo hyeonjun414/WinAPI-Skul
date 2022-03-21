@@ -61,16 +61,14 @@ void CStateAppear::Enter(CObject* _pObj)
         m_fDuration = 0.5f;
 
         CPlayer* pPlayer = (CPlayer*)_pObj;
-        CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"DisAppear", L"texture\\effect\\Enemy_Dead.png", 0.5f, 0.5f, 128, pPlayer->GetObjDir());
-        CREATEOBJECT(eft);
-        eft->SetPos(pPlayer->GetPos());
+        SINGLE(CGameManager)->CreateEffect(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
+            pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
         
         pPlayer->SkillB();
 
-        eft = new CEffect(OBJ_TYPE::EFFECT, L"Appear", L"texture\\effect\\Enemy_Appearance.png", 0.5f, 0.5f, 128, pPlayer->GetObjDir());
-        eft->SetPos(pPlayer->GetPos());
-        CREATEOBJECT(eft);
-        
+        SINGLE(CGameManager)->CreateEffect(L"Appear", L"texture\\effect\\Enemy_Appearance.png",
+            pPlayer->GetPos(), 0.5f, 0.5f,  pPlayer->GetObjDir());
+
         pPlayer->GetAnimator()->Play(L"Player_SkillRebone", true);
         SINGLE(CSoundManager)->Play(L"SkillB");
 

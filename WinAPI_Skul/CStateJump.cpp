@@ -84,10 +84,8 @@ void CStateJump::Enter(CObject* _pObj)
         pPlayer->m_vVelocity.y = 700;
         if (!pPlayer->m_bCanDoubleJump)
         {
-            CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Jump_Smoke", L"texture\\effect\\doublejump_smoke.png",
-                0.5,0.5, 96, pPlayer->GetObjDir());
-            CREATEOBJECT(eft);
-            eft->SetPos(pPlayer->GetPos() + Vec2(0, -20));
+            SINGLE(CGameManager)->CreateEffect(L"Jump_Smoke", L"texture\\effect\\doublejump_smoke.png",
+                pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
             SINGLE(CSoundManager)->Play(L"JumpAir");
         }
         else

@@ -4,10 +4,10 @@
 #include "CAnimator.h"
 #include "CD2DImage.h"
 
-#include "CFuncObj.h"
 #include "CStateIdle.h"
 #include "CStateAppear.h"
-#include "CFuncAttack.h"
+#include "CMeleeAttack.h"
+#include "CPlayer.h"
 
 CEnemyMelee::CEnemyMelee(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType):
 	CEnemy(_eType, _eEnemyType)
@@ -44,7 +44,7 @@ void CEnemyMelee::Init()
 		m_pAnimator->CreateAnimation(L"DisappearEnemy", pImg, Vec2(0, 0), Vec2(128, 128), Vec2(128, 0), 0.5f/6.f, 6);
 
 		SetScale(Vec2(160, 160));
-
+		SetName(L"Big_Knight");
 		CreateCollider();
 		
 		// 위치 세부 조정
@@ -93,23 +93,28 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 	CEnemy::OnCollisionEnter(_pOther);
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK)
 	{
-		CFuncAttack* pAttack = (CFuncAttack*)_pOther->GetObj();
+		CMeleeAttack* pAttack = (CMeleeAttack*)_pOther->GetObj();
 
 		if (m_bCanHit)
 		{
+			CAttack* pAttack = (CAttack*)_pOther->GetObj();
+			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			SINGLE(CSoundManager)->Play(L"Hit");
+			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
+			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
 			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
 			{
-				SetPos(GetPos() + Vec2(10, 0));
+				//SetPos(GetPos() + Vec2(10, 0));
 				SetObjDir(false);
 			}
 			else
 			{
-				SetPos(GetPos() + Vec2(-10, 0));
+				//SetPos(GetPos() + Vec2(-10, 0));
 				SetObjDir(true);
 			}
 
 			m_tEnemyInfo.m_iHp--;
-			pAttack->SetIsHit(true);
 			m_bCanHit = false;
 		}
 

@@ -42,6 +42,7 @@ void CTextObj::Render()
         GetRenderPos().x+100,
         GetRenderPos().y+100,
         30.f,
+        2,
         RGB(255.f,150.f,150.f));
 
 }

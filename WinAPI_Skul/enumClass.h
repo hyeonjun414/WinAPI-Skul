@@ -5,9 +5,7 @@
 enum class OBJ_TYPE
 {
 	DEFAULT,
-
 	IMAGE,
-	
 	TILE,
 	
 	MAPOBJECT,
@@ -30,6 +28,7 @@ enum class ENEMY_TYPE
 	ENEMY_RANGE,
 	ENEMY_BOSS,
 	BIG_KNIGHT,
+	WIZARD,
 
 	SIZE,
 };

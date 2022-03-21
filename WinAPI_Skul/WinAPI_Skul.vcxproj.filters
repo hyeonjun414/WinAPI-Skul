@@ -237,12 +237,6 @@
     <ClInclude Include="CEffect.h">
       <Filter>03.GameObject\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="CFuncAttack.h">
-      <Filter>03.GameObject\FuncObj</Filter>
-    </ClInclude>
-    <ClInclude Include="CFuncObj.h">
-      <Filter>03.GameObject\FuncObj</Filter>
-    </ClInclude>
     <ClInclude Include="CStateDie.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
@@ -269,6 +263,15 @@
     </ClInclude>
     <ClInclude Include="Stateheader.h">
       <Filter>04.Component\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CAttack.h">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeleeAttack.h">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectile.h">
+      <Filter>03.GameObject\FuncObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,12 +425,6 @@
     <ClCompile Include="CEffect.cpp">
       <Filter>03.GameObject\Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="CFuncAttack.cpp">
-      <Filter>03.GameObject\FuncObj</Filter>
-    </ClCompile>
-    <ClCompile Include="CFuncObj.cpp">
-      <Filter>03.GameObject\FuncObj</Filter>
-    </ClCompile>
     <ClCompile Include="CStateDie.cpp">
       <Filter>04.Component\State</Filter>
     </ClCompile>
@@ -451,6 +448,15 @@
     </ClCompile>
     <ClCompile Include="CStateSkill.cpp">
       <Filter>04.Component\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectile.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeleeAttack.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttack.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

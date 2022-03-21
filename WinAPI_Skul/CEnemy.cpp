@@ -4,6 +4,7 @@
 #include "CEnemyMelee.h"
 #include "CEnemyRange.h"
 #include "CAnimator.h"
+#include "CAnimation.h"
 #include "CCollider.h"
 #include "CTile.h"
 
@@ -151,16 +152,16 @@ void CEnemy::RenderEnemyInfo()
 		CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(L"CameraTex", L"texture\\cameraTex.png");
 		RENDER->RenderImage(
 			pImg,
-			pos.x,
+			pos.x - 3,
 			pos.y,
-			pos.x + 150,
-			pos.y + 80,
+			pos.x + 160,
+			pos.y + 90,
 			0.3f);
 		RENDER->RenderText(
 			L"이름 : " + GetName(),
 			pos.x,
 			pos.y + 20,
-			pos.x + 150,
+			pos.x + 200,
 			pos.y,
 			16.f,
 			0,
@@ -169,7 +170,7 @@ void CEnemy::RenderEnemyInfo()
 			L"상태 : " + m_strCurState,
 			pos.x,
 			pos.y + 50,
-			pos.x + 150,
+			pos.x + 200,
 			pos.y,
 			16.f,
 			0,
@@ -178,7 +179,16 @@ void CEnemy::RenderEnemyInfo()
 			L"위치 : (" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y) + L")",
 			pos.x,
 			pos.y + 80,
-			pos.x + 150,
+			pos.x + 200,
+			pos.y,//+ 20 + 100,
+			16.f,
+			0,
+			RGB(255, 255, 255));
+		RENDER->RenderText(
+			L"현재 애니메이션\n : " + GetAnimator()->GetCurAnim()->GetName(),
+			pos.x,
+			pos.y + 130,
+			pos.x + 200,
 			pos.y,//+ 20 + 100,
 			16.f,
 			0,

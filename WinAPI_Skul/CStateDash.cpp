@@ -70,10 +70,8 @@ void CStateDash::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_Dash", true);
         else
             pPlayer->GetAnimator()->Play(L"Player_Dash_Headless", true);
-        CEffect* eft = new CEffect(OBJ_TYPE::EFFECT, L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
-            1, 1, 96, pPlayer->GetObjDir());
-        CREATEOBJECT(eft);
-        eft->SetPos(pPlayer->GetPos()+Vec2(0,-20));
+        SINGLE(CGameManager)->CreateEffect(L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
+            pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
         SINGLE(CSoundManager)->Play(L"Dash");
         pPlayer->m_strCurState = L"Dash";
     }

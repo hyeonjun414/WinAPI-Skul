@@ -20,7 +20,8 @@ CState* CStateTrace::HandleInput(CObject* _pObj)
     case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 150)
+        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 100 &&
+            abs(PLAYERPOS.y - pEnemy->GetPos().y) < 50)
             return new CStateAttack();
         if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400)
             return new CStateIdle();

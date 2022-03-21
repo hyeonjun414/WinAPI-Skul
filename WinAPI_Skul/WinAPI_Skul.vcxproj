@@ -151,6 +151,9 @@
   <ItemGroup>
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
+    <ClInclude Include="CAttack.h" />
+    <ClInclude Include="CMeleeAttack.h" />
+    <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CStateSkill.h" />
     <ClInclude Include="CUIButton.h" />
     <ClInclude Include="CCameraManager.h" />
@@ -160,8 +163,6 @@
     <ClInclude Include="CD2DImage.h" />
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CEventManager.h" />
-    <ClInclude Include="CFuncAttack.h" />
-    <ClInclude Include="CFuncObj.h" />
     <ClInclude Include="CGameManager.h" />
     <ClInclude Include="CGate.h" />
     <ClInclude Include="CSceneInGame.h" />
@@ -221,6 +222,9 @@
   <ItemGroup>
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
+    <ClCompile Include="CAttack.cpp" />
+    <ClCompile Include="CMeleeAttack.cpp" />
+    <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CStateSkill.cpp" />
     <ClCompile Include="CUIButton.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
@@ -230,8 +234,6 @@
     <ClCompile Include="CD2DImage.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEventManager.cpp" />
-    <ClCompile Include="CFuncAttack.cpp" />
-    <ClCompile Include="CFuncObj.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CSceneInGame.cpp" />
