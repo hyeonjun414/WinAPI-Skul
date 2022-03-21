@@ -1,13 +1,6 @@
 #include "pch.h"
 
-#include "CStateMove.h"
-#include "CStateIdle.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
-#include "CStateAttack.h"
-#include "CStateDash.h"
-#include "CStateSkill.h"
-#include "CStateAppear.h"
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -92,6 +85,7 @@ void CStateMove::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_Move", true);
         else
             pPlayer->GetAnimator()->Play(L"Player_Move_Headless", true);
+        pPlayer->m_strCurState = L"Move";
     }
     break;
     }

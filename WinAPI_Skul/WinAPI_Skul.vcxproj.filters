@@ -267,6 +267,9 @@
     <ClInclude Include="CStateSkill.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
+    <ClInclude Include="Stateheader.h">
+      <Filter>04.Component\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">

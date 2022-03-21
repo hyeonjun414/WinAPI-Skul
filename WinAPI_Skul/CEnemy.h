@@ -20,12 +20,23 @@ class CState;
 class CEnemy :
     public CObject
 {
+    friend class CStateIdle;
+    friend class CStateDie;
+    friend class CStateTrace;
+    friend class CStateFall;
+    friend class CStateAppear;
+    friend class CStateAttack;
 protected:
+    wstring m_strCurState;
     bool    m_bIsGround;
     int     m_iCollCount;
 
     float       m_fAttackDeleyTime;
-    float       m_fCurTime;
+    float       m_fCurAttackTime;
+
+    float       m_fHitDelayTime;
+    float       m_fCurHitTime;
+    bool        m_bCanHit;
 
     ENEMY_TYPE  m_eEnemyType;
     CState*     m_pState;
@@ -50,5 +61,8 @@ public:
     tEnemy_Info&        GetEnemyInfo()                      { return m_tEnemyInfo; }
 
     void                SetEnemyInfo(tEnemy_Info _tInfo) { m_tEnemyInfo = _tInfo; }
+    bool                CanHit() { return m_bCanHit; }
+
+    void                RenderEnemyInfo();
 };
 

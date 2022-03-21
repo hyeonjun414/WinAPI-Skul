@@ -95,7 +95,7 @@ void CRenderManager::RenderRevFrame(CD2DImage* img, float dstX, float dstY, floa
 		D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
 }
 
-void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, COLORREF color)
+void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW, float dstH, float fontSize, int textAlign, COLORREF color)
 {
 	m_pWriteFactory->CreateTextFormat(
 		L"Visitor TT1 BRK",
@@ -107,7 +107,7 @@ void CRenderManager::RenderText(wstring str, float dstX, float dstY, float dstW,
 		L"ko",
 		&m_pTextFormat);
 
-	m_pTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+	m_pTextFormat->SetTextAlignment((DWRITE_TEXT_ALIGNMENT)textAlign);
 	m_pTextFormat->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
 	
 	int red = color & 0xFF;

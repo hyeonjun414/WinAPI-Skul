@@ -43,6 +43,7 @@ class CPlayer :
     friend class CStateAppear;
 
 private:
+    wstring         m_strCurState;
     Vec2            m_vVelocity;
     bool            m_bIsGround;
     int             m_iCollCount;
@@ -64,7 +65,6 @@ private:
 
     // 플레이어 전투 정보
     tPlayer_Info    m_tPlayerInfo;
-    //PLAYER_STATE    m_eCurState;
 
     CObject*        m_pHead; // 스킬에서 사용해서 던진 해골 객체
 
@@ -90,14 +90,14 @@ public :
     tPlayer_Info&       GetPlayerInfo()                     { return m_tPlayerInfo; }
     bool                IsGround()                          { return m_bIsGround; }
     
+    void                RenderPlayerInfo();
 
-    void        CoolTime();
-    void        Attack();
-    void        JumpAttack();
-    void        SkillA();
-    void        SkillB();
+    void                CoolTime();
+    void                Attack();
+    void                JumpAttack();
+    void                SkillA();
+    void                SkillB();
 
-    //void        SetCurAnim();
     
 };
 

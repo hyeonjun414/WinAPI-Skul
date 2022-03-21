@@ -5,6 +5,7 @@
 #include "CEffect.h"
 #include "CTextObj.h"
 #include "CPlayer.h"
+#include "CEnemy.h"
 
 CFuncAttack::CFuncAttack(OBJ_TYPE _eType, const wstring& _strImgName, const wstring& _strImgPath,
 	float _fDuration, float _fPlayTime, int _imgSize, bool _dir):
@@ -13,7 +14,6 @@ CFuncAttack::CFuncAttack(OBJ_TYPE _eType, const wstring& _strImgName, const wstr
 	m_fDuration(_fDuration)
 {
 	m_bIsRight = _dir;
-	CreateEffect(_strImgName, _strImgPath, _fDuration, _fPlayTime, _imgSize, _dir);
 }
 
 CFuncAttack::~CFuncAttack()
@@ -31,7 +31,6 @@ void CFuncAttack::Update()
 	{
 		m_vPos.x += m_vVelocity.x * DT;
 		m_vPos.y -= m_vVelocity.y * DT;
-		GetEffect()->SetPos(GetCollider()->GetFinalPos());
 		if (m_bIsHit && ! m_bIsGround)
 		{
 			m_vVelocity.y -= 1000 * DT;
@@ -83,8 +82,6 @@ void CFuncAttack::CreateProjectile(CObject* _pObj, const wstring& _strObjName, V
 		SetPos(_pObj->GetPos() + vPos);
 		m_vVelocity -= _vVelocity;
 	}
-	m_pCollider->SetScale(GetEffect()->GetScale()*2);
-	GetEffect()->EffectPlay(GetPos());
 }
 
 void CFuncAttack::OnCollisionEnter(CCollider* _pOther)
@@ -108,14 +105,18 @@ void CFuncAttack::OnCollisionEnter(CCollider* _pOther)
 		}
 
 	}
-	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::ENEMY_MELEE)
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::ENEMY)
 	{
-		CPlayer* pPlayer = (CPlayer*)GetOwner();
-		CTextObj* pObj = new CTextObj(OBJ_TYPE::TEXT, to_wstring(pPlayer->GetPlayerInfo().m_iDamage), TEXT_EFFECT::BOUNCE);
-		pObj->SetPos((m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
-		CREATEOBJECT(pObj);
-		SINGLE(CSoundManager)->Play(L"Attack");
-		GetEffect()->EffectPlay((m_pCollider->GetFinalPos()+ _pOther->GetFinalPos())/2);
+		CEnemy* pEnemy = (CEnemy*)_pOther->GetObj();
+		if (pEnemy->CanHit())
+		{
+			CPlayer* pPlayer = (CPlayer*)GetOwner();
+			CTextObj* pObj = new CTextObj(OBJ_TYPE::TEXT, to_wstring(pPlayer->GetPlayerInfo().m_iDamage), TEXT_EFFECT::BOUNCE);
+			pObj->SetPos((m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			CREATEOBJECT(pObj);
+			SINGLE(CSoundManager)->Play(L"Attack");
+		}
+
 	}
 
 }

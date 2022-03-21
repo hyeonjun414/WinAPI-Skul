@@ -70,10 +70,18 @@ void CObject::FinalUpdate()
 void CObject::ComponentRender()
 {
 	if (nullptr != m_pAnimator)
+	{
 		m_pAnimator->Render(m_bIsRight);
+		RenderObjCenter();
+	}
 
 	if (nullptr != m_pCollider && SINGLE(CCore)->GetDebugMode())
+	{
 		m_pCollider->Render();
+	}
+		
+	
+	
 }
 
 void CObject::CreateCollider()
@@ -86,4 +94,18 @@ void CObject::CreateAnimator()
 {
 	m_pAnimator = new CAnimator;
 	m_pAnimator->m_pOwner = this;
+}
+
+void CObject::RenderObjCenter()
+{
+	if (SINGLE(CCore)->GetDebugMode())
+	{
+		RENDER->RenderFillEllipse(
+			GetRenderPos().x - 2,
+			GetRenderPos().y - 2,
+			4,
+			4,
+			RGB(255,0,255));
+		
+	}
 }

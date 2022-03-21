@@ -54,6 +54,17 @@ void CEnemy::Update()
 
 	m_pState->Update(this);
 
+	if (!m_bCanHit)
+	{
+		m_fCurHitTime += DT;
+		if (m_fCurHitTime >= m_fHitDelayTime)
+		{
+			m_bCanHit = true;
+			m_fCurHitTime = 0.f;
+		}
+	}
+
+
 	if(nullptr != m_pAnimator)
 		m_pAnimator->Update();
 }
@@ -61,6 +72,7 @@ void CEnemy::Update()
 void CEnemy::Render()
 {
 	ComponentRender();
+	RenderEnemyInfo();
 }
 void CEnemy::OnCollision(CCollider* _pOther)
 {
@@ -128,5 +140,48 @@ void CEnemy::OnCollisionExit(CCollider* _pOther)
 			m_bIsGround = false;
 		}
 
+	}
+}
+
+void CEnemy::RenderEnemyInfo()
+{
+	if (SINGLE(CCore)->GetDebugMode())
+	{
+		Vec2 pos = GetRenderPos() + Vec2(GetScale().x / 2, -GetScale().y);
+		CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(L"CameraTex", L"texture\\cameraTex.png");
+		RENDER->RenderImage(
+			pImg,
+			pos.x,
+			pos.y,
+			pos.x + 150,
+			pos.y + 80,
+			0.3f);
+		RENDER->RenderText(
+			L"이름 : " + GetName(),
+			pos.x,
+			pos.y + 20,
+			pos.x + 150,
+			pos.y,
+			16.f,
+			0,
+			RGB(255, 255, 255));
+		RENDER->RenderText(
+			L"상태 : " + m_strCurState,
+			pos.x,
+			pos.y + 50,
+			pos.x + 150,
+			pos.y,
+			16.f,
+			0,
+			RGB(255, 255, 255));
+		RENDER->RenderText(
+			L"위치 : (" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y) + L")",
+			pos.x,
+			pos.y + 80,
+			pos.x + 150,
+			pos.y,//+ 20 + 100,
+			16.f,
+			0,
+			RGB(255, 255, 255));
 	}
 }

@@ -1,11 +1,6 @@
 #include "pch.h"
-#include "CStateTrace.h"
-#include "CStateDie.h"
-#include "CStateMove.h"
-#include "CStateIdle.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
-#include "CStateJumpAttack.h"
+
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -22,9 +17,11 @@ CState* CStateTrace::HandleInput(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 150)
+            return new CStateAttack();
         if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400)
             return new CStateIdle();
 
@@ -47,9 +44,9 @@ void CStateTrace::Update(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        CEnemy* pEnemy = (CEnemy*)_pObj;
         if (PLAYERPOS.x > pEnemy->GetPos().x +1)
         {
             pEnemy->SetObjDir(true);
@@ -60,6 +57,7 @@ void CStateTrace::Update(CObject* _pObj)
             pEnemy->SetObjDir(false);
             pEnemy->m_vPos.x -= pEnemy->m_tEnemyInfo.m_vVelocity.x * DT;
         }
+        pEnemy->m_strCurState = L"Trace";
     }
     break;
     }
@@ -74,7 +72,7 @@ void CStateTrace::Enter(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         pEnemy->GetAnimator()->Play(L"BigKnight_Move", true);
@@ -92,7 +90,7 @@ void CStateTrace::Exit(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
     }

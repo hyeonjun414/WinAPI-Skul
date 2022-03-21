@@ -1,9 +1,6 @@
 #include "pch.h"
-#include "CStateDash.h"
-#include "CStateIdle.h"
-#include "CStateMove.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
+
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -78,6 +75,7 @@ void CStateDash::Enter(CObject* _pObj)
         CREATEOBJECT(eft);
         eft->SetPos(pPlayer->GetPos()+Vec2(0,-20));
         SINGLE(CSoundManager)->Play(L"Dash");
+        pPlayer->m_strCurState = L"Dash";
     }
     break;
     }

@@ -1,13 +1,6 @@
 #include "pch.h"
 
-#include "CStateMove.h"
-#include "CStateIdle.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
-#include "CStateDie.h"
-#include "CStateJumpAttack.h"
-#include "CStateSkill.h"
-#include "CStateAppear.h"
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CEnemyMelee.h"
@@ -46,7 +39,7 @@ CState* CStateFall::HandleInput(CObject* _pObj)
         return nullptr;
         break;
     }
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
@@ -90,7 +83,7 @@ void CStateFall::Update(CObject* _pObj)
         }
         break;
     }
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         pEnemy->m_tEnemyInfo.m_vVelocity.y -= 1400 * DT;
@@ -112,13 +105,14 @@ void CStateFall::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_Fall", true);
         else
             pPlayer->GetAnimator()->Play(L"Player_Fall_Headless", true);
-
+        pPlayer->m_strCurState = L"Fall";
         break;
     }
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         pEnemy->GetAnimator()->Play(L"BigKnight_Idle", true);
+        pEnemy->m_strCurState = L"Fall";
         break;
     }
     }

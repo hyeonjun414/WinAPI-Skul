@@ -9,7 +9,6 @@ CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
 	CObject(_eType),
 	m_fCurTime(0),
 	m_fDuration(_fDuration),
-	m_strKey(_strImgName),
 	m_bIsPlay(true)
 {
 
@@ -24,7 +23,7 @@ CEffect::CEffect(OBJ_TYPE _eType, wstring _strImgName, wstring _strImgPath,
 	m_pAnimator->CreateAnimation(_strImgName, pImg, Vec2(0, 0), Vec2(imgDiviedSizeX, imgSizeY),
 		Vec2(imgDiviedSizeX, 0), (float)(_fPlayTime/imgCountX), imgCountX);
 	m_pAnimator->Play(_strImgName, true);
-	SetScale(Vec2(imgDiviedSizeX, imgSizeY));
+	//SetScale(Vec2(imgDiviedSizeX, imgSizeY));
 	
 }
 
@@ -57,5 +56,4 @@ void CEffect::EffectPlay(Vec2 _vPos)
 {
 	m_bIsPlay = true;
 	SetPos(_vPos);
-	//m_pAnimator->Play(m_strKey, false);
 }

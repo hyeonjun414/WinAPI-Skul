@@ -60,11 +60,15 @@ void CSceneStart::Enter()
 
 	CUICursor* cursor = new CUICursor(OBJ_TYPE::UI);
 	CREATEOBJECT(cursor);
+	SINGLE(CSoundManager)->AddSound(L"Title", L"sound\\MainTitle.wav", true);
+	SINGLE(CSoundManager)->Play(L"Title");
 
 	CCameraManager::GetInst()->SetLookAt(Vec2(WINSIZEX / 2.f, WINSIZEY / 2.f));
+	
 }
 
 void CSceneStart::Exit()
 {
 	ClearObject();
+	SINGLE(CSoundManager)->Stop(L"Title");
 }

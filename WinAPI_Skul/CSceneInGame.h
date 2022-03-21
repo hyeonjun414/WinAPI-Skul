@@ -11,5 +11,10 @@ public:
     virtual void	Update();
     virtual void    Enter();
     virtual void    Exit();
+
+    void    Stage01Init();
+    void    Stage02Init();
+
+    void    CreateUI();
 };
 

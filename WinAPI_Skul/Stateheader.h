@@ -1,0 +1,12 @@
+#pragma once
+#include "CStateIdle.h"
+#include "CStateMove.h"
+#include "CStateJump.h"
+#include "CStateFall.h"
+#include "CStateAttack.h"
+#include "CStateDash.h"
+#include "CStateDie.h"
+#include "CStateTrace.h"
+#include "CStateSkill.h"
+#include "CStateAppear.h"
+#include "CStateJumpAttack.h"

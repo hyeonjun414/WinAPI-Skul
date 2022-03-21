@@ -1,11 +1,9 @@
 #include "pch.h"
-#include "CStateAttack.h"
-#include "CStateIdle.h"
-#include "CStateMove.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
+
+#include "Stateheader.h"
 
 #include "CPlayer.h"
+#include "CEnemy.h"
 #include "CAnimator.h"
 #include "CCollider.h"
 
@@ -24,6 +22,12 @@ CState* CStateAttack::HandleInput(CObject* _pObj) {
             m_bAttackInput = true;
 
         return nullptr;
+    }
+    break;
+    case OBJ_TYPE::ENEMY:
+    {
+        if (m_fAttackLimitTime <= 0)
+            return new CStateIdle();
     }
     break;
     }
@@ -69,6 +73,11 @@ void CStateAttack::Update(CObject* _pObj) {
 
     }
     break;
+    case OBJ_TYPE::ENEMY:
+    {
+        m_fAttackLimitTime -= DT;
+    }
+    break;
     }
 }
 
@@ -102,6 +111,17 @@ void CStateAttack::Enter(CObject* _pObj)
             pPlayer->m_bIsRight = true;
             pPlayer->m_vPos.x += 20;
         }
+        pPlayer->m_strCurState = L"Attack";
+    }
+    break;
+    case OBJ_TYPE::ENEMY:
+    {
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        m_fAttackLimitTime = 0.6f;
+        m_fFlowTime = 0.f;
+        pEnemy->GetAnimator()->Play(L"BigKnight_AttacKA", true);
+        pEnemy->m_strCurState = L"Attack";
+        
     }
     break;
     }

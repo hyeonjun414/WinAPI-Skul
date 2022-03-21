@@ -7,6 +7,7 @@
 #include "CFuncObj.h"
 #include "CStateIdle.h"
 #include "CStateAppear.h"
+#include "CFuncAttack.h"
 
 CEnemyMelee::CEnemyMelee(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType):
 	CEnemy(_eType, _eEnemyType)
@@ -56,6 +57,12 @@ void CEnemyMelee::Init()
 		m_tEnemyInfo.m_iDamage = 0;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
+		
+		m_fHitDelayTime = 0.1f;
+		m_fCurHitTime = 0.f;
+		m_bCanHit = true;
+		
+
 		m_pState = new CStateAppear();
 		m_pState->Enter(this);
 
@@ -86,20 +93,26 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 	CEnemy::OnCollisionEnter(_pOther);
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK)
 	{
-		CFuncObj* pAttack = (CFuncObj*)_pOther->GetObj();
+		CFuncAttack* pAttack = (CFuncAttack*)_pOther->GetObj();
 
-		if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
+		if (m_bCanHit)
 		{
-			SetPos(GetPos() + Vec2(10, 0));
-			SetObjDir(false);
-		}
-		else
-		{
-			SetPos(GetPos() + Vec2(-10, 0));
-			SetObjDir(true);
+			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
+			{
+				SetPos(GetPos() + Vec2(10, 0));
+				SetObjDir(false);
+			}
+			else
+			{
+				SetPos(GetPos() + Vec2(-10, 0));
+				SetObjDir(true);
+			}
+
+			m_tEnemyInfo.m_iHp--;
+			pAttack->SetIsHit(true);
+			m_bCanHit = false;
 		}
 
-		m_tEnemyInfo.m_iHp--;
 	}
 }
 

@@ -1,15 +1,6 @@
 #include "pch.h"
 
-#include "CStateIdle.h"
-#include "CStateMove.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
-#include "CStateAttack.h"
-#include "CStateDash.h"
-#include "CStateDie.h"
-#include "CStateTrace.h"
-#include "CStateSkill.h"
-#include "CStateAppear.h"
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -59,7 +50,7 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
             return new CStateFall();
     }
         break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
@@ -90,13 +81,15 @@ void CStateIdle::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_Idle", true);
         else
             pPlayer->GetAnimator()->Play(L"Player_Idle_Headless", true);
+        pPlayer->m_strCurState = L"Idle";
 
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         pEnemy->GetAnimator()->Play(L"BigKnight_Idle", true);
+        pEnemy->m_strCurState = L"Idle";
     }
     break;
     }
@@ -111,7 +104,7 @@ void CStateIdle::Exit(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
     }

@@ -57,7 +57,7 @@ void CGate::OnCollision(CCollider* _pOther)
 		CPlayer* pPlayer = (CPlayer*)_pOther->GetObj();
 		if (KEYTAP(KEY::F) && m_bIsActivate)
 		{
-			SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::STAGE_01);
+			SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(m_eNextScene);
 			SINGLE(CSoundManager)->Stop(L"Ch1Bgm");
 			pPlayer->SetVelocity(Vec2(0, 0));
 			pPlayer->SetIsGround(true);

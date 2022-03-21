@@ -1,10 +1,6 @@
 #include "pch.h"
-#include "CStateJump.h"
-#include "CStateIdle.h"
-#include "CStateFall.h"
-#include "CStateDash.h"
-#include "CStateJumpAttack.h"
 
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -18,6 +14,14 @@ CState* CStateJump::HandleInput(CObject* _pObj)
     case OBJ_TYPE::PLAYER:
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
+        if (KEYTAP(KEY::A) && pPlayer->m_bCanSkill)
+        {
+            return new CStateSkill();
+        }
+        if (KEYTAP(KEY::S) && !pPlayer->m_bCanSkill)
+        {
+            return new CStateAppear();
+        }
         if (KEYTAP(KEY::C) && pPlayer->m_bCanDoubleJump)
         {
             pPlayer->m_bCanDoubleJump = false;
@@ -90,6 +94,7 @@ void CStateJump::Enter(CObject* _pObj)
         {
             SINGLE(CSoundManager)->Play(L"Jump");
         }
+        pPlayer->m_strCurState = L"Jump";
     }
     break;
     }

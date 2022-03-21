@@ -1,10 +1,5 @@
 #include "pch.h"
-#include "CStateSkill.h"
-#include "CStateAttack.h"
-#include "CStateIdle.h"
-#include "CStateMove.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -45,9 +40,11 @@ void CStateSkill::Enter(CObject* _pObj)
     {
         CPlayer* pPlayer = (CPlayer*)_pObj;
         pPlayer->GetAnimator()->Play(L"Player_SkillA", true);
+        SINGLE(CSoundManager)->Play(L"SkillA");
         m_fCurTime = 0.f;
         m_fDuration = 0.5f;
         pPlayer->SkillA();
+        pPlayer->m_strCurState = L"SkillA";
     }
     break;
     }

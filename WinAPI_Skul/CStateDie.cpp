@@ -1,10 +1,6 @@
 #include "pch.h"
-#include "CStateDie.h"
-#include "CStateMove.h"
-#include "CStateIdle.h"
-#include "CStateJump.h"
-#include "CStateFall.h"
-#include "CStateJumpAttack.h"
+
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -21,7 +17,7 @@ CState* CStateDie::HandleInput(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         if (m_fCurTime >= m_fDuration)
@@ -44,7 +40,7 @@ void CStateDie::Update(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         m_fCurTime += DT;
@@ -63,7 +59,7 @@ void CStateDie::Enter(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         m_fCurTime = 0.f;
@@ -84,7 +80,7 @@ void CStateDie::Exit(CObject* _pObj)
         CPlayer* pPlayer = (CPlayer*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY_MELEE:
+    case OBJ_TYPE::ENEMY:
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
     }

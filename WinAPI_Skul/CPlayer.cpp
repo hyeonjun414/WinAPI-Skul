@@ -34,7 +34,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	m_fSkillCurTime = 0;
 
 	SetScale(Vec2(96, 96));
-
+	SetName(L"Player");
 	// Collider 만들기
 	CreateCollider();
 	m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y/4));
@@ -96,9 +96,14 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 
 	SINGLE(CSoundManager)->AddSound(L"Jump", L"sound\\Default_Jump.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"JumpAir", L"sound\\Default_Jump_Air.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"AttackA", L"sound\\Legacy_AttackA.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"AttackB", L"sound\\Legacy_AttackB.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"AttackA", L"sound\\Skul_Atk 1.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"AttackB", L"sound\\Skul_Atk 2.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"JumpAttack", L"sound\\Skul_Jump_Atk.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
+
 
 	GetPlayerInfo().m_iDamage = 1;
 
@@ -137,6 +142,7 @@ void CPlayer::Update()
 void CPlayer::Render()
 {
 	ComponentRender();
+	RenderPlayerInfo();
 }
 
 void CPlayer::OnCollision(CCollider* _pOther)
@@ -218,6 +224,49 @@ void CPlayer::OnCollisionExit(CCollider* _pOther)
     }
 }
 
+void CPlayer::RenderPlayerInfo()
+{
+	if (SINGLE(CCore)->GetDebugMode())
+	{
+		Vec2 pos = GetRenderPos() + Vec2(GetScale().x / 2, -GetScale().y);
+		CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(L"CameraTex", L"texture\\cameraTex.png");
+		RENDER->RenderImage(
+			pImg,
+			pos.x,
+			pos.y,
+			pos.x + 150,
+			pos.y +  80,
+			0.3f);
+		RENDER->RenderText(
+			L"이름 : " + GetName(),
+			pos.x,
+			pos.y + 20,
+			pos.x + 150,
+			pos.y,
+			16.f,
+			0,
+			RGB(255,255,255));
+		RENDER->RenderText(
+			L"상태 : " + m_strCurState,
+			pos.x,
+			pos.y+ 50,
+			pos.x+ 150,
+			pos.y,
+			16.f,
+			0,
+			RGB(255, 255, 255));
+		RENDER->RenderText(
+			L"위치 : (" + to_wstring((int)GetPos().x) + L", " + to_wstring((int)GetPos().y) + L")",
+			pos.x,
+			pos.y+ 80,
+			pos.x+ 150,
+			pos.y,//+ 20 + 100,
+			16.f,
+			0,
+			RGB(255,255,255));
+	}
+}
+
 void CPlayer::CoolTime()
 {
 	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
@@ -258,7 +307,7 @@ void CPlayer::Attack()
 	CFuncAttack* pAttack = new CFuncAttack(OBJ_TYPE::PLAYER_ATTACK, L"Hit_Normal", L"texture\\effect\\hit_normal.png",
 		0.5f, 0.5f, 96, m_bIsRight);
 	pAttack->SetOwner(this);
-	pAttack->CreateAttackArea(this, Vec2(50, 0), Vec2(50, 100));
+	pAttack->CreateAttackArea(this, Vec2(50, 0), Vec2(70, 100));
 	CREATEOBJECT(pAttack);
 
 }
@@ -286,82 +335,6 @@ void CPlayer::SkillB()
 {
 	SetPos(m_pHead->GetPos());
 	m_pHead = nullptr;
+
+
 }
-
-//void CPlayer::SetCurAnim()
-//{
-//	CPlayer* pPlayer = this;
-//	switch (m_eCurState)
-//	{
-//	case PLAYER_STATE::IDLE:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_Idle", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Idle_Headless", true);
-//	}
-//		break;
-//	case PLAYER_STATE::MOVE:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_Move", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Move_Headless", true);
-//	}
-//		break;
-//	case PLAYER_STATE::ATTACK:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_AttackA_Headless", true);
-//	}
-//		break;
-//	case PLAYER_STATE::JUMP:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_Jump", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Jump_Headless", true);
-//	}
-//		break;
-//	case PLAYER_STATE::FALL:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_Fall", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Fall_Headless", true);
-//
-//	}
-//		break;
-//	case PLAYER_STATE::SKILL:
-//	{
-//		pPlayer->GetAnimator()->Play(L"Player_SkillA", true);
-//	}
-//		break;
-//	case PLAYER_STATE::DASH:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_Dash", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Dash_Headless", true);
-//	}
-//		break;
-//	case PLAYER_STATE::JUMPATTACK:
-//	{
-//		if (pPlayer->m_bCanSkill)
-//			pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
-//		else
-//			pPlayer->GetAnimator()->Play(L"Player_Headless_JumpAttack", true);
-//	}
-//		break;
-//	case PLAYER_STATE::REBONE:
-//	{
-//		pPlayer->GetAnimator()->Play(L"Player_SkillRebone", true);
-//	}
-//		break;
-//	default:
-//		break;
-//	}
-//}
-

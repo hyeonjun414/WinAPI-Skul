@@ -34,23 +34,46 @@ void CSceneInGame::Update()
 
 void CSceneInGame::Enter()
 {
+	switch (m_eType)
+	{
+	case SCENE_TYPE::STAGE_01:
+		Stage01Init();
+		break;
+	case SCENE_TYPE::STAGE_02:
+		Stage02Init();
+		break;
+	default:
+		break;
+	}
+
+}
+
+void CSceneInGame::Exit()
+{
+	ClearObject();
+
+	// 기존의 충돌 그릅을 해제시켜야한다.
+	SINGLE(CCollisionManager)->Reset();
+}
+
+void CSceneInGame::Stage01Init()
+{
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
 	obj->SetPos(Vec2(400.f, 1000.f));
-	obj->SetScale(Vec2(50, 50));
 	CREATEOBJECT(obj);
 	SINGLE(CGameManager)->SetPlayer(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
 	SINGLE(CCameraManager)->SetTarget(obj);
-	
-	
-	CImageObj* BgObj = nullptr;
 
+
+	CImageObj* BgObj = nullptr;
+	// 백그라운드 레이어 생성
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG1", L"texture\\background\\stage01_1.png", true);
 	BgObj->SetDepth(16.f);
 	CREATEOBJECT(BgObj);
@@ -70,45 +93,137 @@ void CSceneInGame::Enter()
 	BgObj->SetDepth(6.0f);
 	CREATEOBJECT(BgObj);
 
+	// 타일맵 출력
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
-		L"InGameSceneTile",
+		L"Stage01map",
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY_MELEE, ENEMY_TYPE::BIG_KNIGHT);
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
 	monsterMelee->SetPos(Vec2(600.f, 1100.f));
 	CREATEOBJECT(monsterMelee);
 
 
-	//CEffect* EftObj = new CEffect(OBJ_TYPE::EFFECT,L"Hit_Normal", L"texture\\effect\\hit_normal.png", 100, 0.5, 96, true);
-	//EftObj->SetPos(Vec2(100, 800));
-	//CREATEOBJECT(EftObj);
-
-	//EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Appearance", L"texture\\effect\\Enemy_Appearance.png", 100, 0.5, 128, true);
-	//EftObj->SetPos(Vec2(250, 800));
-	//CREATEOBJECT(EftObj);
-
-	//EftObj = new CEffect(OBJ_TYPE::EFFECT, L"Enemy_Dead", L"texture\\effect\\Enemy_Dead.png", 100, 0.5, 128, true);
-	//EftObj->SetPos(Vec2(400, 800));
-	//CREATEOBJECT(EftObj);
-
-
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetNextScene(SCENE_TYPE::STAGE_01);
 	gateObj->SetPos(Vec2(250, 1105));
 	CREATEOBJECT(gateObj);
 
 	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetNextScene(SCENE_TYPE::STAGE_02);
 	gateObj->SetPos(Vec2(2800, 1230));
 	CREATEOBJECT(gateObj);
 
+	// 저장한 타일 충돌체 불러오기
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
 	strPath += L"texture\\tile\\Map\\stage01.tile";
 	LoadTile(strPath);
 
+	CreateUI();
+
+
+	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Attack", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
+	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
+}
+
+void CSceneInGame::Stage02Init()
+{
+	GAMEPLAY(true);
+	SINGLE(CCameraManager)->FadeIn(1.f);
+
+	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
+	obj->SetName(L"Player");
+	obj->SetPos(Vec2(400.f, 1000.f));
+	CREATEOBJECT(obj);
+	SINGLE(CGameManager)->SetPlayer(obj);
+
+	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
+	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
+	SINGLE(CCameraManager)->SetTarget(obj);
+
+
+	CImageObj* BgObj = nullptr;
+	// 백그라운드 레이어 생성
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG1", L"texture\\background\\stage01_1.png", true);
+	BgObj->SetDepth(16.f);
+	CREATEOBJECT(BgObj);
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG2", L"texture\\background\\stage01_2.png", true);
+	BgObj->SetDepth(14.f);
+	CREATEOBJECT(BgObj);
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG3", L"texture\\background\\stage01_3.png", true);
+	BgObj->SetDepth(12.f);
+	CREATEOBJECT(BgObj);
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG4", L"texture\\background\\stage01_4.png", true);
+	BgObj->SetDepth(10.0f);
+	CREATEOBJECT(BgObj);
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG5", L"texture\\background\\stage01_5.png", true);
+	BgObj->SetDepth(8.0f);
+	CREATEOBJECT(BgObj);
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE, L"Stage01BG6", L"texture\\background\\stage01_6.png", true);
+	BgObj->SetDepth(6.0f);
+	CREATEOBJECT(BgObj);
+
+	// 타일맵 출력
+	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
+		L"Stage02map",
+		L"texture\\stage02.png", true);
+	CREATEOBJECT(BgObj);
+
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(600.f, 1100.f));
+	CREATEOBJECT(monsterMelee);
+
+
+	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetNextScene(SCENE_TYPE::STAGE_02);
+	gateObj->SetPos(Vec2(250, 1050));
+	CREATEOBJECT(gateObj);
+
+	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
+	gateObj->SetNextScene(SCENE_TYPE::STAGE_01);
+	gateObj->SetPos(Vec2(2800, 1050));
+	CREATEOBJECT(gateObj);
+
+
+	// 저장한 타일 충돌체 불러오기
+	wstring strPath = SINGLE(CPathManager)->GetContentPath();
+	strPath += L"texture\\tile\\Map\\stage02.tile";
+	LoadTile(strPath);
+
+
+	CreateUI();
+
+
+	// 사운드 설정
+	SINGLE(CSoundManager)->AddSound(L"Attack", L"sound\\arrow_hit.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
+	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+
+	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
+}
+
+void CSceneInGame::CreateUI()
+{
 	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
@@ -138,7 +253,7 @@ void CSceneInGame::Enter()
 	pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
-	pUI->SetPos(Vec2(0,0));
+	pUI->SetPos(Vec2(0, 0));
 	CUIText* pTimer = new CUIText(OBJ_TYPE::UI);
 	pTimer->SetPos(Vec2(20, 5));
 	pTimer->SetScale(Vec2(100, 30));
@@ -150,7 +265,7 @@ void CSceneInGame::Enter()
 	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_3.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(1.f, 1.f));
-	pUI->SetPos(Vec2(WINSIZEX- (float)pUI->GetImage()->GetWidth(), WINSIZEY- (float)pUI->GetImage()->GetHeight()));
+	pUI->SetPos(Vec2(WINSIZEX - (float)pUI->GetImage()->GetWidth(), WINSIZEY - (float)pUI->GetImage()->GetHeight()));
 
 	pTimer = new CUIText(OBJ_TYPE::UI);
 	pTimer->SetPos(Vec2(145, 0));
@@ -160,23 +275,4 @@ void CSceneInGame::Enter()
 	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
-
-
-	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY_MELEE, OBJ_TYPE::TILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY_MELEE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY_MELEE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY_MELEE, OBJ_TYPE::PROJECTILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
-}
-
-void CSceneInGame::Exit()
-{
-	ClearObject();
-
-	// 기존의 충돌 그릅을 해제시켜야한다.
-	SINGLE(CCollisionManager)->Reset();
 }

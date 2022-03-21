@@ -237,8 +237,6 @@ void CCameraManager::MiniMapRender()
 			}
 			
 			case (UINT)OBJ_TYPE::ENEMY:
-			case (UINT)OBJ_TYPE::ENEMY_MELEE:
-			case (UINT)OBJ_TYPE::ENEMY_RANGE:
 			{
 				RENDER->RenderFillRectangle(
 					vPos.x,

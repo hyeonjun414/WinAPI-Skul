@@ -9,6 +9,7 @@ class CGameManager
 
 public:
 	CObject*	m_pPlayer;
+	CObject*	m_pPlayer2;
 	bool		m_bIsPlay;
 
 	int			m_iRemainEnemyCount;
@@ -16,6 +17,7 @@ public:
 	CUIText*	m_pTimer;
 	CUIText*	m_pRemainEnemy;
 
+	vector<CObject> m_vecItem;
 public:
 	void		Init();
 	void		Update();

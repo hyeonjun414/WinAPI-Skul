@@ -150,7 +150,13 @@ void CScene::CScene::LoadTile(const wstring& strPath)
 		newTile->SetPos(Vec2((float)(newTile->GetX() * CTile::SIZE_TILE),
 							(float)(newTile->GetY() * CTile::SIZE_TILE)));
 
-		if (TILE_TYPE::NONE != newTile->GetType())
+		if (TILE_TYPE::FLOATING == newTile->GetType())
+		{
+			newTile->CreateCollider();
+			newTile->GetCollider()->SetScale(Vec2(CTile::SIZE_TILE, CTile::SIZE_TILE/2));
+			newTile->GetCollider()->SetOffsetPos(Vec2(CTile::SIZE_TILE / 2.f, CTile::SIZE_TILE/4.f));
+		}
+		else if (TILE_TYPE::NONE != newTile->GetType())
 		{
 			newTile->CreateCollider();
 			newTile->GetCollider()->SetScale(Vec2(CTile::SIZE_TILE, CTile::SIZE_TILE));

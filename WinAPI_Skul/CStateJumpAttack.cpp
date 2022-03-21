@@ -1,9 +1,6 @@
 #include "pch.h"
-#include "CStateJumpAttack.h"
-#include "CStateJump.h"
-#include "CStateIdle.h"
-#include "CStateFall.h"
-#include "CStateDash.h"
+
+#include "Stateheader.h"
 
 #include "CPlayer.h"
 #include "CAnimator.h"
@@ -68,6 +65,7 @@ void CStateJumpAttack::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_JumpAttack_Headless", true);
         pPlayer->JumpAttack();
         SINGLE(CSoundManager)->Play(L"AttackB");
+        pPlayer->m_strCurState = L"JumpAttack";
     }
     break;
     }
