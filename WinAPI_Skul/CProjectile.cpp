@@ -13,7 +13,7 @@ CProjectile::CProjectile(OBJ_TYPE _eType, CObject* _pObj,
 	m_bIsHit(false)
 {
 	SetObjDir(_pObj->GetObjDir());
-
+	SetName(_strKey);
 	CreateAnimator();
 	m_pAnimator->CreateAnim(_strKey, _strPath, 0.5f);
 	m_pAnimator->Play(_strKey, true);
@@ -67,10 +67,10 @@ void CProjectile::OnCollisionEnter(CCollider* _pOther)
 	//	m_vVelocity.y -= 200;
 	//	m_bIsHit = true;
 	//}
-	//if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
-	//{
-	//	DELETEOBJECT(this);
-	//}
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
+	{
+		DELETEOBJECT(this);
+	}
 }
 
 void CProjectile::Move(Vec2 _vVelocity, float _fDelay)

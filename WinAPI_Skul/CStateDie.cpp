@@ -110,7 +110,7 @@ void CStateDie::Enter(CObject* _pObj)
             m_fCurTime = 0.f;
             m_fDuration = 1.0f;
             //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
-            pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
+            pEnemy->GetAnimator()->PlayAndNextAnim(L"Wizard_Idle", false, L"DisappearEnemy");
         }
         break;
         }

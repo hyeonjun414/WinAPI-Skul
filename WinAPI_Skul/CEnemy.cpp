@@ -55,15 +55,7 @@ void CEnemy::Update()
 
 	m_pState->Update(this);
 
-	if (!m_bCanHit)
-	{
-		m_fCurHitTime += DT;
-		if (m_fCurHitTime >= m_fHitDelayTime)
-		{
-			m_bCanHit = true;
-			m_fCurHitTime = 0.f;
-		}
-	}
+	CoolTime();
 
 
 	if(nullptr != m_pAnimator)
@@ -193,5 +185,29 @@ void CEnemy::RenderEnemyInfo()
 			16.f,
 			0,
 			RGB(255, 255, 255));
+	}
+}
+
+void CEnemy::CoolTime()
+{
+	// 피격 상태 쿨타임
+	if (!m_bCanHit && m_fHitDelayTime != 0.f)
+	{
+		m_fCurHitTime += DT;
+		if (m_fCurHitTime >= m_fHitDelayTime)
+		{
+			m_bCanHit = true;
+			m_fCurHitTime = 0.f;
+		}
+	}
+	// 추적 상태 쿨타임
+	if (!m_bCanTrace && m_fTraceCoolTime != 0.f)
+	{
+		m_fCurTraceTime += DT;
+		if (m_fCurTraceTime >= m_fTraceCoolTime)
+		{
+			m_bCanTrace = true;
+			m_fCurTraceTime = 0.f;
+		}
 	}
 }

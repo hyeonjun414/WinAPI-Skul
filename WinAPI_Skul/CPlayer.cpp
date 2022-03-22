@@ -10,6 +10,8 @@
 #include "CTile.h"
 #include "CProjectile.h"
 #include "CMeleeAttack.h"
+#include "CAttack.h"
+#include "CEnemy.h"
 
 CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
@@ -174,11 +176,22 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			}
 		}
     }
-	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE &&
-		_pOther->GetObj()->GetName() == L"SkulHead")
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE)
 	{
-		m_bCanSkill = true;
-		m_fSkillCurTime = 0.f;
+		if (L"SkulHead" == _pOther->GetObj()->GetName())
+		{
+			m_bCanSkill = true;
+			m_fSkillCurTime = 0.f;
+		}
+		else if (L"Wizard_Fireball" == _pOther->GetObj()->GetName())
+		{
+			CAttack* pAttack = (CAttack*)_pOther->GetObj();
+			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
+			SINGLE(CGameManager)->CreateEffect(L"Explosion", L"texture\\effect\\explosion_small.png",
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
+			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+		}
 	}
 }
 

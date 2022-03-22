@@ -38,6 +38,10 @@ protected:
     float       m_fCurHitTime;
     bool        m_bCanHit;
 
+    float       m_fTraceCoolTime;
+    float       m_fCurTraceTime;
+    bool        m_bCanTrace;
+
     ENEMY_TYPE  m_eEnemyType;
     CState*     m_pState;
     tEnemy_Info m_tEnemyInfo;
@@ -66,6 +70,7 @@ public:
     bool                CanHit() { return m_bCanHit; }
 
     void                RenderEnemyInfo();
+    void                CoolTime();
 
     
 };

@@ -7,7 +7,6 @@ class CEnemyRange :
     friend class CStateDie;
     friend class CStateTrace;
     friend class CStateFall;
-
 public:
     CEnemyRange(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType);
     virtual ~CEnemyRange();
@@ -22,5 +21,6 @@ public:
 
 
     virtual void        Attack();
+    void                Teleport(Vec2 _vTargerPos);
 };
 

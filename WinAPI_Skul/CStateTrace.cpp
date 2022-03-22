@@ -41,16 +41,19 @@ CState* CStateTrace::HandleInput(CObject* _pObj)
         case ENEMY_TYPE::WIZARD:
         {
             CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-            if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 &&
-                abs(PLAYERPOS.y - pEnemy->GetPos().y) < 200)
-                return new CStateAttack();
-            if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 600)
-                return new CStateIdle();
 
             if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
                 return new CStateDie();
+
             if (!pEnemy->m_bIsGround)
                 return new CStateFall();
+            if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400)
+                return new CStateAttack();
+
+            if ((PLAYERPOS - pEnemy->GetPos()).Length() > 600)
+                return new CStateIdle();
+
+            
         }
         break;
         }
@@ -127,6 +130,13 @@ void CStateTrace::Enter(CObject* _pObj)
         case ENEMY_TYPE::WIZARD:
         {
             CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            SINGLE(CGameManager)->CreateEffect(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
+                pEnemy->GetPos(), 0.5f, 0.5f, pEnemy->GetObjDir());
+
+            pEnemy->Teleport(PLAYERPOS);
+
+            SINGLE(CGameManager)->CreateEffect(L"Appear", L"texture\\effect\\Enemy_Appearance.png",
+                pEnemy->GetPos(), 0.5f, 0.5f, pEnemy->GetObjDir());
             pEnemy->GetAnimator()->Play(L"Wizard_Teleport", true);
             pEnemy->m_strCurState = L"Trace";
         }

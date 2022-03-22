@@ -75,16 +75,29 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
                 return new CStateFall();
         }
             break;
+
         case ENEMY_TYPE::WIZARD:
         {
             CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
             if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
                 return new CStateDie();
-            if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 && pEnemy->m_bIsGround)
-                return new CStateTrace();
 
             if (!pEnemy->m_bIsGround)
                 return new CStateFall();
+
+            // 플레이어와의 거리가 400이상으로 벌어지고 추적 가능 상태이면 텔레포트
+            if ((PLAYERPOS - pEnemy->GetPos()).Length() > 400 &&
+                pEnemy->m_bIsGround && pEnemy->m_bCanTrace)
+            {
+                pEnemy->m_bCanTrace = false;
+                return new CStateTrace();
+            }
+
+
+            if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400)
+                return new CStateAttack();
+
+            
         }
             break;
         }
