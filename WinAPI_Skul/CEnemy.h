@@ -52,9 +52,11 @@ public:
     virtual void        Update();
     virtual void        Render();
 
-    virtual void	OnCollision(CCollider* _pOther);
-    virtual void	OnCollisionEnter(CCollider* _pOther);
-    virtual void	OnCollisionExit(CCollider* _pOther);
+    virtual void	    OnCollision(CCollider* _pOther);
+    virtual void	    OnCollisionEnter(CCollider* _pOther);
+    virtual void	    OnCollisionExit(CCollider* _pOther);
+
+    virtual void        Attack() {}
 
 
     ENEMY_TYPE          GetEnemyType()                      { return m_eEnemyType; }
@@ -64,5 +66,7 @@ public:
     bool                CanHit() { return m_bCanHit; }
 
     void                RenderEnemyInfo();
+
+    
 };
 

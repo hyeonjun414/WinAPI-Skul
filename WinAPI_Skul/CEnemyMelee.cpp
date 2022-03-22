@@ -2,7 +2,6 @@
 #include "CEnemyMelee.h"
 #include "CCollider.h"
 #include "CAnimator.h"
-#include "CD2DImage.h"
 
 #include "CStateIdle.h"
 #include "CStateAppear.h"
@@ -27,21 +26,13 @@ void CEnemyMelee::Init()
 	case ENEMY_TYPE::BIG_KNIGHT:
 	{
 		CreateAnimator();
-		CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(L"BigKnight_Idle", L"texture\\enemy\\big_knight_idle.png");
-		m_pAnimator->CreateAnimation(L"BigKnight_Idle", pImg, Vec2(0, 0), Vec2(160, 160), Vec2(160, 0), 0.2f, 4);
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"BigKnight_Move", L"texture\\enemy\\big_knight_move.png");
-		m_pAnimator->CreateAnimation(L"BigKnight_Move", pImg, Vec2(0, 0), Vec2(160, 160), Vec2(160, 0), 0.1f, 8);
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"BigKnight_AttacKA", L"texture\\enemy\\big_knight_attacka.png");
-		m_pAnimator->CreateAnimation(L"BigKnight_AttacKA", pImg, Vec2(0, 0), Vec2(160, 160), Vec2(160, 0), 0.1f, 6);
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"BigKnight_AttacKB", L"texture\\enemy\\big_knight_attackb.png");
-		m_pAnimator->CreateAnimation(L"BigKnight_AttacKB", pImg, Vec2(0, 0), Vec2(160, 160), Vec2(160, 0), 2.f, 2);
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"BigKnight_Die", L"texture\\enemy\\big_knight_die.png");
-		m_pAnimator->CreateAnimation(L"BigKnight_Die", pImg, Vec2(0, 0), Vec2(160, 160), Vec2(160, 0), 2.f, 1);
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"AppearEnemy", L"texture\\effect\\Enemy_Appearance.png");
-		m_pAnimator->CreateAnimation(L"AppearEnemy", pImg, Vec2(0, 0), Vec2(128, 128), Vec2(128, 0), 1.0f/11.f, 11);
-
-		pImg = SINGLE(CResourceManager)->LoadD2DImage(L"DisappearEnemy", L"texture\\effect\\Enemy_Dead.png");
-		m_pAnimator->CreateAnimation(L"DisappearEnemy", pImg, Vec2(0, 0), Vec2(128, 128), Vec2(128, 0), 0.5f/6.f, 6);
+		m_pAnimator->CreateAnim(L"BigKnight_Idle", L"texture\\enemy\\big_knight_idle.png", 0.8f);
+		m_pAnimator->CreateAnim(L"BigKnight_Move", L"texture\\enemy\\big_knight_move.png", 0.8f);
+		m_pAnimator->CreateAnim(L"BigKnight_AttacKA", L"texture\\enemy\\big_knight_attacka.png", 0.6f);
+		m_pAnimator->CreateAnim(L"BigKnight_AttacKB", L"texture\\enemy\\big_knight_attackb.png", 4.0f);
+		m_pAnimator->CreateAnim(L"BigKnight_Die", L"texture\\enemy\\big_knight_die.png", 0.5f);
+		m_pAnimator->CreateAnim(L"AppearEnemy", L"texture\\effect\\Enemy_Appearance.png", 1.0f);
+		m_pAnimator->CreateAnim(L"DisappearEnemy", L"texture\\effect\\Enemy_Dead.png", 0.5f);
 
 		SetScale(Vec2(160, 160));
 		SetName(L"Big_Knight");
@@ -124,4 +115,8 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 void CEnemyMelee::OnCollisionExit(CCollider* _pOther)
 {
 	CEnemy::OnCollisionExit(_pOther);
+}
+
+void CEnemyMelee::Attack()
+{
 }

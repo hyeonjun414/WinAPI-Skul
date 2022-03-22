@@ -50,6 +50,7 @@ enum class TILE_TYPE
 	NONE,
 	GROUND,
 	FLOATING,
+	WALL,
 
 	SIZE,
 };

@@ -22,7 +22,7 @@ CState* CStateAppear::HandleInput(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        CEnemy* pEnemy = (CEnemy*)_pObj;
         if (m_fCurTime >= m_fDuration)
             return new CStateIdle();
     }

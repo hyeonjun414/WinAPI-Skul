@@ -40,8 +40,8 @@ void CStateJumpAttack::Update(CObject* _pObj)
         {
             pPlayer->m_vPos.x += pPlayer->m_vVelocity.x * DT;
         }
-        pPlayer->m_vVelocity.y -= 1400 * DT;
-        pPlayer->m_vPos.y -= pPlayer->m_vVelocity.y * DT;
+        pPlayer->m_vVelocity.y += 1400 * DT;
+        pPlayer->m_vPos.y += pPlayer->m_vVelocity.y * DT;
 
         m_fJumpAttackCurTime += DT;
     }

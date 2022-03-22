@@ -36,7 +36,7 @@ CState* CStateJump::HandleInput(CObject* _pObj)
         {
             return new CStateJumpAttack();
         }
-        if (pPlayer->GetVelocity().y <= 0)
+        if (pPlayer->GetVelocity().y >= 0)
             return new CStateFall();
         return nullptr;
     }
@@ -63,8 +63,8 @@ void CStateJump::Update(CObject* _pObj)
             pPlayer->SetObjDir(true);
             pPlayer->m_vPos.x += pPlayer->m_vVelocity.x * DT;
         }
-        pPlayer->m_vVelocity.y -= 1400 * DT;
-        pPlayer->m_vPos.y -= pPlayer->m_vVelocity.y * DT;
+        pPlayer->m_vVelocity.y += 1400 * DT;
+        pPlayer->m_vPos.y += pPlayer->m_vVelocity.y * DT;
     }
     break;
     }
@@ -81,7 +81,7 @@ void CStateJump::Enter(CObject* _pObj)
             pPlayer->GetAnimator()->Play(L"Player_Jump", true);
         else
             pPlayer->GetAnimator()->Play(L"Player_Jump_Headless", true);
-        pPlayer->m_vVelocity.y = 700;
+        pPlayer->m_vVelocity.y = -700;
         if (!pPlayer->m_bCanDoubleJump)
         {
             SINGLE(CGameManager)->CreateEffect(L"Jump_Smoke", L"texture\\effect\\doublejump_smoke.png",

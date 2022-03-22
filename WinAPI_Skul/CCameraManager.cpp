@@ -208,10 +208,10 @@ void CCameraManager::MiniMapRender()
 			Vec2 vPos = vecObject[i][j]->GetPos();
 			Vec2 vScale = vecObject[i][j]->GetScale();
 			vPos.x *= 0.07f;
-			vPos.y *= 0.085f;
+			vPos.y *= 0.08f;
 			vScale.y /= 2.f;
 			vScale.y *= 0.07f;
-			vPos += Vec2(WINSIZEX- 242, WINSIZEY- 142);
+			vPos += Vec2(WINSIZEX- 242, WINSIZEY- 144);
 			
 			switch (i)
 			{

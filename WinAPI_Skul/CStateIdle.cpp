@@ -7,6 +7,7 @@
 #include "CCollider.h"
 
 #include "CEnemyMelee.h"
+#include "CEnemyRange.h"
 
 
 CState* CStateIdle::HandleInput(CObject* _pObj) {
@@ -40,6 +41,12 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
         }
         if (KEYTAP(KEY::C))
         {
+            if (KEYHOLD(KEY::DOWN))
+            {
+                pPlayer->m_vPos.y += 3;
+                pPlayer->m_bIsGround = false;
+                return new CStateFall();
+            }
             return new CStateJump();
         }
         if (KEYTAP(KEY::X))
@@ -52,15 +59,36 @@ CState* CStateIdle::HandleInput(CObject* _pObj) {
         break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
-            return new CStateDie();
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+            if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
+                return new CStateDie();
 
-        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 && pEnemy->m_bIsGround)
-            return new CStateTrace();
+            if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 && pEnemy->m_bIsGround)
+                return new CStateTrace();
 
-        if (!pEnemy->m_bIsGround)
-            return new CStateFall();
+            if (!pEnemy->m_bIsGround)
+                return new CStateFall();
+        }
+            break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
+                return new CStateDie();
+            if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 400 && pEnemy->m_bIsGround)
+                return new CStateTrace();
+
+            if (!pEnemy->m_bIsGround)
+                return new CStateFall();
+        }
+            break;
+        }
+
     }
     break;
     }
@@ -87,9 +115,25 @@ void CStateIdle::Enter(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        pEnemy->GetAnimator()->Play(L"BigKnight_Idle", true);
-        pEnemy->m_strCurState = L"Idle";
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+            pEnemy->GetAnimator()->Play(L"BigKnight_Idle", true);
+            pEnemy->m_strCurState = L"Idle";
+        }
+        break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            pEnemy->GetAnimator()->Play(L"Wizard_Idle", true);
+            pEnemy->m_strCurState = L"Idle";
+        }
+        break;
+        }
+        
     }
     break;
     }
@@ -106,7 +150,22 @@ void CStateIdle::Exit(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+            ;
+        }
+        break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            ;
+        }
+        break;
+        }
     }
     break;
     }

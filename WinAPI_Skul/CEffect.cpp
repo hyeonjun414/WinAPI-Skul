@@ -11,20 +11,10 @@ CEffect::CEffect(wstring _strImgName, wstring _strImgPath,
 	m_fDuration(_fDuration),
 	m_bIsPlay(true)
 {
-
-	CD2DImage* pImg = SINGLE(CResourceManager)->LoadD2DImage(_strImgName, _strImgPath);
 	SetObjDir(_dir);
-	float imgX = (float)pImg->GetWidth();
-	float imgY = (float)pImg->GetHeight();
-	int imgCountX = (int)(imgX / imgY);
-	float imgDiviedSizeX = imgX / imgCountX;
 	CreateAnimator();
-
-	m_pAnimator->CreateAnimation(_strImgName, pImg, Vec2(0, 0), Vec2(imgDiviedSizeX, imgY),
-		Vec2(imgDiviedSizeX, 0), (float)(_fInterval /imgCountX), imgCountX);
+	m_pAnimator->CreateAnim(_strImgName, _strImgPath, _fInterval);
 	m_pAnimator->Play(_strImgName, true);
-	//SetScale(Vec2(imgDiviedSizeX, imgSizeY));
-	
 }
 
 CEffect::~CEffect()

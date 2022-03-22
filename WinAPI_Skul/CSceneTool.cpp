@@ -366,6 +366,11 @@ void CSceneTool::ClickTileGroup(CUIButton* _btn)
 	}
 	else if (m_eTileType == TILE_TYPE::FLOATING)
 	{
+		m_eTileType = TILE_TYPE::WALL;
+		_btn->SetText(L"WALL");
+	}
+	else if (m_eTileType == TILE_TYPE::WALL)
+	{
 		m_eTileType = TILE_TYPE::NONE;
 		_btn->SetText(L"NONE");
 	}
@@ -382,22 +387,6 @@ void CSceneTool::CreateTilePanel()
 	panelTile->SetName(L"panelTile");
 	panelTile->SetScale(Vec2(200, 100));
 	panelTile->SetPos(Vec2(WINSIZEX - 450.f, 50.f));
-
-	//CD2DImage* pImg = CResourceManager::GetInst()->LoadD2DImage(L"Tile", L"texture\\tile\\tilemap.bmp");
-	//for (UINT y = 0; y < 8; y++)
-	//{
-	//	for (UINT x = 0; x < 4; x++)
-	//	{
-	//		CUITileBtn* btnTile = new CUITileBtn(OBJ_TYPE::UI);
-	//		btnTile->SetScale(Vec2(CTile::SIZE_TILE/2, CTile::SIZE_TILE/2));
-	//		btnTile->SetPos(Vec2((float)x * CTile::SIZE_TILE/2, (float)y * CTile::SIZE_TILE/2));
-	//		btnTile->SetPos(btnTile->GetPos() + Vec2(8.f, 8.f));
-	//		btnTile->SetImage(pImg);
-	//		btnTile->SetIdx(y * 12 + x);
-	//		btnTile->SetClickCallBack(ClickTileButton, (DWORD_PTR)this, (DWORD_PTR)btnTile);
-	//		panelTile->AddChild(btnTile);
-	//	}
-	//}
 
 	CUIButton* btnTileGroup = new CUIButton(OBJ_TYPE::UI);
 	btnTileGroup->SetScale(Vec2(100.f, 50.f));
@@ -480,6 +469,17 @@ void CSceneTool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 255, 0),
+				3.f
+			);
+		}
+		else if (TILE_TYPE::WALL == pTile->GetType())
+		{
+			CRenderManager::GetInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 0, 255),
 				3.f
 			);
 		}

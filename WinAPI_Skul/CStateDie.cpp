@@ -7,6 +7,7 @@
 #include "CCollider.h"
 
 #include "CEnemyMelee.h"
+#include "CEnemyRange.h"
 
 CState* CStateDie::HandleInput(CObject* _pObj)
 {
@@ -19,11 +20,29 @@ CState* CStateDie::HandleInput(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        if (m_fCurTime >= m_fDuration)
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
         {
-            DELETEOBJECT(_pObj);
-            SINGLE(CGameManager)->m_iRemainEnemyCount--;
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+            if (m_fCurTime >= m_fDuration)
+            {
+                DELETEOBJECT(_pObj);
+                SINGLE(CGameManager)->m_iRemainEnemyCount--;
+            }
+        }
+        break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            if (m_fCurTime >= m_fDuration)
+            {
+                DELETEOBJECT(_pObj);
+                SINGLE(CGameManager)->m_iRemainEnemyCount--;
+            }
+        }
+        break;
         }
     }
     break;
@@ -42,9 +61,21 @@ void CStateDie::Update(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         m_fCurTime += DT;
-
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        }
+        break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        }
+        break;
+        }
     }
     break;
     }
@@ -61,11 +92,28 @@ void CStateDie::Enter(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        m_fCurTime = 0.f;
-        m_fDuration = 2.5f;
-        //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
-        pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+            m_fCurTime = 0.f;
+            m_fDuration = 1.0f;
+            //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
+            pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
+        }
+            break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+            m_fCurTime = 0.f;
+            m_fDuration = 1.0f;
+            //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
+            pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
+        }
+        break;
+        }
     }
     break;
     }
@@ -82,7 +130,20 @@ void CStateDie::Exit(CObject* _pObj)
     break;
     case OBJ_TYPE::ENEMY:
     {
-        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        CEnemy* pEnemy = (CEnemy*)_pObj;
+        switch (pEnemy->GetEnemyType())
+        {
+        case ENEMY_TYPE::BIG_KNIGHT:
+        {
+            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        }
+        break;
+        case ENEMY_TYPE::WIZARD:
+        {
+            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        }
+        break;
+        }
     }
     break;
     }

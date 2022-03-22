@@ -35,10 +35,6 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 		if (pEnemy->CanHit())
 		{
 			CPlayer* pPlayer = (CPlayer*)GetOwner();
-			CTextObj* pObj = new CTextObj(OBJ_TYPE::TEXT, to_wstring(pPlayer->GetPlayerInfo().m_iDamage), TEXT_EFFECT::BOUNCE);
-			pObj->SetPos((m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
-			CREATEOBJECT(pObj);
-			SINGLE(CSoundManager)->Play(L"Attack");
 		}
 
 	}

@@ -37,6 +37,7 @@ public:
 	int				GetMaxFrame()		{ return (int)m_vecFrame.size(); }
 	const wstring&	GetName()			{ return m_strName; }
 	bool			IsFinish()			{ return m_bFinish; }
+	CD2DImage*		GetImg()			{ return m_pImg; }
 
 };
 
