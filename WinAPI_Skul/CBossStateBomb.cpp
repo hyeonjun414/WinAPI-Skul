@@ -2,6 +2,7 @@
 #include "stateheader.h"
 #include "CEnemyBoss.h"
 #include "CAnimator.h"
+#include "CProjectile.h"
 
 CBossState* CBossStateBomb::HandleInput(CObject* _pObj)
 {
@@ -27,25 +28,44 @@ void CBossStateBomb::Update(CObject* _pObj)
 
 	if (m_fCurTime < 2.0f)
 	{
+		if (1.0f < m_fCurTime && m_fCurTime < 1.1f && m_bOnceFunc)
+		{
+			SINGLE(CGameManager)->CreateEffect(L"Bomb_Charging2", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_2.png",
+				pBoss->m_pHeadTop->GetPos(), 1.f, 1.f, true, 1.f);
+			m_bOnceFunc = false;
+			m_fOnceFuncCurTime = 0.f;
+		}
 		Vec2 randVec = Vec2(rand() % 500 - 250, rand() % 500 - 250);
 		//pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + randVec * DT);
 		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + randVec * DT);
 		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + randVec * DT);
 	}
-	else if (1.0f < m_fCurTime && m_fCurTime < 1.5f)
+	else if (2.f < m_fCurTime && m_fCurTime < 2.3f)
 	{
+		pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + Vec2(0, -30) * DT);
+		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + Vec2(0, -400) * DT);
+		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + Vec2(0, -400) * DT);
 	}
-	else if (1.5f < m_fCurTime && m_fCurTime < 1.8f)
+	else if (2.4f < m_fCurTime && m_fCurTime < 6.f)
 	{
-	}
-	else if (1.8f < m_fCurTime && m_fCurTime < 2.0f)
-	{
-	}
-	else if (2.0f < m_fCurTime && m_fCurTime < 6.f)
-	{
-	}
-	else if (6.f < m_fCurTime && m_fCurTime < 6.2f)
-	{
+		if (m_fCurTime < 2.5f && m_bOnceFunc)
+		{
+			SINGLE(CGameManager)->CreateEffect(L"Bomb_Casting", L"texture\\effect\\ElderEntP2_EnergyCorps_Spark.png",
+				pBoss->m_pHeadTop->GetPos(), 3.5f, 1.f, true, 1.f);
+			SINGLE(CCameraManager)->CameraShaking(500.f, 5.f);
+			m_bOnceFunc = false;
+			m_fOnceFuncCurTime = 0.f;
+		}
+		Vec2 randVec = Vec2(rand() % 300 - 150, rand() % 300 - 150);
+		pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + randVec * DT);
+		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + randVec * DT);
+		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + randVec * DT);
+		if (m_bOnceFunc)
+		{
+			CreateBomb(_pObj);
+			m_bOnceFunc = false;
+			m_fOnceFuncCurTime = 0.f;
+		}
 	}
 	else
 	{}
@@ -62,7 +82,7 @@ void CBossStateBomb::Enter(CObject* _pObj)
 	m_fNextAttackTime = 7.0f;
 	m_fNextAttackCurTime = 0.f;
 	m_bOnceFunc = true;
-	m_fOnceFuncTime = 0.5f;
+	m_fOnceFuncTime = 0.2f;
 	m_fOnceFuncCurTime = 0.f;
 	pBoss->m_bIsPhaseChanged = true;
 	pBoss->m_strCurState = L"Change";
@@ -74,7 +94,8 @@ void CBossStateBomb::Enter(CObject* _pObj)
 	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-360, +200));
 	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+360, +200));
 
-	ChargingEffect(pBoss->m_pHeadTop);
+	SINGLE(CGameManager)->CreateEffect(L"Bomb_Charging", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_1.png",
+		pBoss->m_pHeadTop->GetPos(), 1.f, 1.f, true, 1.f);
 }
 
 void CBossStateBomb::Exit(CObject* _pObj)
@@ -88,9 +109,20 @@ void CBossStateBomb::Exit(CObject* _pObj)
 	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+280, 100));
 }
 
-void CBossStateBomb::ChargingEffect(CObject* _pObj)
+void CBossStateBomb::CreateBomb(CObject* _pObj)
 {
-	SINGLE(CGameManager)->CreateEffect(L"Bomb_Charging", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging.png",
-		_pObj->GetPos(), 2.f, 2.f, true);
+	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	CObject* pObj = pBoss->m_pHeadTop;
+	Vec2 startPos = pObj->GetPos() + Vec2(rand() % 1400 - 700, rand()%50 - 25) + Vec2(0, -100);
+	Vec2 vVelo = (PLAYERPOS - startPos).Normalize() * 300;
+	SINGLE(CGameManager)->CreateEffect(L"Bomb_Emerge", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile_Emerge.png",
+		startPos, 1.f, 1.f, true, 1.f);
+	CProjectile* pProj = new CProjectile(OBJ_TYPE::PROJECTILE, _pObj,
+		L"Bomb", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile.png",
+		5.f);
+	pProj->SetPos(startPos);
+	pProj->SetVelocity(vVelo);
+	CREATEOBJECT(pProj);
+	
 }
 

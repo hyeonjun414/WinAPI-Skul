@@ -38,10 +38,11 @@ void CGameManager::Update()
 
 }
 
-void CGameManager::CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos, float _fDuration, float _fInterval, bool _bDir)
+void CGameManager::CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos, float _fDuration, float _fInterval, bool _bDir, float _size)
 {
 	CEffect* pEft = new CEffect(_strKey, _strPath, _fDuration, _fInterval,_bDir);
 	pEft->SetPos(_vPos);
+	pEft->SetSizeRate(_size);
 	CREATEOBJECT(pEft);
 }
 

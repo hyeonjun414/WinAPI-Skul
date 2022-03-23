@@ -18,7 +18,7 @@ public:
 	~CAnimator();
 
 	void Update();
-	void Render(bool _bIsRight);
+	void Render(bool _bIsRight, float _rate = 1.0f);
 	void Render_Without_Obj();
 
 	void CreateAnimation( // 특정 애니메이션을 생성

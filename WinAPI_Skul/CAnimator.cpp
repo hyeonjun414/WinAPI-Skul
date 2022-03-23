@@ -40,10 +40,10 @@ void CAnimator::Update()
 	}
 }
 
-void CAnimator::Render(bool _bIsRight)
+void CAnimator::Render(bool _bIsRight, float _rate)
 {
 	if (nullptr != m_pCurAnim)
-		m_pCurAnim->Render(_bIsRight);
+		m_pCurAnim->Render(_bIsRight , _rate);
 }
 
 void CAnimator::Render_Without_Obj()
@@ -87,7 +87,7 @@ void CAnimator::CreateAnim(const wstring& _strName, const wstring& _strPath, flo
 	pAnim->SetName(_strName);
 	pAnim->m_pAnimator = this;
 
-	pAnim->Create(pImg, Vec2(0,0), Vec2(imgY, imgY), Vec2(imgY, 0), _fInterval/imgCountX, imgCountX);
+	pAnim->Create(pImg, Vec2(0,0), Vec2(imgY, imgY), Vec2(imgY, 0), (_fInterval + 0.05f) / imgCountX, imgCountX);
 
 	m_mapAnim.insert(make_pair(_strName, pAnim));
 }

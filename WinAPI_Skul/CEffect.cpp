@@ -10,7 +10,8 @@ CEffect::CEffect(wstring _strImgName, wstring _strImgPath,
 	m_fCurTime(0),
 	m_fDuration(_fDuration),
 	m_bIsPlay(true),
-	m_pTargetObj(nullptr)
+	m_pTargetObj(nullptr),
+	m_fSizeRate(1.0f)
 {
 	SetObjDir(_dir);
 	CreateAnimator();
@@ -43,7 +44,7 @@ void CEffect::Render()
 {
 	if (m_bIsPlay)
 	{
-		ComponentRender();
+		GetAnimator()->Render(m_bIsRight, m_fSizeRate);
 	}
 }
 

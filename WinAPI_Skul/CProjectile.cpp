@@ -15,7 +15,7 @@ CProjectile::CProjectile(OBJ_TYPE _eType, CObject* _pObj,
 	SetObjDir(_pObj->GetObjDir());
 	SetName(_strKey);
 	CreateAnimator();
-	m_pAnimator->CreateAnim(_strKey, _strPath, 0.5f);
+	m_pAnimator->CreateAnim(_strKey, _strPath, 1.f);
 	m_pAnimator->Play(_strKey, true);
 	int imgsize = m_pAnimator->GetCurAnim()->GetImg()->GetHeight();
 	CreateCollider();
@@ -67,8 +67,15 @@ void CProjectile::OnCollisionEnter(CCollider* _pOther)
 	//	m_vVelocity.y -= 200;
 	//	m_bIsHit = true;
 	//}
-	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
+	//if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
+	//{
+	//	DELETEOBJECT(this);
+	//}
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
+		SINGLE(CGameManager)->CreateEffect(L"Bomb_Explosion", L"texture\\effect\\ElderEntP2_EnergyCorps_Explosion.png",
+			_pOther->GetFinalPos()+Vec2(0, -85), 1.f, 1.f, rand()%2, 1.f);
+		this->SetActive(false);
 		DELETEOBJECT(this);
 	}
 }

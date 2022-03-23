@@ -48,10 +48,10 @@ void CAnimation::Update()
 	}
 }
 
-void CAnimation::Render(bool _bIsRight)
+void CAnimation::Render(bool _bIsRight, float _rate)
 {
 	if (m_bFinish) return; // 애니메이션이 끝났다면 렌더도 진행하지 않는다.
-
+	 
 	// 애니메이션을 출력할 위치를 가져온다.
 	CObject* pObj = m_pAnimator->GetObj();
 	Vec2 vPos = pObj->GetRenderPos();
@@ -62,10 +62,10 @@ void CAnimation::Render(bool _bIsRight)
 	{
 		RENDER->RenderFrame(
 			m_pImg,
-			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
-			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x *_rate,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y *_rate,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x *_rate,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y *_rate,
 			m_vecFrame[m_iCurFrame].vLT.x,
 			m_vecFrame[m_iCurFrame].vLT.y,
 			m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
@@ -76,10 +76,10 @@ void CAnimation::Render(bool _bIsRight)
 	{
 		RENDER->RenderRevFrame(
 			m_pImg,
-			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
-			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
 			m_vecFrame[m_iCurFrame].vLT.x,
 			m_vecFrame[m_iCurFrame].vLT.y,
 			m_vecFrame[m_iCurFrame].vLT.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
@@ -89,10 +89,10 @@ void CAnimation::Render(bool _bIsRight)
 	if (SINGLE(CCore)->GetDebugMode())
 	{
 		RENDER->RenderRectangle(
-			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y,
-			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x,
-			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
+			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
+			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
 			RGB(255, 255, 255)
 		);
 	}

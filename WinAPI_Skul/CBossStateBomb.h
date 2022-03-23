@@ -27,7 +27,7 @@ public:
     virtual void Enter(CObject* _pObj);
     virtual void Exit(CObject* _pObj);
 
-    void        ChargingEffect(CObject* _pObj);
+    void        CreateBomb(CObject* _pObj);
 
 
 };
