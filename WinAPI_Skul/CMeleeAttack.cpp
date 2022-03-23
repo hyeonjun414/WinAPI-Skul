@@ -40,11 +40,24 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 
 	}
 	if (GetObjType() == OBJ_TYPE::BOSS_ATTACK &&
+		GetName() == L"Slam" &&
 		_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
 		SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
-			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos())/2 + Vec2(0,-100),
-			2.f, 2.f, true);
+			Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x)/ 2 + rand() % 100 - 50,
+				_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
+			2.f, 2.f, rand()%2);
+		SINGLE(CCameraManager)->CameraShaking(2500, 1.f);
+		SINGLE(CSoundManager)->Play(L"BossSlam");
+	}
+	else if (GetObjType() == OBJ_TYPE::BOSS_ATTACK &&
+		GetName() == L"Sweep" &&
+		_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+	{
+		SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+			Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
+				_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
+			0.5f, 0.5f, rand() % 2);
 	}
 }
 

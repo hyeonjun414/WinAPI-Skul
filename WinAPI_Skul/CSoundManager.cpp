@@ -19,7 +19,7 @@ void CSoundManager::Init()
 
 	System_Create(&m_pSystem);
 
-	result = m_pSystem->init(32, FMOD_INIT_NORMAL, nullptr);
+	result = m_pSystem->init(64, FMOD_INIT_NORMAL, nullptr);
 	assert(!result);
 
 }

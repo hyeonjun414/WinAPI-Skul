@@ -5,8 +5,22 @@
 
 CBossState* CBossStateIdle::HandleInput(CObject* _pObj)
 {
+	//if (m_fNextAttackCurTime >= m_fNextAttackTime)
+	//	return new CBossStateSlam();
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
-		return new CBossStateSlam();
+	{
+		//switch (m_eNextAction)
+		//{
+		//case BossPattern::SLAM:
+		//	return new CBossStateSlam();
+		//case BossPattern::SWEEP:
+		//	return new CBossStateSweep();
+		//case BossPattern::CHANGE:
+		//	return new CBossStateChange();
+		//}
+		return new CBossStateBomb();
+		
+	}
 	return nullptr;
 }
 
@@ -41,11 +55,21 @@ void CBossStateIdle::Enter(CObject* _pObj)
 	m_fMoveDir = -1.f;
 	m_fMoveTime = 1.f;
 	m_fCurTime = 0.f;
-	m_fNextAttackTime = 3.f;
+	m_fNextAttackTime = 1.f;
 	m_fNextAttackCurTime = 0.f;
+	m_eNextAction = (BossPattern)(rand() % 3);
 	pBoss->m_strCurState = L"Idle";
-	pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle", true);
-	pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle", true);
+	if (pBoss->m_bIsPhaseChanged)
+	{
+		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle_P2", true);
+		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle_P2", true);
+	}
+	else
+	{
+		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle", true);
+		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle", true);
+	}
+	
 	m_vOriginPos = pBoss->GetPos();
 }
 

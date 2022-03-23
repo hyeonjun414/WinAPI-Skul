@@ -9,7 +9,8 @@ CEffect::CEffect(wstring _strImgName, wstring _strImgPath,
 	CObject(OBJ_TYPE::EFFECT),
 	m_fCurTime(0),
 	m_fDuration(_fDuration),
-	m_bIsPlay(true)
+	m_bIsPlay(true),
+	m_pTargetObj(nullptr)
 {
 	SetObjDir(_dir);
 	CreateAnimator();
@@ -23,6 +24,10 @@ CEffect::~CEffect()
 
 void CEffect::Update()
 {
+	if (nullptr != m_pTargetObj)
+	{
+		SetPos(m_pTargetObj->GetPos());
+	}
 	if (m_bIsPlay)
 	{
 		m_fCurTime += DT;

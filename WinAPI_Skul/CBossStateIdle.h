@@ -1,5 +1,13 @@
 #pragma once
 #include "CBossState.h"
+
+enum class BossPattern
+{
+    SLAM,
+    SWEEP,
+    CHANGE
+};
+
 class CBossStateIdle :
     public CBossState
 {
@@ -10,6 +18,8 @@ private:
     float m_fMoveTime;
     float m_fCurTime;
     float m_fMoveDir;
+
+    BossPattern  m_eNextAction;
 
 public:
     virtual ~CBossStateIdle() {}

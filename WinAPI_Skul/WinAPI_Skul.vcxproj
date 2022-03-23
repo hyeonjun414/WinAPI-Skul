@@ -153,8 +153,11 @@
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CAttack.h" />
     <ClInclude Include="CBossState.h" />
+    <ClInclude Include="CBossStateBomb.h" />
+    <ClInclude Include="CBossStateChange.h" />
     <ClInclude Include="CBossStateIdle.h" />
     <ClInclude Include="CBossStateSlam.h" />
+    <ClInclude Include="CBossStateSweep.h" />
     <ClInclude Include="CLineObj.h" />
     <ClInclude Include="CMeleeAttack.h" />
     <ClInclude Include="CProjectile.h" />
@@ -229,8 +232,11 @@
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CAttack.cpp" />
     <ClCompile Include="CBossState.cpp" />
+    <ClCompile Include="CBossStateBomb.cpp" />
+    <ClCompile Include="CBossStateChange.cpp" />
     <ClCompile Include="CBossStateIdle.cpp" />
     <ClCompile Include="CBossStateSlam.cpp" />
+    <ClCompile Include="CBossStateSweep.cpp" />
     <ClCompile Include="CLineObj.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
     <ClCompile Include="CProjectile.cpp" />

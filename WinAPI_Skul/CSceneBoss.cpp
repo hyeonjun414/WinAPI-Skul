@@ -66,8 +66,8 @@ void CSceneBoss::Enter()
 
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	SINGLE(CSoundManager)->AddSound(L"Ch1BossBgm", L"sound\\Chapter1_Boss.wav", true);
+	SINGLE(CSoundManager)->Play(L"Ch1BossBgm");
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
@@ -79,6 +79,7 @@ void CSceneBoss::Enter()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::BOSS_ATTACK);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::BOSS_ATTACK);
 
 }
 

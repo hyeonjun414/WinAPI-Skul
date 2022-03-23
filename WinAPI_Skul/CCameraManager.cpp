@@ -54,6 +54,7 @@ void CCameraManager::Init()
 {
 	// 효과를 주는 텍스쳐의 사이즈는 프로그램의 해상도 만큼으로 만들어준다.
 	m_pImg = SINGLE(CResourceManager)->LoadD2DImage(L"CameraTex", L"texture\\cameraTex.png");
+	m_pWhiteImg = SINGLE(CResourceManager)->LoadD2DImage(L"CameraWhite", L"texture\\cameraWhite.png");
 }
 
 void CCameraManager::Update()
@@ -151,6 +152,20 @@ void CCameraManager::Render()
 			(float)m_pImg->GetWidth(),
 			(float)m_pImg->GetHeight(), iAlpha);
 	}
+	else if (CAM_EFFECT::WHITEOUT == m_eEffect)
+	{
+		iAlpha = (1 - fRatio);
+		RENDER->RenderImage(m_pWhiteImg,
+			0,
+			0,
+			(float)m_pImg->GetWidth(),
+			(float)m_pImg->GetHeight(), iAlpha);
+		Vec2 shakePos = Vec2(rand() % 2000 - 2000 / 2, rand() % 2000 - 2000 / 2);
+
+		//m_vLookAt += shakePos;
+		//m_vCurLookAt += shakePos;
+		m_vPrevLookAt += shakePos * DT;
+	}
 
 
 }
@@ -218,6 +233,13 @@ void CCameraManager::CameraShaking(float _magnitude, float _duration)
 	m_eEffect = CAM_EFFECT::SHAKING;
 	m_fEffectDuration = _duration;
 	m_iMagnitude = _magnitude;
+	m_fCurTime = 0.f;
+}
+
+void CCameraManager::WhiteOut(float _duration)
+{
+	m_eEffect = CAM_EFFECT::WHITEOUT;
+	m_fEffectDuration = _duration;
 	m_fCurTime = 0.f;
 }
 

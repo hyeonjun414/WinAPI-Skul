@@ -13,3 +13,6 @@
 
 #include "CBossStateIdle.h"
 #include "CBossStateSlam.h"
+#include "CBossStateSweep.h"
+#include "CBossStateChange.h"
+#include "CBossStateBomb.h"

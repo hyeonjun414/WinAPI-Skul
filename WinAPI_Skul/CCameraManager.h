@@ -28,6 +28,7 @@ private:
 
 	CAM_EFFECT		m_eEffect;					// 카메라 효과를 타입
 	CD2DImage*		m_pImg;						// 카메라 효과에 사용되는 텍스쳐
+	CD2DImage*		m_pWhiteImg;
 	float			m_fEffectDuration;			// 카메라 효과 수행시간
 	float			m_fCurTime;					// 카메라 효과가 시작되고 지나간 시간
 	int				m_iMagnitude;				// 카메라 흔들기 값.
@@ -65,7 +66,7 @@ public:
 	void		FadeOut(float _duration);
 	void		LodingAnimation(float _duration);
 	void		CameraShaking(float _magnitude, float _duration);
-
+	void		WhiteOut(float _duration);
 	// 미니맵 출력
 	void		MiniMapRender();
 

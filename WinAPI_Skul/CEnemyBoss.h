@@ -5,6 +5,10 @@ class CEnemyBoss :
 {
     friend class CBossStateIdle;
     friend class CBossStateSlam;
+    friend class CBossStateSweep;
+    friend class CBossStateChange;
+    friend class CBossStateBomb;
+
 private:
     CObject* m_pBody;
     CObject* m_pLeftHand;
@@ -16,6 +20,8 @@ private:
     float m_fMoveCurTime;
     float m_fHandMoveCurTime;
     float moveSwitch = -1.f;
+
+    bool m_bIsPhaseChanged;
 
     
 
@@ -32,5 +38,6 @@ public:
     virtual void	    OnCollisionExit(CCollider* _pOther);
 
     void        Slam(CObject* _pObj);
+    void        Sweep(CObject* _pObj);
 };
 

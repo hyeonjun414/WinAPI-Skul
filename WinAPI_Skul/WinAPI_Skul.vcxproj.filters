@@ -291,6 +291,15 @@
     <ClInclude Include="CBossStateSlam.h">
       <Filter>04.Component\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="CBossStateSweep.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossStateChange.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossStateBomb.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -489,6 +498,15 @@
       <Filter>04.Component\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateSlam.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateSweep.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateChange.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateBomb.cpp">
       <Filter>04.Component\BossState</Filter>
     </ClCompile>
   </ItemGroup>
