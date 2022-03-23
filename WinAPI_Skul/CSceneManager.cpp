@@ -4,6 +4,7 @@
 #include "CSceneStart.h"
 #include "CSceneTool.h"
 #include "CSceneInGame.h"
+#include "CSceneBoss.h"
 
 CSceneManager::CSceneManager():
 	m_arrScene{},
@@ -38,6 +39,7 @@ void CSceneManager::Init()
 	m_arrScene[(int)SCENE_TYPE::TOOL] = new CSceneTool(L"ToolScene", SCENE_TYPE::TOOL);
 	m_arrScene[(int)SCENE_TYPE::STAGE_01] = new CSceneInGame(L"Stage_01", SCENE_TYPE::STAGE_01);
 	m_arrScene[(int)SCENE_TYPE::STAGE_02] = new CSceneInGame(L"Stage_02", SCENE_TYPE::STAGE_02);
+	m_arrScene[(int)SCENE_TYPE::BOSS] = new CSceneBoss(L"StageBoss", SCENE_TYPE::BOSS);
 
 	m_pCurScene = m_arrScene[(int)SCENE_TYPE::START];
 	m_pCurScene->Enter();

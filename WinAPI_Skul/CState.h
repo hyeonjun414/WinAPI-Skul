@@ -12,6 +12,11 @@ enum class STATE_TYPE
     TRACE,
     SKILL,
     SWITCH,
+
+    PHASE1,
+    PHASE2,
+    BOSS_SLAM,
+    BOSS_WAEP,
 };
 
 
@@ -19,6 +24,7 @@ enum class STATE_TYPE
 class CState
 {
 public :
+
     virtual ~CState() {}
     virtual CState* HandleInput(CObject* _pObj) { return nullptr; }
     virtual void Update(CObject* _pObj) {}

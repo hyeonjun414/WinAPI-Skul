@@ -5,6 +5,8 @@
 enum class OBJ_TYPE
 {
 	DEFAULT,
+	BACKGOUNRD,
+	LINE,
 	IMAGE,
 	TILE,
 	
@@ -12,6 +14,7 @@ enum class OBJ_TYPE
 	ENEMY,
 	PLAYER,
 	PLAYER_ATTACK,
+	BOSS_ATTACK,
 	PROJECTILE,
 	EFFECT,
 	ATTACK,
@@ -29,6 +32,7 @@ enum class ENEMY_TYPE
 	ENEMY_BOSS,
 	BIG_KNIGHT,
 	WIZARD,
+	ELDER_ENT,
 
 	SIZE,
 };
@@ -41,6 +45,7 @@ enum class SCENE_TYPE
 	START,
 	STAGE_01,
 	STAGE_02,
+	BOSS,
 
 	SIZE,
 };
@@ -99,6 +104,7 @@ enum class CAM_EFFECT
 	FADE_IN,
 	FADE_OUT,
 	LODING_IMAGE,
+	SHAKING,
 
 
 	NONE,

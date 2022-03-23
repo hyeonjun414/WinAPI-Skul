@@ -16,6 +16,7 @@ CMeleeAttack::~CMeleeAttack()
 
 void CMeleeAttack::Update()
 {
+	SetPos(m_pOwner->GetPos());
 	m_fCurTime += DT;
 
 	if (m_fCurTime >= m_fDuration)
@@ -37,6 +38,13 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 			CPlayer* pPlayer = (CPlayer*)GetOwner();
 		}
 
+	}
+	if (GetObjType() == OBJ_TYPE::BOSS_ATTACK &&
+		_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+	{
+		SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos())/2 + Vec2(0,-100),
+			2.f, 2.f, true);
 	}
 }
 

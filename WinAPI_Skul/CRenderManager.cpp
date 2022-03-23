@@ -26,7 +26,7 @@ void CRenderManager::Init()
 	GetClientRect(hWnd, &rc);
 
 	// D2D1Factory »ý¼º
-	D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, &m_pFactory);
+	D2D1CreateFactory(D2D1_FACTORY_TYPE_MULTI_THREADED, &m_pFactory);
 
 	
 	m_pFactory->CreateHwndRenderTarget(RenderTargetProperties(),

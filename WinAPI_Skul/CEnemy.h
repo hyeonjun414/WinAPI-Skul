@@ -47,6 +47,7 @@ protected:
     tEnemy_Info m_tEnemyInfo;
 
 public:
+    CEnemy(OBJ_TYPE _eType);
     CEnemy(OBJ_TYPE _eType, ENEMY_TYPE _eMonsterType);
     virtual ~CEnemy();
 

@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 template<typename T>
 void Safe_Delete_Array(T* _arr, int _size)
 {

@@ -64,6 +64,9 @@
     <Filter Include="03.GameObject\FuncObj">
       <UniqueIdentifier>{e10098c6-9452-4946-93bf-642246c0c767}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Component\BossState">
+      <UniqueIdentifier>{c06df55e-c01e-4017-80eb-c9e3820e95af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -273,6 +276,21 @@
     <ClInclude Include="CProjectile.h">
       <Filter>03.GameObject\FuncObj</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneBoss.h">
+      <Filter>05.Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossState.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="CLineObj.h">
+      <Filter>03.GameObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossStateIdle.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossStateSlam.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -457,6 +475,21 @@
     </ClCompile>
     <ClCompile Include="CAttack.cpp">
       <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneBoss.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossState.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineObj.cpp">
+      <Filter>03.GameObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateIdle.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateSlam.cpp">
+      <Filter>04.Component\BossState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

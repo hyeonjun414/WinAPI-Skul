@@ -318,8 +318,8 @@ void CPlayer::SkillA()
 	CProjectile* pAttack = new CProjectile(OBJ_TYPE::PROJECTILE, this,
 		L"Skul_Head", L"texture\\effect\\skul_head.png",
 		5.f);
-	pAttack->SetVelocity(Vec2(GetObjDir() ? 700 : -700,0));
-	pAttack->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 50 : -50, 0));
+	pAttack->SetVelocity(Vec2(GetObjDir() ? 700.f : -700.f,0));
+	pAttack->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 50.f : -50.f, 0));
 	pAttack->SetName(L"SkulHead");
 	m_pHead = pAttack;
 	CREATEOBJECT(pAttack);

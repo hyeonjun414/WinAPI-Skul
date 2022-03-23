@@ -70,7 +70,7 @@ void CCameraManager::Update()
 		}
 		else
 		{
-			SetLookAt(m_pTargetObj->GetPos()+Vec2(0,-100));
+			SetLookAt(m_pTargetObj->GetPos()+Vec2(0,-200));
 		}
 	}
 
@@ -79,6 +79,14 @@ void CCameraManager::Update()
 
 	CheckBoundary();
 
+	if (CAM_EFFECT::SHAKING == m_eEffect)
+	{
+		Vec2 shakePos = Vec2(rand() % m_iMagnitude - m_iMagnitude/2, rand() % m_iMagnitude - m_iMagnitude/2);
+
+		//m_vLookAt += shakePos;
+		//m_vCurLookAt += shakePos;
+		m_vPrevLookAt += shakePos * DT;
+	}
 	
 }
 
@@ -89,6 +97,8 @@ void CCameraManager::SetLookAt(Vec2 _vLook)
 
 	m_fSpeed = fMoveDist / m_fTime * 2;
 	m_fFlowTime = 0.f;
+
+	
 }
 
 
@@ -126,17 +136,23 @@ void CCameraManager::Render()
 	if (CAM_EFFECT::FADE_OUT == m_eEffect)
 	{
 		iAlpha = fRatio;
+		RENDER->RenderImage(m_pImg,
+			0,
+			0,
+			(float)m_pImg->GetWidth(),
+			(float)m_pImg->GetHeight(), iAlpha);
 	}
 	else if (CAM_EFFECT::FADE_IN == m_eEffect)
 	{
 		iAlpha = (1 - fRatio);
+		RENDER->RenderImage(m_pImg,
+			0,
+			0,
+			(float)m_pImg->GetWidth(),
+			(float)m_pImg->GetHeight(), iAlpha);
 	}
 
-	RENDER->RenderImage(m_pImg,
-		0,
-		0,
-		(float)m_pImg->GetWidth(),
-		(float)m_pImg->GetHeight(), iAlpha);
+
 }
 
 void CCameraManager::CheckBoundary()
@@ -194,6 +210,14 @@ void CCameraManager::LodingAnimation(float _duration)
 {
 	m_eEffect = CAM_EFFECT::LODING_IMAGE;
 	m_fEffectDuration = _duration;
+	m_fCurTime = 0.f;
+}
+
+void CCameraManager::CameraShaking(float _magnitude, float _duration)
+{
+	m_eEffect = CAM_EFFECT::SHAKING;
+	m_fEffectDuration = _duration;
+	m_iMagnitude = _magnitude;
 	m_fCurTime = 0.f;
 }
 

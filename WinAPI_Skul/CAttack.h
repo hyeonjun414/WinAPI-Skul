@@ -4,7 +4,7 @@ class CAttack :
     public CObject
 {
 protected:
-    CObject* m_pOwner;
+    CObject*    m_pOwner;
 
     float		m_fCurTime;	    // 오브젝트 생성되고 지나간 시간
     float		m_fDuration;	// 오브젝트 지속시간

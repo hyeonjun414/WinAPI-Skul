@@ -10,3 +10,6 @@
 #include "CStateSkill.h"
 #include "CStateAppear.h"
 #include "CStateJumpAttack.h"
+
+#include "CBossStateIdle.h"
+#include "CBossStateSlam.h"

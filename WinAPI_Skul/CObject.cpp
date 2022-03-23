@@ -54,10 +54,13 @@ void CObject::Init()
 
 void CObject::Update()
 {
+	if (nullptr != m_pAnimator)
+		m_pAnimator->Update();
 }
 
 void CObject::Render()
 {
+	ComponentRender();
 }
 
 void CObject::FinalUpdate()

@@ -152,8 +152,13 @@
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CAttack.h" />
+    <ClInclude Include="CBossState.h" />
+    <ClInclude Include="CBossStateIdle.h" />
+    <ClInclude Include="CBossStateSlam.h" />
+    <ClInclude Include="CLineObj.h" />
     <ClInclude Include="CMeleeAttack.h" />
     <ClInclude Include="CProjectile.h" />
+    <ClInclude Include="CSceneBoss.h" />
     <ClInclude Include="CStateSkill.h" />
     <ClInclude Include="CUIButton.h" />
     <ClInclude Include="CCameraManager.h" />
@@ -223,8 +228,13 @@
     <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CAnimator.cpp" />
     <ClCompile Include="CAttack.cpp" />
+    <ClCompile Include="CBossState.cpp" />
+    <ClCompile Include="CBossStateIdle.cpp" />
+    <ClCompile Include="CBossStateSlam.cpp" />
+    <ClCompile Include="CLineObj.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
     <ClCompile Include="CProjectile.cpp" />
+    <ClCompile Include="CSceneBoss.cpp" />
     <ClCompile Include="CStateSkill.cpp" />
     <ClCompile Include="CUIButton.cpp" />
     <ClCompile Include="CCameraManager.cpp" />

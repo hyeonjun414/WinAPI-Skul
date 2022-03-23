@@ -436,6 +436,11 @@ void CSceneTool::PrintTileLine()
 			Vec2(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
 			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y)
 		);
+		CRenderManager::GetInst()->RenderLine(
+			Vec2(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
+			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y),
+			RGB(255, 0, 255), 40.f
+		);
 	}
 }
 

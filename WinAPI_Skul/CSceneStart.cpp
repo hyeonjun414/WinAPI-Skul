@@ -28,6 +28,10 @@ void CSceneStart::Update()
 	{
 		ChangeNextScene(SCENE_TYPE::STAGE_01);
 	}
+	if (KEYTAP(KEY::B))
+	{
+		ChangeNextScene(SCENE_TYPE::BOSS);
+	}
 	if (KEYTAP(KEY::ESC))
 	{
 		ChangeNextScene(SCENE_TYPE::TOOL);

@@ -125,8 +125,8 @@ void CEnemyRange::Attack()
 {
 	CProjectile* pProj = new CProjectile(OBJ_TYPE::PROJECTILE, this,
 		L"Wizard_Fireball", L"texture\\effect\\fireball.png", 5.f);
-	pProj->SetPos(GetCollider()->GetFinalPos()+Vec2(m_bIsRight? 20 : -20, 0));
-	pProj->SetVelocity((PLAYERPOS - pProj->GetPos()).Normalize() * 300);
+	pProj->SetPos(GetCollider()->GetFinalPos()+Vec2(m_bIsRight? 20.f : -20.f, 0));
+	pProj->SetVelocity((PLAYERPOS - pProj->GetPos()).Normalize() * 300.f);
 	
 	CREATEOBJECT(pProj);
 

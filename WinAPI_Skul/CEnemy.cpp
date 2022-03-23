@@ -11,6 +11,13 @@
 #include "CStateIdle.h"
 
 
+CEnemy::CEnemy(OBJ_TYPE _eType):
+	CObject(_eType),
+	m_eEnemyType(ENEMY_TYPE::ENEMY_BOSS),
+	m_tEnemyInfo{}
+{
+}
+
 CEnemy::CEnemy(OBJ_TYPE _eType, ENEMY_TYPE _eMonsterType):
 	CObject(_eType),
 	m_eEnemyType(_eMonsterType),
@@ -176,15 +183,17 @@ void CEnemy::RenderEnemyInfo()
 			16.f,
 			0,
 			RGB(255, 255, 255));
-		RENDER->RenderText(
-			L"현재 애니메이션\n : " + GetAnimator()->GetCurAnim()->GetName(),
-			pos.x,
-			pos.y + 130,
-			pos.x + 200,
-			pos.y,//+ 20 + 100,
-			16.f,
-			0,
-			RGB(255, 255, 255));
+
+		if(nullptr != m_pAnimator)
+			RENDER->RenderText(
+				L"현재 애니메이션\n : " + GetAnimator()->GetCurAnim()->GetName(),
+				pos.x,
+				pos.y + 130,
+				pos.x + 200,
+				pos.y,//+ 20 + 100,
+				16.f,
+				0,
+				RGB(255, 255, 255));
 	}
 }
 

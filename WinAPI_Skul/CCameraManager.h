@@ -30,6 +30,8 @@ private:
 	CD2DImage*		m_pImg;						// 카메라 효과에 사용되는 텍스쳐
 	float			m_fEffectDuration;			// 카메라 효과 수행시간
 	float			m_fCurTime;					// 카메라 효과가 시작되고 지나간 시간
+	int				m_iMagnitude;				// 카메라 흔들기 값.
+	Vec2			m_vShakeAddPos;				// 효과 지속시간동안 총 흔들린 값;
 
 	// 컴포넌트
 	CAnimator*		m_pAnimator;				// 로딩에 사용할 애니메이터
@@ -53,17 +55,19 @@ public:
 	Vec2		GetRealPos(Vec2 _vRenderPos)		{ return _vRenderPos + m_vDiff; }
 	CObject*	GetTarget()							{ return m_pTargetObj; }
 
-	void	CheckBoundary();					// 현재 맵의 크기를 기준으로 카메라가 영역을 벗어나지 않도록 만드는 함수
-	void	Scroll(Vec2 vec, float velocity);	// 키 입력을 받아 카메라 위치를 이동하는 함수
+	void		CheckBoundary();					// 현재 맵의 크기를 기준으로 카메라가 영역을 벗어나지 않도록 만드는 함수
+	void		Scroll(Vec2 vec, float velocity);	// 키 입력을 받아 카메라 위치를 이동하는 함수
 
-	void	CreateAnimator();
+	void		CreateAnimator();
 
 	// 카메라 효과들
-	void	FadeIn(float _duration);
-	void	FadeOut(float _duration);
-	void	LodingAnimation(float _duration);
+	void		FadeIn(float _duration);
+	void		FadeOut(float _duration);
+	void		LodingAnimation(float _duration);
+	void		CameraShaking(float _magnitude, float _duration);
 
-	void	MiniMapRender();
+	// 미니맵 출력
+	void		MiniMapRender();
 
 };
 
