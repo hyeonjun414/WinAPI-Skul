@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "Stateheader.h"
+#include "stateheader.h"
 #include "CEnemyBoss.h"
 #include "CAnimator.h"
 
-CBossState* CBossStateIdle::HandleInput(CObject* _pObj)
+CBossState* CBossStateIdleP2::HandleInput(CObject* _pObj)
 {
+	//if (m_fNextAttackCurTime >= m_fNextAttackTime)
+	//	return new CBossStateSlam();
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
-	if (pBoss->m_tEnemyInfo.m_iHp <= 5)
-		return new CBossStateChange();
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
 	{
 		switch (m_eNextAction)
@@ -16,12 +16,14 @@ CBossState* CBossStateIdle::HandleInput(CObject* _pObj)
 			return new CBossStateSlam();
 		case BossPattern::SWEEP:
 			return new CBossStateSweep();
+		case BossPattern::BOMB:
+			return new CBossStateBomb();
 		}
 	}
 	return nullptr;
 }
 
-void CBossStateIdle::Update(CObject* _pObj)
+void CBossStateIdleP2::Update(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	m_fCurTime += DT;
@@ -35,41 +37,32 @@ void CBossStateIdle::Update(CObject* _pObj)
 	pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.15f);
 	if (m_fCurTime >= 0.1f)
 	{
-		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.20f);
+		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.2f);
 		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.25f);
 	}
-	if (m_fCurTime >= 0.6f)
+	if (m_fCurTime >= 0.7f)
 	{
 		pBoss->m_pLeftHand->SetPos(pBoss->m_pLeftHand->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.15f);
 		pBoss->m_pRightHand->SetPos(pBoss->m_pRightHand->GetPos() + pBoss->m_tEnemyInfo.m_vVelocity * DT * m_fMoveDir * 0.15f);
 	}
 }
 
-void CBossStateIdle::Enter(CObject* _pObj)
+void CBossStateIdleP2::Enter(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	m_fMoveDir = -1.f;
 	m_fMoveTime = 1.f;
 	m_fCurTime = 0.f;
-	m_fNextAttackTime = 2.f;
+	m_fNextAttackTime = 1.f;
 	m_fNextAttackCurTime = 0.f;
-	m_eNextAction = (BossPattern)(rand() % 2);
-	pBoss->m_strCurState = L"Idle";
-	if (pBoss->m_bIsPhaseChanged)
-	{
-		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle_P2", true);
-		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle_P2", true);
-	}
-	else
-	{
-		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle", true);
-		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle", true);
-	}
-	
+	m_eNextAction = (BossPattern)(rand() % 3);
+	pBoss->m_strCurState = L"Idle_P2";
+	pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle_P2", true);
+	pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle_P2", true);
 	m_vOriginPos = pBoss->GetPos();
 }
 
-void CBossStateIdle::Exit(CObject* _pObj)
+void CBossStateIdleP2::Exit(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	pBoss->SetPos(m_vOriginPos);

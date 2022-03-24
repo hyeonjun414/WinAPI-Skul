@@ -7,6 +7,7 @@
 #include "Stateheader.h"
 #include "CLineObj.h"
 #include "CMeleeAttack.h"
+#include "CPlayer.h"
 
 CEnemyBoss::CEnemyBoss(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType):
 	CEnemy(_eType, _eEnemyType)
@@ -73,6 +74,7 @@ void CEnemyBoss::Init()
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Sweep", L"texture\\enemy\\bosshand_sweep.png", 3.f);
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Idle_P2", L"texture\\enemy\\bosshand_p2.png", 3.f);
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Slam_P2", L"texture\\enemy\\bosshand_slam_p2.png", 3.f);
+		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Sweep_P2", L"texture\\enemy\\bosshand_sweep_p2.png", 3.f);
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Bomb", L"texture\\enemy\\bosshand_bomb.png", 3.f);
 		m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle", true);
 		CREATEOBJECT(m_pRightHand);
@@ -95,28 +97,39 @@ void CEnemyBoss::Init()
 		line = new CLineObj(m_pBody, m_pRightHand, Vec2(-500, 1000), Vec2(100, 0), 28.f);
 		CREATEOBJECT(line);
 		
-		
-
-		SetPos(Vec2(1600.f, 850.f));
-		GetEnemyInfo().m_vVelocity = Vec2(0, 300);
+		m_fHitDelayTime = 0.1f;
+		m_fCurHitTime = 0.f;
+		m_bCanHit = true;
+		SetPos(Vec2(1600.f, 800.f));
+		GetEnemyInfo().m_vVelocity = Vec2(0, 400);
+		GetEnemyInfo().m_iHp = 10;
 		m_fMoveTime = 1.0f;
 		m_fMoveCurTime = 0.f;
-		m_pState = new CBossStateIdle();
-		m_pState->Enter(this);
+	
 		SetName(L"Elder_Ent");
 		CreateCollider();
 		m_pCollider->SetScale(Vec2(200, 450));
 		m_pCollider->SetOffsetPos(Vec2(30, 70));
-		m_pBody->SetPos(GetPos());
-		m_pHeadTop->SetPos(GetPos() + Vec2(0, -50));
-		m_pHeadBottom->SetPos(GetPos() + Vec2(30, 70));
-		m_pLeftHand->SetPos(GetPos() + Vec2(-280, 100));
-		m_pRightHand->SetPos(GetPos() + Vec2(+280, 100));
+
+		m_pBody->SetPos(GetPos() + Vec2(0,50));
+		m_pHeadTop->SetPos(GetPos() + Vec2(0, 0));
+		m_pHeadBottom->SetPos(GetPos() + Vec2(30, 120));
+		m_pLeftHand->SetPos(GetPos() + Vec2(-350, 180));
+		m_pRightHand->SetPos(GetPos() + Vec2(+350, 180));
+
+		m_pState = new CBossStateIdle();
+		m_pState->Enter(this);
+
+		
 
 		SINGLE(CSoundManager)->AddSound(L"BossSlam", L"sound\\ElderEnt_FistSlam.wav", false);
 		SINGLE(CSoundManager)->AddSound(L"BossSweep", L"sound\\ElderEnt_Sweeping.wav", false);
 		SINGLE(CSoundManager)->AddSound(L"BossSweepRoar", L"sound\\ElderEnt_Sweeping_Roar.wav", false);
 		SINGLE(CSoundManager)->AddSound(L"BossRoar", L"sound\\ElderEnt_Roar.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"BossBombFire", L"sound\\ElderEnt_EnergyBomb_Fire.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"BossBombReady", L"sound\\ElderEnt_EnergyBomb_Ready.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"BossBombExplosion", L"sound\\Atk_Explosion_Small.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"BossChangeIntro", L"sound\\ElderEnt_Change_Intro.wav", false);
 		
 
 	}
@@ -156,6 +169,25 @@ void CEnemyBoss::OnCollision(CCollider* _pOther)
 
 void CEnemyBoss::OnCollisionEnter(CCollider* _pOther)
 {
+	//CEnemy::OnCollisionEnter(_pOther);
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK)
+	{
+		CMeleeAttack* pAttack = (CMeleeAttack*)_pOther->GetObj();
+
+		if (m_bCanHit)
+		{
+			CAttack* pAttack = (CAttack*)_pOther->GetObj();
+			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			SINGLE(CSoundManager)->Play(L"Hit");
+			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
+			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			
+			m_tEnemyInfo.m_iHp -= pPlayer->GetPlayerInfo().m_iDamage;
+			m_bCanHit = false;
+		}
+
+	}
 }
 
 void CEnemyBoss::OnCollisionExit(CCollider* _pOther)

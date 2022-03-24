@@ -156,6 +156,7 @@
     <ClInclude Include="CBossStateBomb.h" />
     <ClInclude Include="CBossStateChange.h" />
     <ClInclude Include="CBossStateIdle.h" />
+    <ClInclude Include="CBossStateIdleP2.h" />
     <ClInclude Include="CBossStateSlam.h" />
     <ClInclude Include="CBossStateSweep.h" />
     <ClInclude Include="CLineObj.h" />
@@ -235,6 +236,7 @@
     <ClCompile Include="CBossStateBomb.cpp" />
     <ClCompile Include="CBossStateChange.cpp" />
     <ClCompile Include="CBossStateIdle.cpp" />
+    <ClCompile Include="CBossStateIdleP2.cpp" />
     <ClCompile Include="CBossStateSlam.cpp" />
     <ClCompile Include="CBossStateSweep.cpp" />
     <ClCompile Include="CLineObj.cpp" />

@@ -12,7 +12,10 @@
 #include "CStateJumpAttack.h"
 
 #include "CBossStateIdle.h"
+#include "CBossStateIdleP2.h"
 #include "CBossStateSlam.h"
 #include "CBossStateSweep.h"
 #include "CBossStateChange.h"
 #include "CBossStateBomb.h"
+
+#include "CBossStateIdleP2.h"

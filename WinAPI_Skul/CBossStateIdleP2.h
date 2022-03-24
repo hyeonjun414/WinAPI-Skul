@@ -1,15 +1,6 @@
 #pragma once
 #include "CBossState.h"
-
-enum class BossPattern
-{
-    SLAM,
-    SWEEP,
-    BOMB,
-    CHANGE
-};
-
-class CBossStateIdle :
+class CBossStateIdleP2 :
     public CBossState
 {
 private:
@@ -23,11 +14,10 @@ private:
     BossPattern  m_eNextAction;
 
 public:
-    virtual ~CBossStateIdle() {}
+    virtual ~CBossStateIdleP2() {}
     virtual CBossState* HandleInput(CObject* _pObj);
     virtual void Update(CObject* _pObj);
 
     virtual void Enter(CObject* _pObj);
     virtual void Exit(CObject* _pObj);
 };
-

@@ -84,7 +84,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 
 
-	GetPlayerInfo().m_iDamage = 1;
+	GetPlayerInfo().m_iDamage = 10;
 
 }
 

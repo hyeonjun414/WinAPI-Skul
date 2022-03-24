@@ -5,8 +5,19 @@
 
 CBossState* CBossStateSlam::HandleInput(CObject* _pObj)
 {
+	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	if (pBoss->m_tEnemyInfo.m_iHp <= 5 && !pBoss->m_bIsPhaseChanged)
+	{
+		return new CBossStateChange();
+	}
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
-		return new CBossStateIdle();
+	{
+		if (pBoss->m_bIsPhaseChanged)
+			return new CBossStateIdleP2();
+		else
+			return new CBossStateIdle();
+	}
+		
 	return nullptr;
 }
 
@@ -119,16 +130,17 @@ void CBossStateSlam::Enter(CObject* _pObj)
 	m_bOnceFunc = true;
 	m_fOnceFuncTime = 0.5f;
 	m_fOnceFuncCurTime = 0.f;
-	pBoss->m_strCurState = L"Slam";
 	if (pBoss->m_bIsPhaseChanged)
 	{
 		m_fStateSpeed = 1.2f;
+		pBoss->m_strCurState = L"Slam_P2";
 		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Slam_P2", true);
 		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Slam_P2", true);
 	}
 	else
 	{
 		m_fStateSpeed = 1.f;
+		pBoss->m_strCurState = L"Slam";
 		pBoss->m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Slam", true);
 		pBoss->m_pRightHand->GetAnimator()->Play(L"BossRightHand_Slam", true);
 	}
@@ -139,18 +151,18 @@ void CBossStateSlam::Exit(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	pBoss->SetPos(m_vOriginPos);
-	pBoss->m_pBody->SetPos(pBoss->GetPos());
-	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, -50));
-	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 70));
-	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-280, 100));
-	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+280, 100));
+	pBoss->m_pBody->SetPos(pBoss->GetPos() + Vec2(0, 50));
+	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, 0));
+	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 120));
+	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-350, 180));
+	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+350, 180));
 }
 
 void CBossStateSlam::SetSlamVelocity(CObject* _pObj)
 {
 	Vec2 dir = (PLAYERPOS - _pObj->GetPos()).Normalize();
 	//float velocity = (PLAYERPOS - _pObj->GetPos()).Length() / 0.5f;
-	
+	dir.y = 0.7f;
 	m_vSlamVelocity = dir * 800;
 }
 

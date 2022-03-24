@@ -5,8 +5,19 @@
 
 CBossState* CBossStateSweep::HandleInput(CObject* _pObj)
 {
+	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	if (pBoss->m_tEnemyInfo.m_iHp <= 5 && !pBoss->m_bIsPhaseChanged)
+	{
+		return new CBossStateChange();
+	}
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
-		return new CBossStateIdle();
+	{
+		if (pBoss->m_bIsPhaseChanged)
+			return new CBossStateIdleP2();
+		else
+			return new CBossStateIdle();
+			
+	}
 	return nullptr;
 }
 
@@ -107,11 +118,11 @@ void CBossStateSweep::Exit(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	pBoss->SetPos(m_vOriginPos);
-	pBoss->m_pBody->SetPos(pBoss->GetPos());
-	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, -50));
-	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 70));
-	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-280, 100));
-	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+280, 100));
+	pBoss->m_pBody->SetPos(pBoss->GetPos() + Vec2(0, 50));
+	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, 0));
+	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 120));
+	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-350, 180));
+	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+350, 180));
 }
 
 void CBossStateSweep::SelectSweepHand(CObject* _pObj)

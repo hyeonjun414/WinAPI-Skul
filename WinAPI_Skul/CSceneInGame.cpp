@@ -103,12 +103,12 @@ void CSceneInGame::Stage01Init()
 	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
 	monsterMelee->SetPos(Vec2(600.f, 1100.f));
 	CREATEOBJECT(monsterMelee);
-	for (size_t i = 0; i < 10; i++)
-	{
-		monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-		monsterMelee->SetPos(Vec2(800.f, 1300.f));
-		CREATEOBJECT(monsterMelee);
-	}
+	//for (size_t i = 0; i < 10; i++)
+	//{
+	//	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	//	monsterMelee->SetPos(Vec2(800.f, 1300.f));
+	//	CREATEOBJECT(monsterMelee);
+	//}
 	
 	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
 	monsterMelee->SetPos(Vec2(800.f, 1300.f));
@@ -227,6 +227,7 @@ void CSceneInGame::Stage02Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);

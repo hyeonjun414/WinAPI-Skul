@@ -8,6 +8,7 @@ private:
     bool    m_bIsGround;
     bool    m_bIsHit;
     bool    m_bIsMove;
+    bool    m_bIgnoreTile;
 
     float   m_fDalayTime;
     float   m_fTraceTime;
@@ -26,7 +27,7 @@ public:
     virtual void	OnCollisionExit(CCollider* _pOther) {};
 
     void SetVelocity(Vec2 _vVelocity) { m_vVelocity = _vVelocity; }
-
+    void SetIgnoreTile(bool _value) { m_bIgnoreTile = _value; }
     void Move(Vec2 _vVelocity, float _fDelay = 0.f );
     void Stop(float _fDelay = 0.f);
     void Trace(CObject* _pObj, Vec2 _vVelocity, float _fTraceTime = 0.f);

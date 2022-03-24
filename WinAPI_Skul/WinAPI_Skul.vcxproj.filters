@@ -300,6 +300,9 @@
     <ClInclude Include="CBossStateBomb.h">
       <Filter>04.Component\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="CBossStateIdleP2.h">
+      <Filter>04.Component\BossState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -507,6 +510,9 @@
       <Filter>04.Component\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateBomb.cpp">
+      <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateIdleP2.cpp">
       <Filter>04.Component\BossState</Filter>
     </ClCompile>
   </ItemGroup>

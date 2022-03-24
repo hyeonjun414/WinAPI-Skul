@@ -105,7 +105,7 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 				SetObjDir(true);
 			}
 
-			m_tEnemyInfo.m_iHp--;
+			m_tEnemyInfo.m_iHp -= pPlayer->GetPlayerInfo().m_iDamage;
 			m_bCanHit = false;
 		}
 

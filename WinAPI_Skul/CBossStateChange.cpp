@@ -6,7 +6,7 @@
 CBossState* CBossStateChange::HandleInput(CObject* _pObj)
 {
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
-		return new CBossStateIdle();
+		return new CBossStateIdleP2();
 	return nullptr;
 }
 
@@ -37,11 +37,11 @@ void CBossStateChange::Update(CObject* _pObj)
 	}
 	else if (1.5f < m_fCurTime && m_fCurTime < 1.8f)
 	{
-		pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + Vec2(0, 300) * DT);
-		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + Vec2(0, 600) * DT);
-		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + Vec2(0, 600) * DT);
-		pBoss->m_pLeftHand->SetPos(pBoss->m_pLeftHand->GetPos() + Vec2(0, 1300) * DT);
-		pBoss->m_pRightHand->SetPos(pBoss->m_pRightHand->GetPos() + Vec2(0, 1300) * DT);
+		pBoss->m_pBody->SetPos(pBoss->m_pBody->GetPos() + Vec2(0, 500) * DT);
+		pBoss->m_pHeadTop->SetPos(pBoss->m_pHeadTop->GetPos() + Vec2(0, 700) * DT);
+		pBoss->m_pHeadBottom->SetPos(pBoss->m_pHeadBottom->GetPos() + Vec2(0, 700) * DT);
+		pBoss->m_pLeftHand->SetPos(pBoss->m_pLeftHand->GetPos() + Vec2(0, 1420) * DT);
+		pBoss->m_pRightHand->SetPos(pBoss->m_pRightHand->GetPos() + Vec2(0, 1420) * DT);
 	}
 	else if (1.8f < m_fCurTime && m_fCurTime < 2.0f)
 	{
@@ -103,27 +103,32 @@ void CBossStateChange::Enter(CObject* _pObj)
 	pBoss->m_strCurState = L"Change";
 
 	m_vOriginPos = pBoss->GetPos();
-	pBoss->m_pBody->SetPos(pBoss->GetPos() + Vec2(0, -50));
+	pBoss->m_pBody->SetPos(pBoss->GetPos());
 	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, -70));
 	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 50));
-	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-320, 0));
-	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+320, 0));
+	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-350, 0));
+	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+350, 0));
+
+	SINGLE(CSoundManager)->Play(L"BossChangeIntro");
 }
 
 void CBossStateChange::Exit(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
 	pBoss->SetPos(m_vOriginPos);
-	pBoss->m_pBody->SetPos(pBoss->GetPos());
-	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, -50));
-	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 70));
-	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-280, 100));
-	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+280, 100));
+	pBoss->m_pBody->SetPos(pBoss->GetPos() + Vec2(0, 50));
+	pBoss->m_pHeadTop->SetPos(pBoss->GetPos() + Vec2(0, 0));
+	pBoss->m_pHeadBottom->SetPos(pBoss->GetPos() + Vec2(30, 120));
+	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-350, 180));
+	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+350, 180));
 }
 
 void CBossStateChange::AnimationChange(CEnemyBoss* _pObj)
 {
 	SINGLE(CCameraManager)->WhiteOut(4.f);
+
+	SINGLE(CSoundManager)->Play(L"BossSlam");
+	SINGLE(CSoundManager)->Play(L"BossSlam");
 	SINGLE(CSoundManager)->Play(L"BossRoar");
 	_pObj->m_pBody->GetAnimator()->Play(L"BossBody_P2", true);
 	_pObj->m_pHeadTop->GetAnimator()->Play(L"BossHeadTop_P2", true);
