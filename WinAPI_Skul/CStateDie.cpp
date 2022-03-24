@@ -28,8 +28,7 @@ CState* CStateDie::HandleInput(CObject* _pObj)
             CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
             if (m_fCurTime >= m_fDuration)
             {
-                DELETEOBJECT(_pObj);
-                SINGLE(CGameManager)->m_iRemainEnemyCount--;
+                pEnemy->Die();
             }
         }
         break;
@@ -38,8 +37,7 @@ CState* CStateDie::HandleInput(CObject* _pObj)
             CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
             if (m_fCurTime >= m_fDuration)
             {
-                DELETEOBJECT(_pObj);
-                SINGLE(CGameManager)->m_iRemainEnemyCount--;
+                pEnemy->Die();
             }
         }
         break;

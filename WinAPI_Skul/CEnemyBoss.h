@@ -38,6 +38,8 @@ public:
     virtual void	    OnCollisionEnter(CCollider* _pOther);
     virtual void	    OnCollisionExit(CCollider* _pOther);
 
+    virtual void        Hit(int _damage);
+
     void        Slam(CObject* _pObj);
     void        Sweep(CObject* _pObj);
 };

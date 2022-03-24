@@ -5,6 +5,7 @@ class CAttack :
 {
 protected:
     CObject*    m_pOwner;
+    CObject* m_pTraceObj;
 
     float		m_fCurTime;	    // 오브젝트 생성되고 지나간 시간
     float		m_fDuration;	// 오브젝트 지속시간
@@ -14,6 +15,8 @@ public:
     virtual ~CAttack();
 
     CObject* GetOwner() { return m_pOwner; }
+
+    void  SetTraceObj(CObject* _pObj) { m_pTraceObj = _pObj; }
 
 };
 

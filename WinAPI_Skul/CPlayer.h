@@ -32,6 +32,7 @@ class CState;
 class CPlayer :
     public CObject
 {
+    friend class CGameManager;
     friend class CStateIdle;
     friend class CStateMove;
     friend class CStateJump;
@@ -89,7 +90,8 @@ public :
     Vec2                GetVelocity()                       { return m_vVelocity; }
     tPlayer_Info&       GetPlayerInfo()                     { return m_tPlayerInfo; }
     bool                IsGround()                          { return m_bIsGround; }
-    
+    float               GetCurHealthRatio()                 { return m_tPlayerInfo.m_iHp / (float)m_tPlayerInfo.m_iMaxHp; }
+
     void                RenderPlayerInfo();
 
     void                CoolTime();
@@ -97,6 +99,8 @@ public :
     void                JumpAttack();
     void                SkillA();
     void                SkillB();
+
+    void                Hit(int _damage);
 
     
 };

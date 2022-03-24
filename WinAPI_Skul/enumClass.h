@@ -1,6 +1,15 @@
 #pragma once
 
+enum Color
+{
+	red = RGB(255,0,0),
+	GREED = RGB(0, 255, 0),
+	BLUE = RGB(0,0,255),
+	ORANGE = RGB(255,128, 0),
+	BLACK = RGB(0,0,0),
+	WHITE = RGB(255,255,255)
 
+};
 // 오브젝트 그룹
 enum class OBJ_TYPE
 {
@@ -15,6 +24,7 @@ enum class OBJ_TYPE
 	PLAYER,
 	PLAYER_ATTACK,
 	BOSS_ATTACK,
+	MELEE_ATTACK,
 	PROJECTILE,
 	EFFECT,
 	ATTACK,

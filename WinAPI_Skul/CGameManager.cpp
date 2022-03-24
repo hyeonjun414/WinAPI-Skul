@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "CGameManager.h"
 #include "CUIText.h"
+#include "CUIImage.h"
 #include "CEffect.h"
 #include "CTextObj.h"
+#include "CPlayer.h"
 
 CGameManager::CGameManager():
 	m_pPlayer(nullptr)
@@ -36,6 +38,13 @@ void CGameManager::Update()
 		m_pRemainEnemy->SetText(to_wstring(m_iRemainEnemyCount));
 	}
 
+
+}
+
+void CGameManager::EraseHeadObj()
+{
+	CPlayer* pPlayer = (CPlayer*)m_pPlayer;
+	pPlayer->m_pHead = nullptr;
 }
 
 void CGameManager::CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos, float _fDuration, float _fInterval, bool _bDir, float _size)
@@ -46,9 +55,9 @@ void CGameManager::CreateEffect(const wstring& _strKey, const wstring& _strPath,
 	CREATEOBJECT(pEft);
 }
 
-void CGameManager::DamageText(const wstring& _strDamage, Vec2 _vPos)
+void CGameManager::DamageText(const wstring& _strDamage, Vec2 _vPos, Color _color)
 {
-	CTextObj* pDamage = new CTextObj(OBJ_TYPE::HUD, _strDamage, TEXT_EFFECT::BOUNCE);
+	CTextObj* pDamage = new CTextObj(OBJ_TYPE::HUD, _strDamage, TEXT_EFFECT::BOUNCE, _color);
 	pDamage->SetPos(_vPos);
 	CREATEOBJECT(pDamage);
 

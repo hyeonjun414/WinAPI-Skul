@@ -26,5 +26,6 @@ public:
 
 	void EffectPlay(Vec2 _vPos);
 
+
 };
 

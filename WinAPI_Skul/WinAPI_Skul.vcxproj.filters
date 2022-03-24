@@ -303,6 +303,9 @@
     <ClInclude Include="CBossStateIdleP2.h">
       <Filter>04.Component\BossState</Filter>
     </ClInclude>
+    <ClInclude Include="CHealthBar.h">
+      <Filter>04.Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -514,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="CBossStateIdleP2.cpp">
       <Filter>04.Component\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CHealthBar.cpp">
+      <Filter>04.Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

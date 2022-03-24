@@ -2,7 +2,9 @@
 #include "CUIText.h"
 
 CUIText::CUIText(OBJ_TYPE _eType):
-	CUI(_eType)
+	CUI(_eType),
+	m_strText(L""),
+	m_fFontSize(14.f)
 {
 }
 

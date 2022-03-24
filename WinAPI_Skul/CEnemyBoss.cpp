@@ -8,6 +8,7 @@
 #include "CLineObj.h"
 #include "CMeleeAttack.h"
 #include "CPlayer.h"
+#include "CUIImage.h"
 
 CEnemyBoss::CEnemyBoss(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType):
 	CEnemy(_eType, _eEnemyType)
@@ -101,8 +102,12 @@ void CEnemyBoss::Init()
 		m_fCurHitTime = 0.f;
 		m_bCanHit = true;
 		SetPos(Vec2(1600.f, 800.f));
-		GetEnemyInfo().m_vVelocity = Vec2(0, 400);
-		GetEnemyInfo().m_iHp = 10;
+		tEnemy_Info& info = GetEnemyInfo();
+		info.m_vVelocity = Vec2(0, 400);
+		info.m_iHp = 100;
+		info.m_iMaxHp = 100;
+		info.m_iDamage = 5;
+		
 		m_fMoveTime = 1.0f;
 		m_fMoveCurTime = 0.f;
 	
@@ -174,7 +179,7 @@ void CEnemyBoss::OnCollisionEnter(CCollider* _pOther)
 	{
 		CMeleeAttack* pAttack = (CMeleeAttack*)_pOther->GetObj();
 
-		if (m_bCanHit)
+		if (m_bCanHit && m_strCurState != L"Change")
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
@@ -182,11 +187,9 @@ void CEnemyBoss::OnCollisionEnter(CCollider* _pOther)
 			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
-			
-			m_tEnemyInfo.m_iHp -= pPlayer->GetPlayerInfo().m_iDamage;
+			Hit(pPlayer->GetPlayerInfo().m_iDamage);
 			m_bCanHit = false;
 		}
-
 	}
 }
 
@@ -194,18 +197,28 @@ void CEnemyBoss::OnCollisionExit(CCollider* _pOther)
 {
 }
 
+void CEnemyBoss::Hit(int _damage)
+{
+	m_tEnemyInfo.m_iHp = m_tEnemyInfo.m_iHp - _damage < 0 ? 0 : m_tEnemyInfo.m_iHp - _damage;
+	Vec2 vec = SINGLE(CGameManager)->m_pBossStatus->GetOriginSize();
+	SINGLE(CGameManager)->m_pBossStatus->SetScaleRate(Vec2(vec.x * m_tEnemyInfo.m_iHp/(float)m_tEnemyInfo.m_iMaxHp, vec.y));
+
+}
+
 void CEnemyBoss::Slam(CObject* _pObj)
 {
-	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::BOSS_ATTACK, _pObj, 0.5f);
+	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 0.5f);
 	pAttack->CreateAttackArea(_pObj, Vec2(0, 0), Vec2(200, 200));
+	pAttack->SetTraceObj(_pObj);
 	pAttack->SetName(L"Slam");
 	CREATEOBJECT(pAttack);
 }
 
 void CEnemyBoss::Sweep(CObject* _pObj)
 {
-	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::BOSS_ATTACK, _pObj, 1.0f);
+	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 1.0f);
 	pAttack->CreateAttackArea(_pObj, Vec2(0, 0), Vec2(170, 250));
+	pAttack->SetTraceObj(_pObj);
 	pAttack->SetName(L"Sweep");
 
 	CREATEOBJECT(pAttack);

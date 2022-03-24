@@ -17,7 +17,7 @@ void CSound::Play()
 {
 	
 	SINGLE(CSoundManager)->GetSystem()->playSound(m_pSound, nullptr, false, &m_pChannel);
-	//m_pChannel->setVolume(0.1f);
+	m_pChannel->setVolume(0.1f);
 }
 
 void CSound::Stop()

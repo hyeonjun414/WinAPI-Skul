@@ -61,6 +61,7 @@ void CSceneInGame::Stage01Init()
 {
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
+	CreateUI();
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
@@ -130,9 +131,6 @@ void CSceneInGame::Stage01Init()
 	strPath += L"texture\\tile\\Map\\stage01.tile";
 	LoadTile(strPath);
 
-	CreateUI();
-
-
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
@@ -153,6 +151,7 @@ void CSceneInGame::Stage02Init()
 {
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
+	CreateUI();
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
@@ -203,7 +202,7 @@ void CSceneInGame::Stage02Init()
 	CREATEOBJECT(gateObj);
 
 	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
-	gateObj->SetNextScene(SCENE_TYPE::STAGE_01);
+	gateObj->SetNextScene(SCENE_TYPE::BOSS);
 	gateObj->SetPos(Vec2(2800, 1050));
 	CREATEOBJECT(gateObj);
 
@@ -214,7 +213,7 @@ void CSceneInGame::Stage02Init()
 	LoadTile(strPath);
 
 
-	CreateUI();
+	
 
 
 	// 사운드 설정
@@ -240,11 +239,19 @@ void CSceneInGame::CreateUI()
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
 	pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
-	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png");
+	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
 	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(232.f, 2.f));
+
+	SINGLE(CGameManager)->m_pCurHealth = pUIChild;
 	pUIChild->SetPos(Vec2(88, 90));
 	pUI->AddChild(pUIChild);
+	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
+	pUIChildText->SetPos(Vec2(70, 77));
+	pUIChildText->SetScale(Vec2(250, 40));
+	pUIChildText->SetFontSize(24.f);
+	SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
+	
+	pUI->AddChild(pUIChildText);
 	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
 	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
 	pUIChild->SetScaleRate(Vec2(4.f, 4.f));

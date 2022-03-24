@@ -34,6 +34,11 @@ void CTimeManager::Update()
 	m_dDT = (double)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / m_llFrequency.QuadPart;
 	m_llPrevCount = m_llCurCount; // 이전 카운트 갱신
 
+	if (m_dDT > 1 / 60.f)
+	{
+		m_dDT = 1 / 60.f;
+	}
+
 	// 1초에 몇번 업데이트를 하나.
 	++updateCount;
 	updateOneSecond += m_dDT;

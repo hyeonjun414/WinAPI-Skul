@@ -6,7 +6,8 @@
 CBossState* CBossStateSlam::HandleInput(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
-	if (pBoss->m_tEnemyInfo.m_iHp <= 5 && !pBoss->m_bIsPhaseChanged)
+	if (0.5f >= pBoss->m_tEnemyInfo.m_iHp / (float)pBoss->m_tEnemyInfo.m_iMaxHp &&
+		!pBoss->m_bIsPhaseChanged)
 	{
 		return new CBossStateChange();
 	}
@@ -163,6 +164,7 @@ void CBossStateSlam::SetSlamVelocity(CObject* _pObj)
 	Vec2 dir = (PLAYERPOS - _pObj->GetPos()).Normalize();
 	//float velocity = (PLAYERPOS - _pObj->GetPos()).Length() / 0.5f;
 	dir.y = 0.7f;
+	dir.x += dir.x > 0.5f ? 0.2f : -0.2f;
 	m_vSlamVelocity = dir * 800;
 }
 

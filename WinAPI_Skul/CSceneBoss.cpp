@@ -31,6 +31,7 @@ void CSceneBoss::Enter()
 {
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
+	CreateUI();
 
 	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
 	obj->SetName(L"Player");
@@ -62,8 +63,6 @@ void CSceneBoss::Enter()
 
 	
 
-	CreateUI();
-
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1BossBgm", L"sound\\Chapter1_Boss.wav", true);
@@ -78,8 +77,8 @@ void CSceneBoss::Enter()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::BOSS_ATTACK);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::BOSS_ATTACK);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::MELEE_ATTACK);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MELEE_ATTACK);
 
 }
 
@@ -97,11 +96,19 @@ void CSceneBoss::CreateUI()
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
 	pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
-	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png");
+	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
 	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(232.f, 2.f));
+
+	SINGLE(CGameManager)->m_pCurHealth = pUIChild;
 	pUIChild->SetPos(Vec2(88, 90));
 	pUI->AddChild(pUIChild);
+	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
+	pUIChildText->SetPos(Vec2(70, 77));
+	pUIChildText->SetScale(Vec2(250, 40));
+	pUIChildText->SetFontSize(24.f);
+	SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
+
+	pUI->AddChild(pUIChildText);
 	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
 	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
 	pUIChild->SetScaleRate(Vec2(4.f, 4.f));
@@ -143,5 +150,28 @@ void CSceneBoss::CreateUI()
 	pTimer->SetFontSize(30.f);
 	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
 	pUI->AddChild(pTimer);
+	CREATEOBJECT(pUI);
+	
+	pUI = new CUIImage(OBJ_TYPE::UI, L"BossStatusFrame", L"texture\\ui\\bossStatus.png");
+	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
+	pUI->SetScaleRate(Vec2(2.f, 2.f));
+	pUI->SetPos(Vec2(WINSIZEX/2 - pUI->GetImage()->GetWidth()+20, 0));
+	pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(550.f, 2.5f));
+	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	pUIChild->SetPos(Vec2(45, 57));
+	SINGLE(CGameManager)->m_pBossStatus = pUIChild;
+	pUI->AddChild(pUIChild);
+	pUIChildText = new CUIText(OBJ_TYPE::UI);
+	pUIChildText->SetPos(Vec2(pUI->GetImage()->GetWidth()/2+35, 20));
+	pUIChildText->SetScale(Vec2(250, 40));
+	pUIChildText->SetFontSize(18.f);
+	pUIChildText->SetText(L"위그드라실");
+	pUI->AddChild(pUIChildText);
+	pUIChildText = new CUIText(OBJ_TYPE::UI);
+	pUIChildText->SetPos(Vec2(pUI->GetImage()->GetWidth()/2+33,78));
+	pUIChildText->SetScale(Vec2(250, 40));
+	pUIChildText->SetFontSize(15.f);
+	pUIChildText->SetText(L"장로 엔트");
+	pUI->AddChild(pUIChildText);
 	CREATEOBJECT(pUI);
 }

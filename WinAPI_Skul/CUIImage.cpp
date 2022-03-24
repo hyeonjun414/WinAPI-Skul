@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "CUIImage.h"
 
-CUIImage::CUIImage(OBJ_TYPE _eType, const wstring& _strKey, const wstring& _strPath):
+CUIImage::CUIImage(OBJ_TYPE _eType, const wstring& _strKey, const wstring& _strPath, Vec2 _sizeRate):
 	CUI(_eType),
 	m_pImg(nullptr),
-	m_vScaleRate(Vec2(1.f,1.f))
+	m_vScaleRate(_sizeRate),
+	m_vOriginScaleRate(_sizeRate)
 {
 	m_pImg = SINGLE(CResourceManager)->LoadD2DImage(_strKey, _strPath);
 	assert(m_pImg);

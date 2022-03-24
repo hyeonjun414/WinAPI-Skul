@@ -12,6 +12,8 @@
 #include "CMeleeAttack.h"
 #include "CAttack.h"
 #include "CEnemy.h"
+#include "CUIImage.h"
+#include "CUIText.h"
 
 CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
@@ -83,8 +85,11 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 
-
-	GetPlayerInfo().m_iDamage = 10;
+	
+	GetPlayerInfo().m_iDamage = 5;
+	GetPlayerInfo().m_iHp = 50;
+	GetPlayerInfo().m_iMaxHp = 50;
+	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
 
 }
 
@@ -176,6 +181,17 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			}
 		}
     }
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::MELEE_ATTACK)
+	{
+		CAttack* pAttack = (CAttack*)_pOther->GetObj();
+		CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
+		SINGLE(CSoundManager)->Play(L"Hit");
+		SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
+			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
+		SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
+		Hit(pEnemy->GetEnemyInfo().m_iDamage);
+	}
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE)
 	{
 		if (L"SkulHead" == _pOther->GetObj()->GetName())
@@ -190,7 +206,22 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			SINGLE(CGameManager)->CreateEffect(L"Explosion", L"texture\\effect\\explosion_small.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
-				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
+			SINGLE(CSoundManager)->Play(L"Hit");
+
+			Hit(pEnemy->GetEnemyInfo().m_iDamage);
+		}
+		else if (L"BossBomb" == _pOther->GetObj()->GetName())
+		{
+			CAttack* pAttack = (CAttack*)_pOther->GetObj();
+			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
+			SINGLE(CGameManager)->CreateEffect(L"Explosion", L"texture\\effect\\explosion_small.png",
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
+			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
+			SINGLE(CSoundManager)->Play(L"Hit");
+
+			Hit(pEnemy->GetEnemyInfo().m_iDamage);
 		}
 	}
 }
@@ -327,9 +358,18 @@ void CPlayer::SkillA()
 
 void CPlayer::SkillB()
 {
-	if (!m_bCanSkill)
+	if (!m_bCanSkill && nullptr != m_pHead)
 	{
 		SetPos(m_pHead->GetPos());
 		m_pHead = nullptr;
 	}
+}
+
+void CPlayer::Hit(int _damage)
+{
+	m_tPlayerInfo.m_iHp = m_tPlayerInfo.m_iHp -_damage < 0 ? 0 : m_tPlayerInfo.m_iHp - _damage;
+	Vec2 vec = SINGLE(CGameManager)->m_pCurHealth->GetOriginSize();
+	SINGLE(CGameManager)->m_pCurHealth->SetScaleRate(Vec2(vec.x * GetCurHealthRatio(), vec.y));
+	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
+	
 }

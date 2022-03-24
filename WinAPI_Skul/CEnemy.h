@@ -1,6 +1,6 @@
 #pragma once
 #include "CObject.h"
-
+#include "CHealthBar.h"
 
 struct tEnemy_Info
 {
@@ -46,6 +46,9 @@ protected:
     CState*     m_pState;
     tEnemy_Info m_tEnemyInfo;
 
+    // ÄÄÆ÷³ÍÆ®
+    CHealthBar* m_pHpBar;
+
 public:
     CEnemy(OBJ_TYPE _eType);
     CEnemy(OBJ_TYPE _eType, ENEMY_TYPE _eMonsterType);
@@ -62,6 +65,8 @@ public:
     virtual void	    OnCollisionExit(CCollider* _pOther);
 
     virtual void        Attack() {}
+    virtual void        Hit(int _damage);
+    virtual void        Die();
 
 
     ENEMY_TYPE          GetEnemyType()                      { return m_eEnemyType; }
@@ -73,6 +78,7 @@ public:
     void                RenderEnemyInfo();
     void                CoolTime();
 
+    void CreateHealthBar();
     
 };
 

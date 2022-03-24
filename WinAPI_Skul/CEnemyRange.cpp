@@ -46,8 +46,9 @@ void CEnemyRange::Init()
 		m_pAnimator->SetAllAnimOffset(Vec2(0, 20));
 
 
-		m_tEnemyInfo.m_iHp = 10;
-		m_tEnemyInfo.m_iDamage = 0;
+		m_tEnemyInfo.m_iHp = 20;
+		m_tEnemyInfo.m_iMaxHp = 20;
+		m_tEnemyInfo.m_iDamage = 1;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
 
@@ -59,6 +60,7 @@ void CEnemyRange::Init()
 		m_fCurTraceTime = 0.f;
 		m_bCanTrace = true;
 
+		CreateHealthBar();
 
 		m_pState = new CStateAppear();
 		m_pState->Enter(this);
@@ -110,7 +112,7 @@ void CEnemyRange::OnCollisionEnter(CCollider* _pOther)
 				SetObjDir(true);
 			}
 
-			m_tEnemyInfo.m_iHp -= pPlayer->GetPlayerInfo().m_iDamage;
+			Hit(pPlayer->GetPlayerInfo().m_iDamage);
 			m_bCanHit = false;
 		}
 

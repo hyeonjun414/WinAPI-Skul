@@ -6,7 +6,7 @@
 CBossState* CBossStateIdle::HandleInput(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
-	if (pBoss->m_tEnemyInfo.m_iHp <= 5)
+	if (0.5f >= pBoss->m_tEnemyInfo.m_iHp / (float)pBoss->m_tEnemyInfo.m_iMaxHp)
 		return new CBossStateChange();
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
 	{

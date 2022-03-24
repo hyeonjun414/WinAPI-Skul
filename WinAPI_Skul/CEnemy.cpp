@@ -7,6 +7,7 @@
 #include "CAnimation.h"
 #include "CCollider.h"
 #include "CTile.h"
+#include "CUIText.h"
 
 #include "CStateIdle.h"
 
@@ -67,12 +68,17 @@ void CEnemy::Update()
 
 	if(nullptr != m_pAnimator)
 		m_pAnimator->Update();
+	if (nullptr != m_pHpBar)
+		m_pHpBar->FinalUpdate();
 }
 
 void CEnemy::Render()
 {
 	ComponentRender();
 	RenderEnemyInfo();
+	if (nullptr != m_pHpBar)
+		m_pHpBar->Render();
+
 }
 void CEnemy::OnCollision(CCollider* _pOther)
 {
@@ -141,6 +147,20 @@ void CEnemy::OnCollisionExit(CCollider* _pOther)
 		}
 
 	}
+}
+
+void CEnemy::Hit(int _damage)
+{
+	m_tEnemyInfo.m_iHp = m_tEnemyInfo.m_iHp - _damage < 0 ? 0 : m_tEnemyInfo.m_iHp - _damage;
+	if (nullptr != m_pHpBar)
+		m_pHpBar->SetFrontScale(m_pHpBar->GetBackScale() * m_tEnemyInfo.m_iHp / (float)m_tEnemyInfo.m_iMaxHp);
+}
+
+void CEnemy::Die()
+{
+	SINGLE(CGameManager)->m_iRemainEnemyCount--;
+	SINGLE(CGameManager)->m_pRemainEnemy->SetText(to_wstring(SINGLE(CGameManager)->m_iRemainEnemyCount));
+	DELETEOBJECT(this);
 }
 
 void CEnemy::RenderEnemyInfo()
@@ -219,4 +239,15 @@ void CEnemy::CoolTime()
 			m_fCurTraceTime = 0.f;
 		}
 	}
+}
+
+void CEnemy::CreateHealthBar()
+{
+	CHealthBar* bar = new CHealthBar;
+	bar->m_pEnemy = this;
+	bar->m_vOffsetPos = Vec2(-25.f, 10.f);
+	bar->m_vBackScale = Vec2(100.f, 8.f);
+	bar->m_vFrontScale = Vec2(80.f, 2.f);
+	m_pHpBar = bar;
+
 }

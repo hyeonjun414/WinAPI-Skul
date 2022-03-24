@@ -159,6 +159,7 @@
     <ClInclude Include="CBossStateIdleP2.h" />
     <ClInclude Include="CBossStateSlam.h" />
     <ClInclude Include="CBossStateSweep.h" />
+    <ClInclude Include="CHealthBar.h" />
     <ClInclude Include="CLineObj.h" />
     <ClInclude Include="CMeleeAttack.h" />
     <ClInclude Include="CProjectile.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="CBossStateIdleP2.cpp" />
     <ClCompile Include="CBossStateSlam.cpp" />
     <ClCompile Include="CBossStateSweep.cpp" />
+    <ClCompile Include="CHealthBar.cpp" />
     <ClCompile Include="CLineObj.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
     <ClCompile Include="CProjectile.cpp" />

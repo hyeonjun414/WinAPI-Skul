@@ -25,6 +25,7 @@ CProjectile::CProjectile(OBJ_TYPE _eType, CObject* _pObj,
 
 CProjectile::~CProjectile()
 {
+	//delete m_pAnimator;
 }
 
 void CProjectile::Update()
@@ -54,11 +55,11 @@ void CProjectile::OnCollisionEnter(CCollider* _pOther)
 {
 	if (GetName() == L"BossBomb")
 	{
-		if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+		if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE && !m_bIsHit)
 		{
 			SINGLE(CGameManager)->CreateEffect(L"Bomb_Explosion", L"texture\\effect\\ElderEntP2_EnergyCorps_Explosion.png",
 				_pOther->GetFinalPos() + Vec2(0, -85), 1.f, 1.f, rand() % 2, 1.f);
-			this->SetActive(false);
+			m_bIsHit = true;
 			DELETEOBJECT(this);
 			SINGLE(CSoundManager)->Play(L"BossBombExplosion");
 		}
@@ -89,6 +90,7 @@ void CProjectile::OnCollisionEnter(CCollider* _pOther)
 		}
 		if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
 		{
+			SINGLE(CGameManager)->EraseHeadObj();
 			DELETEOBJECT(this);
 		}
 	}

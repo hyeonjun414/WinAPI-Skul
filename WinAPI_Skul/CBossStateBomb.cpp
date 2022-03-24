@@ -85,7 +85,7 @@ void CBossStateBomb::Enter(CObject* _pObj)
 	m_fOnceFuncTime = 0.2f;
 	m_fOnceFuncCurTime = 0.f;
 	pBoss->m_bIsPhaseChanged = true;
-	pBoss->m_strCurState = L"Change";
+	pBoss->m_strCurState = L"Bomb";
 
 	m_vOriginPos = pBoss->GetPos();
 	pBoss->m_pBody->SetPos(pBoss->GetPos() + Vec2(0, 50));

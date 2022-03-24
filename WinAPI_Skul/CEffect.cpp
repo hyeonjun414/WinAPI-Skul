@@ -47,9 +47,3 @@ void CEffect::Render()
 		GetAnimator()->Render(m_bIsRight, m_fSizeRate);
 	}
 }
-
-void CEffect::EffectPlay(Vec2 _vPos)
-{
-	m_bIsPlay = true;
-	SetPos(_vPos);
-}

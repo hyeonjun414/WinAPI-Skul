@@ -16,7 +16,15 @@ CMeleeAttack::~CMeleeAttack()
 
 void CMeleeAttack::Update()
 {
-	SetPos(m_pOwner->GetPos());
+	if (nullptr != m_pTraceObj)
+	{
+		SetPos(m_pTraceObj->GetPos());
+	}
+	else
+	{
+		SetPos(m_pOwner->GetPos());
+	}
+	
 	m_fCurTime += DT;
 
 	if (m_fCurTime >= m_fDuration)
@@ -39,26 +47,34 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 		}
 
 	}
-	if (GetObjType() == OBJ_TYPE::BOSS_ATTACK &&
-		GetName() == L"Slam" &&
-		_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+	else if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
 	{
-		SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
-			Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x)/ 2 + rand() % 100 - 50,
-				_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
-			2.f, 2.f, rand()%2);
-		SINGLE(CCameraManager)->CameraShaking(2500, 1.f);
-		SINGLE(CSoundManager)->Play(L"BossSlam");
+
 	}
-	else if (GetObjType() == OBJ_TYPE::BOSS_ATTACK &&
-		GetName() == L"Sweep" &&
-		_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
+	else if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
-		SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
-			Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
-				_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
-			0.5f, 0.5f, rand() % 2);
+		if (GetObjType() == OBJ_TYPE::MELEE_ATTACK)
+		{ 
+			if (GetName() == L"Slam")
+			{
+				SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+					Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
+						_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
+					2.f, 2.f, rand() % 2);
+				SINGLE(CCameraManager)->CameraShaking(2500, 1.f);
+				SINGLE(CSoundManager)->Play(L"BossSlam");
+			}
+			else if (GetName() == L"Sweep")
+			{
+				SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+					Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
+						_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
+					0.5f, 0.5f, rand() % 2);
+			}
+		}
 	}
+
+	
 }
 
 void CMeleeAttack::CreateAttackArea(CObject* _pObj, Vec2 _vPos, Vec2 _vScale)
