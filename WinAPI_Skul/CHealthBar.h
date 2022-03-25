@@ -8,15 +8,14 @@ class CHealthBar
 private:
 	CEnemy* m_pEnemy;
 
-	CD2DImage*      m_pBackImg;
 	CD2DImage*      m_pFrontImg;
 	CD2DImage*		m_pFrameImg;
 
-	Vec2			m_vOffsetPos;	// 오브젝트에서의 상대적인 위치 -> 기준점은 오브젝트의 중심이다.
-	Vec2			m_vFinalPos;	// 충돌체의 최종 위치
-	Vec2			m_vRenderPos;	// 그려낼 최종 위치
-	Vec2			m_vBackScale;		// 충돌체의 크기 정보
-	Vec2			m_vFrontScale;		// 충돌체의 크기 정보
+	Vec2			m_vOffsetPos;	// 오브젝트에서의 상대적인 위치
+	Vec2			m_vFinalPos;	
+	Vec2			m_vRenderPos;	
+	Vec2			m_vBackScale;		
+	Vec2			m_vFrontScale;		
 
 public:
 	CHealthBar();

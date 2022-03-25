@@ -44,8 +44,8 @@ void CEnemyMelee::Init()
 		m_pAnimator->SetAllAnimOffset(Vec2(0, 0));
 
 
-		m_tEnemyInfo.m_iHp = 20;
-		m_tEnemyInfo.m_iMaxHp = 20;
+		m_tEnemyInfo.m_iHp = 1000;
+		m_tEnemyInfo.m_iMaxHp = 1000;
 		m_tEnemyInfo.m_iDamage = 1;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
@@ -92,10 +92,11 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 1.f);
 			SINGLE(CSoundManager)->Play(L"Hit");
 			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
 			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
 			{
 				//SetPos(GetPos() + Vec2(10, 0));
@@ -107,7 +108,7 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 				SetObjDir(true);
 			}
 
-			Hit(pPlayer->GetPlayerInfo().m_iDamage);
+			Hit(damage);
 			m_bCanHit = false;
 		}
 

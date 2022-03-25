@@ -86,7 +86,7 @@ CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 
 	
-	GetPlayerInfo().m_iDamage = 5;
+	GetPlayerInfo().m_iDamage = 100;
 	GetPlayerInfo().m_iHp = 50;
 	GetPlayerInfo().m_iMaxHp = 50;
 	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));

@@ -63,4 +63,13 @@ void CGameManager::DamageText(const wstring& _strDamage, Vec2 _vPos, Color _colo
 
 }
 
+int CGameManager::RandomInt(int _value, float _volume)
+{
+	// 10 * 2 = 20 10 - 10
+	//int value = _value * _volume;
+	int randValue = rand()%_value * (1.f + _volume);
+	int result = _value + randValue;
+	return result;
+}
+
 

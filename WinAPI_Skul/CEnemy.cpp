@@ -31,6 +31,8 @@ CEnemy::CEnemy(OBJ_TYPE _eType, ENEMY_TYPE _eMonsterType):
 CEnemy::~CEnemy()
 {
 	delete m_pState;
+	if (nullptr != m_pHpBar)
+		delete m_pHpBar;
 }
 
 void CEnemy::Init()
@@ -153,7 +155,10 @@ void CEnemy::Hit(int _damage)
 {
 	m_tEnemyInfo.m_iHp = m_tEnemyInfo.m_iHp - _damage < 0 ? 0 : m_tEnemyInfo.m_iHp - _damage;
 	if (nullptr != m_pHpBar)
-		m_pHpBar->SetFrontScale(m_pHpBar->GetBackScale() * m_tEnemyInfo.m_iHp / (float)m_tEnemyInfo.m_iMaxHp);
+	{
+		float ratio = m_tEnemyInfo.m_iHp / (float)m_tEnemyInfo.m_iMaxHp < 0.05f ? 0.f : m_tEnemyInfo.m_iHp / (float)m_tEnemyInfo.m_iMaxHp;
+		m_pHpBar->SetFrontScale(m_pHpBar->GetBackScale() * ratio);
+	}
 }
 
 void CEnemy::Die()
@@ -245,9 +250,6 @@ void CEnemy::CreateHealthBar()
 {
 	CHealthBar* bar = new CHealthBar;
 	bar->m_pEnemy = this;
-	bar->m_vOffsetPos = Vec2(-25.f, 10.f);
-	bar->m_vBackScale = Vec2(100.f, 8.f);
-	bar->m_vFrontScale = Vec2(80.f, 2.f);
 	m_pHpBar = bar;
 
 }
