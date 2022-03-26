@@ -38,5 +38,7 @@ public:
     virtual void        SkillB();
 
     virtual void        Hit(int _damage);
+
+    void                ArrowRainFire();
 };
 

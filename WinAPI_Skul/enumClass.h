@@ -28,6 +28,7 @@ enum class OBJ_TYPE
 	PROJECTILE,
 	EFFECT,
 	ATTACK,
+	GENERATOR,
 	TEXT,
 	HUD,
 	UI,

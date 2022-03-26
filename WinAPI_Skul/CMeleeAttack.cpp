@@ -57,7 +57,7 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 		{ 
 			if (GetName() == L"Slam")
 			{
-				SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+				SINGLE(CGameManager)->CreateVfx(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
 					Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
 						_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
 					2.f, 2.f, rand() % 2);
@@ -66,7 +66,7 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 			}
 			else if (GetName() == L"Sweep")
 			{
-				SINGLE(CGameManager)->CreateEffect(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
+				SINGLE(CGameManager)->CreateVfx(L"BigStemp", L"texture\\effect\\BigStomp_Attack_Smoke.png",
 					Vec2((m_pCollider->GetFinalPos().x + _pOther->GetFinalPos().x) / 2 + rand() % 100 - 50,
 						_pOther->GetFinalPos().y - 160 + rand() % 30 - 15),
 					0.5f, 0.5f, rand() % 2);

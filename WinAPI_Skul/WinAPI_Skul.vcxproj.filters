@@ -348,6 +348,15 @@
     <ClInclude Include="CBall.h">
       <Filter>03.GameObject\FuncObj</Filter>
     </ClInclude>
+    <ClInclude Include="CSfx.h">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CVfx.h">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjGenerator.h">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -595,6 +604,15 @@
     </ClCompile>
     <ClCompile Include="CBall.cpp">
       <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CSfx.cpp">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CVfx.cpp">
+      <Filter>03.GameObject\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjGenerator.cpp">
+      <Filter>03.GameObject\Object\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

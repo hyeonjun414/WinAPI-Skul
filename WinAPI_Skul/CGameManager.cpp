@@ -5,6 +5,7 @@
 #include "CEffect.h"
 #include "CTextObj.h"
 #include "CPlayer.h"
+#include "CVfx.h"
 
 CGameManager::CGameManager():
 	m_pPlayer(nullptr)
@@ -47,9 +48,9 @@ void CGameManager::EraseHeadObj()
 	pPlayer->m_pHead = nullptr;
 }
 
-void CGameManager::CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos, float _fDuration, float _fInterval, bool _bDir, float _size)
+void CGameManager::CreateVfx(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos, float _fDuration, float _fInterval, bool _bDir, float _size)
 {
-	CEffect* pEft = new CEffect(_strKey, _strPath, _fDuration, _fInterval,_bDir);
+	CVfx* pEft = new CVfx(_strKey, _strPath, _fDuration, _fInterval,_bDir);
 	pEft->SetPos(_vPos);
 	pEft->SetSizeRate(_size);
 	CREATEOBJECT(pEft);

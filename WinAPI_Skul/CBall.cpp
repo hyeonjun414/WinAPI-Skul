@@ -51,7 +51,7 @@ void CBall::OnCollisionEnter(CCollider* _pOther)
 	{
 		if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE && !m_bIsHit)
 		{
-			SINGLE(CGameManager)->CreateEffect(L"Bomb_Explosion", L"texture\\effect\\ElderEntP2_EnergyCorps_Explosion.png",
+			SINGLE(CGameManager)->CreateVfx(L"Bomb_Explosion", L"texture\\effect\\ElderEntP2_EnergyCorps_Explosion.png",
 				_pOther->GetFinalPos() + Vec2(0, -85), 1.f, 1.f, rand() % 2, 1.f);
 			m_bIsHit = true;
 			DELETEOBJECT(this);

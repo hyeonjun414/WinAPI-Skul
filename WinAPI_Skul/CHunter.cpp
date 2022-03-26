@@ -16,6 +16,8 @@
 #include "CUIImage.h"
 #include "CUIText.h"
 #include "CArrow.h"
+#include "CObjGenerator.h"
+#include "CSfx.h"
 
 CHunter::CHunter(OBJ_TYPE _eType):
 	CPlayer(_eType)
@@ -91,6 +93,7 @@ void CHunter::Init()
 	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Arrow", L"sound\\Shot_Arrow.wav", false);
 
 
 
@@ -141,6 +144,7 @@ void CHunter::CoolTime()
 
 void CHunter::Attack()
 {
+	SINGLE(CSoundManager)->Play(L"Arrow");
 	if (m_bCharged)
 	{
 		m_fCurChargeTime = 0.f;
@@ -166,6 +170,7 @@ void CHunter::Attack()
 
 void CHunter::JumpAttack()
 {
+	SINGLE(CSoundManager)->Play(L"Arrow");
 	m_fCurChargeTime = 0.f;
 	GetAnimator()->Play(L"Player_JumpAttack", true);
 	CArrow* pProj = new CArrow(OBJ_TYPE::PROJECTILE, this,
@@ -177,19 +182,33 @@ void CHunter::JumpAttack()
 
 void CHunter::SkillA()
 {
+
 	if (m_bCharged)
 	{
+		SINGLE(CSoundManager)->Play(L"Arrow");
 		m_fCurChargeTime = 0.f;
 		m_bCharged = false;
 		GetAnimator()->Play(L"Player_Attack", true);
-		CArrow* pProj = new CArrow(OBJ_TYPE::PROJECTILE, this,
-			L"Arrow_completed", L"texture\\player\\hunter\\Hunter_Attack_Completed_Projectile.png", 5.f);
-		pProj->SetVelocity(Vec2(GetObjDir() ? 2000.f : -2000.f, -100.f));
-		pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
-		CREATEOBJECT(pProj);
+		CObjGenerator* pObjGene = new CObjGenerator(0.1f, GetPos()+Vec2(GetObjDir()? 500 : -500, -500), Vec2(500, 50), 1.f);
+		for (int i = 1; i <= 10; i++)
+		{
+			CArrow* pProj = new CArrow(OBJ_TYPE::PROJECTILE, this,
+				L"Arrow_completed", L"texture\\player\\hunter\\Hunter_Attack_Completed_Projectile.png", 5.f);
+			pProj->SetName(L"ArrowRain");
+			pProj->SetVelocity(Vec2(0, 1400.f));
+			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
+			pObjGene->ReservateObj(pProj);
+
+			CSfx* pSfx = new CSfx(L"Arrow");
+			pObjGene->ReservateEft(pSfx);
+		}
+		CREATEOBJECT(pObjGene);
+		SINGLE(CGameManager)->CreateVfx(L"ArrowRainFire", L"texture\\effect\\Hunter_SiegeShot_Charged.png",
+				m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 30 : -30, -60), 0.5f, 0.5f, GetObjDir());
 	}
 	else
 	{
+		SINGLE(CSoundManager)->Play(L"Arrow");
 		m_fCurChargeTime = 0.f;
 		GetAnimator()->Play(L"Player_Attack", true);
 		for (int i = 1; i <= 5; i++)
@@ -202,14 +221,55 @@ void CHunter::SkillA()
 			pProj->SetName(L"ArrowRain");
 			pProj->SetVelocity(velo*800);
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
+
 			CREATEOBJECT(pProj);
 		}
-
 	}
 }
 
 void CHunter::SkillB()
 {
+	if (m_bCharged)
+	{
+		m_fCurChargeTime = 0.f;
+		m_bCharged = false;
+		GetAnimator()->Play(L"Player_Attack", true);
+		CObjGenerator* pObjGene = new CObjGenerator(0.1f, GetPos() + Vec2(GetObjDir() ? 70 : -70, -30), Vec2(10, 20));
+		for (int i = 1; i <= 10; i++)
+		{
+			CArrow* pProj = new CArrow(OBJ_TYPE::PROJECTILE, this,
+				L"Arrow_completed", L"texture\\player\\hunter\\Hunter_Attack_Completed_Projectile.png", 5.f);
+			pProj->SetVelocity(Vec2(GetObjDir() ? 2000.f : -2000.f, -120.f));
+			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
+			pObjGene->ReservateObj(pProj);
+
+			CSfx* pSfx = new CSfx(L"Arrow");
+			pObjGene->ReservateEft(pSfx);
+		}
+		CREATEOBJECT(pObjGene);
+		SINGLE(CGameManager)->CreateVfx(L"RapidShotEffect", L"texture\\effect\\Hunter_RapidShot_Completed.png",
+			m_pCollider->GetFinalPos()+ Vec2(GetObjDir()?50:-50, -10), 1.f, 1.f, GetObjDir());
+
+	}
+	else
+	{
+		m_fCurChargeTime = 0.f;
+		m_bCharged = false;
+		GetAnimator()->Play(L"Player_Attack", true);
+		CObjGenerator* pObjGene = new CObjGenerator(0.1f, GetPos() + Vec2(GetObjDir() ? 50 : -50, -30), Vec2(10, 20));
+		for (int i = 1; i <= 5; i++)
+		{
+			CArrow* pProj = new CArrow(OBJ_TYPE::PROJECTILE, this,
+				L"Arrow_Incompleted", L"texture\\player\\hunter\\Hunter_Attack_Incompleted_Projectile.png", 5.f);
+			pProj->SetVelocity(Vec2(GetObjDir() ? 1400.f : -1400.f, -150.f));
+			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
+			pObjGene->ReservateObj(pProj);
+
+			CSfx* pSfx = new CSfx(L"Arrow");
+			pObjGene->ReservateEft(pSfx);
+		}
+		CREATEOBJECT(pObjGene);
+	}
 }
 
 void CHunter::Hit(int _damage)

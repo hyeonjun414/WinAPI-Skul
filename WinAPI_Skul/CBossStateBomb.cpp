@@ -33,7 +33,7 @@ void CBossStateBomb::Update(CObject* _pObj)
 	{
 		if (1.0f < m_fCurTime && m_fCurTime < 1.1f && m_bOnceFunc)
 		{
-			SINGLE(CGameManager)->CreateEffect(L"Bomb_Charging2", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_2.png",
+			SINGLE(CGameManager)->CreateVfx(L"Bomb_Charging2", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_2.png",
 				pBoss->m_pHeadTop->GetPos(), 1.f, 1.f, true, 1.f);
 			m_bOnceFunc = false;
 			m_fOnceFuncCurTime = 0.f;
@@ -53,7 +53,7 @@ void CBossStateBomb::Update(CObject* _pObj)
 	{
 		if (m_fCurTime < 2.5f && m_bOnceFunc)
 		{
-			SINGLE(CGameManager)->CreateEffect(L"Bomb_Casting", L"texture\\effect\\ElderEntP2_EnergyCorps_Spark.png",
+			SINGLE(CGameManager)->CreateVfx(L"Bomb_Casting", L"texture\\effect\\ElderEntP2_EnergyCorps_Spark.png",
 				pBoss->m_pHeadTop->GetPos(), 3.5f, 1.f, true, 1.f);
 			SINGLE(CCameraManager)->CameraShaking(500.f, 5.f);
 			m_bOnceFunc = false;
@@ -97,7 +97,7 @@ void CBossStateBomb::Enter(CObject* _pObj)
 	pBoss->m_pLeftHand->SetPos(pBoss->GetPos() + Vec2(-420, +240));
 	pBoss->m_pRightHand->SetPos(pBoss->GetPos() + Vec2(+420, +240));
 
-	SINGLE(CGameManager)->CreateEffect(L"Bomb_Charging", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_1.png",
+	SINGLE(CGameManager)->CreateVfx(L"Bomb_Charging", L"texture\\effect\\ElderEntP2_EnergyCorps_Charging_1.png",
 		pBoss->m_pHeadTop->GetPos(), 1.f, 1.f, true, 1.f);
 	SINGLE(CSoundManager)->Play(L"BossBombFire");
 }
@@ -120,7 +120,7 @@ void CBossStateBomb::CreateBomb(CObject* _pObj)
 	Vec2 startPos = pObj->GetPos() + Vec2(rand() % 1400 - 700, rand()%50 - 25) + Vec2(0, -100);
 	//Vec2 vVelo = (PLAYERPOS - startPos).Normalize() * 300;
 	Vec2 vVelo = Vec2(rand()%500 - 250, 500);
-	SINGLE(CGameManager)->CreateEffect(L"Bomb_Emerge", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile_Emerge.png",
+	SINGLE(CGameManager)->CreateVfx(L"Bomb_Emerge", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile_Emerge.png",
 		startPos, 1.f, 1.f, true, 1.f);
 	CBall* pProj = new CBall(OBJ_TYPE::PROJECTILE, _pObj,
 		L"BossBomb", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile.png",

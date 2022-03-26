@@ -67,7 +67,7 @@ void CPlayerStateDash::Enter(CObject* _pObj)
 	pPlayer->m_vVelocity.y = 0;
 
 	pPlayer->m_strCurState = L"Dash";
-	SINGLE(CGameManager)->CreateEffect(L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
+	SINGLE(CGameManager)->CreateVfx(L"Dash_Smoke", L"texture\\effect\\dash_smoke_midium.png",
 		pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
 	SINGLE(CSoundManager)->Play(L"Dash");
 

@@ -93,7 +93,7 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
 			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 0.2f);
 			SINGLE(CSoundManager)->Play(L"Hit");
-			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
+			SINGLE(CGameManager)->CreateVfx(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
 			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)

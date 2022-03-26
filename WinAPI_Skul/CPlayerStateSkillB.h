@@ -3,6 +3,9 @@
 class CPlayerStateSkillB :
     public CPlayerState
 {
+private:
+    bool    m_bIsAttack;
+
 public:
     virtual ~CPlayerStateSkillB() {}
     virtual CPlayerState* HandleInput(CObject* _pObj);

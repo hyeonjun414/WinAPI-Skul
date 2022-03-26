@@ -168,6 +168,7 @@
     <ClInclude Include="CLineObj.h" />
     <ClInclude Include="CLittleBorn.h" />
     <ClInclude Include="CMeleeAttack.h" />
+    <ClInclude Include="CObjGenerator.h" />
     <ClInclude Include="CPlayerState.h" />
     <ClInclude Include="CPlayerStateAttack.h" />
     <ClInclude Include="CPlayerStateDash.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="CPlayerStateSkillB.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CSceneBoss.h" />
+    <ClInclude Include="CSfx.h" />
     <ClInclude Include="CUIButton.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />
@@ -229,6 +231,7 @@
     <ClInclude Include="CUIManager.h" />
     <ClInclude Include="CUIText.h" />
     <ClInclude Include="CUITileBtn.h" />
+    <ClInclude Include="CVfx.h" />
     <ClInclude Include="enumClass.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="function.h" />
@@ -260,6 +263,7 @@
     <ClCompile Include="CLineObj.cpp" />
     <ClCompile Include="CLittleBorn.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
+    <ClCompile Include="CObjGenerator.cpp" />
     <ClCompile Include="CPlayerState.cpp" />
     <ClCompile Include="CPlayerStateAttack.cpp" />
     <ClCompile Include="CPlayerStateDash.cpp" />
@@ -272,6 +276,7 @@
     <ClCompile Include="CPlayerStateSkillB.cpp" />
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CSceneBoss.cpp" />
+    <ClCompile Include="CSfx.cpp" />
     <ClCompile Include="CUIButton.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCollider.cpp" />
@@ -321,6 +326,7 @@
     <ClCompile Include="CUIManager.cpp" />
     <ClCompile Include="CUIText.cpp" />
     <ClCompile Include="CUITileBtn.cpp" />
+    <ClCompile Include="CVfx.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

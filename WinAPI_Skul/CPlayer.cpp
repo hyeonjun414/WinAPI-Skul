@@ -112,7 +112,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		CAttack* pAttack = (CAttack*)_pOther->GetObj();
 		CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
 		SINGLE(CSoundManager)->Play(L"Hit");
-		SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
+		SINGLE(CGameManager)->CreateVfx(L"Hit", L"texture\\effect\\hit_normal.png",
 			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
 		SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
 			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
@@ -129,7 +129,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
-			SINGLE(CGameManager)->CreateEffect(L"Explosion", L"texture\\effect\\explosion_small.png",
+			SINGLE(CGameManager)->CreateVfx(L"Explosion", L"texture\\effect\\explosion_small.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
@@ -141,7 +141,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
-			SINGLE(CGameManager)->CreateEffect(L"Explosion", L"texture\\effect\\explosion_small.png",
+			SINGLE(CGameManager)->CreateVfx(L"Explosion", L"texture\\effect\\explosion_small.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);

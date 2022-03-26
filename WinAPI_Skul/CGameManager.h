@@ -38,7 +38,7 @@ public:
 
 
 	void		EraseHeadObj();
-	void		CreateEffect(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos,
+	void		CreateVfx(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos,
 							float _fDuration, float _fInterval, bool _bDir, float _size = 1.0f);
 
 	void		DamageText(const wstring& _strDamage, Vec2 _vPos, Color _color = Color::WHITE);

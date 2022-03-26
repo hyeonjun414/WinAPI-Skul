@@ -67,8 +67,9 @@ void CArrow::OnCollisionEnter(CCollider* _pOther)
 			m_pArrowImg = SINGLE(CResourceManager)->LoadD2DImage(L"Arrow_Incompleted_Stuck", L"texture\\player\\hunter\\Hunter_Attack_Incompleted_Projectile_Stuck.png");
 		if (GetName() == L"ArrowRain")
 		{
-			SINGLE(CGameManager)->CreateEffect(L"ArrowRain_Spark", L"texture\\effect\\Hunter_ArrowRain_Spark.png",
+			SINGLE(CGameManager)->CreateVfx(L"ArrowRain_Spark", L"texture\\effect\\Hunter_ArrowRain_Spark.png",
 				m_pCollider->GetFinalPos() + Vec2(0, -70), 1.f, 1.f, rand() % 2);
+			m_fDuration = m_fCurTime + 1.f;
 		}
 	}
 

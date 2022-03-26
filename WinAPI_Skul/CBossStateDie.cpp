@@ -56,11 +56,11 @@ void CBossStateDie::Update(CObject* _pObj)
 		{
 			LOG(L"카메라 흔들기 효과")
 			SINGLE(CCameraManager)->CameraShaking(2000, 1.5f);
-			SINGLE(CGameManager)->CreateEffect(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
+			SINGLE(CGameManager)->CreateVfx(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
 				pBoss->m_pHeadBottom->GetPos()+ Vec2(0, -120), 2.f, 2.f, rand()%2, 2.f);
-			SINGLE(CGameManager)->CreateEffect(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
+			SINGLE(CGameManager)->CreateVfx(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
 				pBoss->m_pHeadBottom->GetPos() + Vec2(-300, -120), 2.f, 2.f, rand() % 2, 2.f);
-			SINGLE(CGameManager)->CreateEffect(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
+			SINGLE(CGameManager)->CreateVfx(L"Die_Smoke", L"texture\\effect\\ElderEnt_Die_Impact.png",
 				pBoss->m_pHeadBottom->GetPos() + Vec2(300, -120), 2.f, 2.f, rand() % 2, 2.f);
 			m_bOnceFunc = false;
 			m_fOnceFuncCurTime = 0.f;

@@ -94,12 +94,12 @@ void CEnemyStateTrace::Enter(CObject* _pObj)
     case ENEMY_TYPE::WIZARD:
     {
         CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-        SINGLE(CGameManager)->CreateEffect(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
+        SINGLE(CGameManager)->CreateVfx(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
             pEnemy->GetPos(), 0.5f, 0.5f, pEnemy->GetObjDir());
 
         pEnemy->Teleport(PLAYERPOS);
 
-        SINGLE(CGameManager)->CreateEffect(L"Appear", L"texture\\effect\\Enemy_Appearance.png",
+        SINGLE(CGameManager)->CreateVfx(L"Appear", L"texture\\effect\\Enemy_Appearance.png",
             pEnemy->GetPos(), 0.5f, 0.5f, pEnemy->GetObjDir());
         pEnemy->GetAnimator()->Play(L"Wizard_Teleport", true);
         pEnemy->m_strCurState = L"Trace";
