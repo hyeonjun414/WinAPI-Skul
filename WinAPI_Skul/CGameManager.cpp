@@ -67,7 +67,10 @@ int CGameManager::RandomInt(int _value, float _volume)
 {
 	// 10 * 2 = 20 10 - 10
 	//int value = _value * _volume;
-	int randValue = rand()%_value * (1.f + _volume);
+	// volume의 두배만큼 값을 받은 다음 +-volume 처리를 위해 값을 빼준다.
+	// ex) 10 -> 20 -> +- 10;
+	int randValue = rand()%(int)(_value * _volume * 2.f) - (_value * _volume);
+	// randValue = rand()%4 - 2;
 	int result = _value + randValue;
 	return result;
 }

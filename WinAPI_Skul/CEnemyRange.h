@@ -3,10 +3,10 @@
 class CEnemyRange :
     public CEnemy
 {
-    friend class CStateIdle;
-    friend class CStateDie;
-    friend class CStateTrace;
-    friend class CStateFall;
+    friend class CEnemyStateIdle;
+    friend class CEnemyStateDie;
+    friend class CEnemyStateTrace;
+    friend class CEnemyStateFall;
 public:
     CEnemyRange(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType);
     virtual ~CEnemyRange();

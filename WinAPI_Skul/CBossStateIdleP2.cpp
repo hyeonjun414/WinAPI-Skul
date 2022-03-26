@@ -8,6 +8,8 @@ CBossState* CBossStateIdleP2::HandleInput(CObject* _pObj)
 	//if (m_fNextAttackCurTime >= m_fNextAttackTime)
 	//	return new CBossStateSlam();
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	if (0 >= pBoss->m_tEnemyInfo.m_iHp)
+		return new CBossStateDie();
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
 	{
 		switch (m_eNextAction)

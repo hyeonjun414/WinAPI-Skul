@@ -55,4 +55,17 @@ public:
 		OutputDebugStringW(log);
 		OutputDebugStringW(L"\n");
 	}
+	static void debug(wstring log)
+	{
+		SYSTEMTIME st;
+		GetLocalTime(&st);
+
+		std::wstring str = L"";
+		str = format(L"%d/%d/%d %d:%2d:%2d", st.wYear, st.wMonth, st.wDay, st.wHour, st.wMinute, st.wSecond);
+
+		OutputDebugStringW(str.c_str());
+		OutputDebugStringW(L" [DEBUG] ");
+		OutputDebugStringW(log.c_str());
+		OutputDebugStringW(L"\n");
+	}
 };

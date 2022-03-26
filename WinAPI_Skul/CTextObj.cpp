@@ -5,11 +5,11 @@
 CTextObj::CTextObj(OBJ_TYPE _eType, const wstring& _strText, TEXT_EFFECT _eEffect, Color _color) :
     CObject(_eType),
     m_strText(_strText),
-    m_fDuration(1.5f),
+    m_fDuration(1.f),
     m_fCurTime(0.f),
     m_eColor(_color)
 {
-    m_vVelocity.y = 700;
+    m_vVelocity.y = 600;
     m_vVelocity.x = (float)((rand() % 200) - 100);
 }
 

@@ -65,8 +65,8 @@ public:
 	void		FadeIn(float _duration);
 	void		FadeOut(float _duration);
 	void		LodingAnimation(float _duration);
-	void		CameraShaking(float _magnitude, float _duration);
-	void		WhiteOut(float _duration);
+	void		CameraShaking(int _magnitude, float _duration);
+	void		WhiteOut(float _duration, int _magnitude);
 	// ¹Ì´Ï¸Ê Ãâ·Â
 	void		MiniMapRender();
 

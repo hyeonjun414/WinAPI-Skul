@@ -64,8 +64,17 @@
     <Filter Include="03.GameObject\FuncObj">
       <UniqueIdentifier>{e10098c6-9452-4946-93bf-642246c0c767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Component\BossState">
+    <Filter Include="04.Component\State\PlayerState">
+      <UniqueIdentifier>{9aa3db5c-46a7-4032-b6b1-4ceb8b5c59da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Component\State\BossState">
       <UniqueIdentifier>{c06df55e-c01e-4017-80eb-c9e3820e95af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Component\State\EnemyState">
+      <UniqueIdentifier>{c5e52706-43d4-4bb2-ad04-9d651e46f486}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.GameObject\Object\Other">
+      <UniqueIdentifier>{58527d36-7239-4dc6-88a7-e47d1c27d3a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +180,6 @@
     <ClInclude Include="CSceneStart.h">
       <Filter>05.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CImageObj.h">
-      <Filter>03.GameObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="CD2DImage.h">
       <Filter>06.Resource</Filter>
     </ClInclude>
@@ -189,31 +195,7 @@
     <ClInclude Include="CPlayer.h">
       <Filter>03.GameObject\Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="CTextObj.h">
-      <Filter>03.GameObject\Object</Filter>
-    </ClInclude>
     <ClInclude Include="CState.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateIdle.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateMove.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateJump.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateFall.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateAttack.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateDash.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateJumpAttack.h">
       <Filter>04.Component\State</Filter>
     </ClInclude>
     <ClInclude Include="CGameManager.h">
@@ -240,15 +222,6 @@
     <ClInclude Include="CEffect.h">
       <Filter>03.GameObject\Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="CStateDie.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateAppear.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateTrace.h">
-      <Filter>04.Component\State</Filter>
-    </ClInclude>
     <ClInclude Include="CUITileBtn.h">
       <Filter>03.GameObject\UI</Filter>
     </ClInclude>
@@ -257,12 +230,6 @@
     </ClInclude>
     <ClInclude Include="CUIText.h">
       <Filter>03.GameObject\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CObject.h">
-      <Filter>03.GameObject\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CStateSkill.h">
-      <Filter>04.Component\State</Filter>
     </ClInclude>
     <ClInclude Include="Stateheader.h">
       <Filter>04.Component\State</Filter>
@@ -280,31 +247,106 @@
       <Filter>05.Scene</Filter>
     </ClInclude>
     <ClInclude Include="CBossState.h">
-      <Filter>04.Component\BossState</Filter>
-    </ClInclude>
-    <ClInclude Include="CLineObj.h">
-      <Filter>03.GameObject\Object</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateIdle.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateSlam.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateSweep.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateChange.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateBomb.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CBossStateIdleP2.h">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClInclude>
     <ClInclude Include="CHealthBar.h">
       <Filter>04.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossStateDie.h">
+      <Filter>04.Component\State\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="CHunter.h">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateAppear.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateAttack.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateDie.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateFall.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateIdle.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyStateTrace.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerState.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateIdle.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateJump.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateMove.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateFall.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateJumpAttack.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateSkillA.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateSkillB.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateAttack.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerStateDash.h">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyState.h">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="CImageObj.h">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="CLineObj.h">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="CObject.h">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="CTextObj.h">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="CLittleBorn.h">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CArrow.h">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClInclude>
+    <ClInclude Include="CBall.h">
+      <Filter>03.GameObject\FuncObj</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -392,9 +434,6 @@
     <ClCompile Include="CSceneStart.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CImageObj.cpp">
-      <Filter>03.GameObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="CSceneTool.cpp">
       <Filter>05.Scene</Filter>
     </ClCompile>
@@ -407,31 +446,7 @@
     <ClCompile Include="CPlayer.cpp">
       <Filter>03.GameObject\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="CTextObj.cpp">
-      <Filter>03.GameObject\Object</Filter>
-    </ClCompile>
     <ClCompile Include="CState.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateIdle.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateMove.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateJump.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateFall.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateAttack.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateDash.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateJumpAttack.cpp">
       <Filter>04.Component\State</Filter>
     </ClCompile>
     <ClCompile Include="CGameManager.cpp">
@@ -458,15 +473,6 @@
     <ClCompile Include="CEffect.cpp">
       <Filter>03.GameObject\Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="CStateDie.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateAppear.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateTrace.cpp">
-      <Filter>04.Component\State</Filter>
-    </ClCompile>
     <ClCompile Include="CUITileBtn.cpp">
       <Filter>03.GameObject\UI</Filter>
     </ClCompile>
@@ -475,12 +481,6 @@
     </ClCompile>
     <ClCompile Include="CUIText.cpp">
       <Filter>03.GameObject\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CObject.cpp">
-      <Filter>03.GameObject\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="CStateSkill.cpp">
-      <Filter>04.Component\State</Filter>
     </ClCompile>
     <ClCompile Include="CProjectile.cpp">
       <Filter>03.GameObject\FuncObj</Filter>
@@ -495,31 +495,106 @@
       <Filter>05.Scene</Filter>
     </ClCompile>
     <ClCompile Include="CBossState.cpp">
-      <Filter>04.Component\BossState</Filter>
-    </ClCompile>
-    <ClCompile Include="CLineObj.cpp">
-      <Filter>03.GameObject\Object</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateIdle.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateSlam.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateSweep.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateChange.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateBomb.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CBossStateIdleP2.cpp">
-      <Filter>04.Component\BossState</Filter>
+      <Filter>04.Component\State\BossState</Filter>
     </ClCompile>
     <ClCompile Include="CHealthBar.cpp">
       <Filter>04.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossStateDie.cpp">
+      <Filter>04.Component\State\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="CHunter.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateAppear.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateAttack.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateDie.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateFall.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateIdle.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyStateTrace.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerState.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateIdle.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateJump.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateMove.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateFall.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateJumpAttack.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateSkillA.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateSkillB.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateAttack.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateDash.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyState.cpp">
+      <Filter>04.Component\State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="CImageObj.cpp">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineObj.cpp">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="CObject.cpp">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextObj.cpp">
+      <Filter>03.GameObject\Object\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="CLittleBorn.cpp">
+      <Filter>03.GameObject\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CArrow.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
+    </ClCompile>
+    <ClCompile Include="CBall.cpp">
+      <Filter>03.GameObject\FuncObj</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

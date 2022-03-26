@@ -117,6 +117,7 @@ void CCameraManager::Render()
 	if (m_fEffectDuration < m_fCurTime)
 	{
 		m_eEffect = CAM_EFFECT::NONE;
+ 		m_iMagnitude = 0;
 		return;
 	}
 	if (CAM_EFFECT::LODING_IMAGE == m_eEffect)
@@ -160,11 +161,15 @@ void CCameraManager::Render()
 			0,
 			(float)m_pImg->GetWidth(),
 			(float)m_pImg->GetHeight(), iAlpha);
-		Vec2 shakePos = Vec2(rand() % 2000 - 2000 / 2, rand() % 2000 - 2000 / 2);
+		if (0 != m_iMagnitude)
+		{
+			Vec2 shakePos = Vec2(rand() % m_iMagnitude - m_iMagnitude / 2, rand() % m_iMagnitude - m_iMagnitude / 2);
+			//m_vLookAt += shakePos;
+			//m_vCurLookAt += shakePos;
+			m_vPrevLookAt += shakePos * DT;
+		}
 
-		//m_vLookAt += shakePos;
-		//m_vCurLookAt += shakePos;
-		m_vPrevLookAt += shakePos * DT;
+		
 	}
 
 
@@ -228,7 +233,7 @@ void CCameraManager::LodingAnimation(float _duration)
 	m_fCurTime = 0.f;
 }
 
-void CCameraManager::CameraShaking(float _magnitude, float _duration)
+void CCameraManager::CameraShaking(int _magnitude, float _duration)
 {
 	m_eEffect = CAM_EFFECT::SHAKING;
 	m_fEffectDuration = _duration;
@@ -236,10 +241,11 @@ void CCameraManager::CameraShaking(float _magnitude, float _duration)
 	m_fCurTime = 0.f;
 }
 
-void CCameraManager::WhiteOut(float _duration)
+void CCameraManager::WhiteOut(float _duration, int _magnitude)
 {
 	m_eEffect = CAM_EFFECT::WHITEOUT;
 	m_fEffectDuration = _duration;
+	m_iMagnitude = _magnitude;
 	m_fCurTime = 0.f;
 }
 

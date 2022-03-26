@@ -20,12 +20,12 @@ class CState;
 class CEnemy :
     public CObject
 {
-    friend class CStateIdle;
-    friend class CStateDie;
-    friend class CStateTrace;
-    friend class CStateFall;
-    friend class CStateAppear;
-    friend class CStateAttack;
+    friend class CEnemyStateIdle;
+    friend class CEnemyStateDie;
+    friend class CEnemyStateTrace;
+    friend class CEnemyStateFall;
+    friend class CEnemyStateAppear;
+    friend class CEnemyStateAttack;
 protected:
     wstring m_strCurState;
     bool    m_bIsGround;

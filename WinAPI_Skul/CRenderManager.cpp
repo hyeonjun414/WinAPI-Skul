@@ -67,6 +67,18 @@ void CRenderManager::RenderImage(CD2DImage* img, float dstX, float dstY, float d
 	}
 }
 
+void CRenderManager::RenderRotateImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float _angle, float _alpha)
+{
+	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };
+	m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle, D2D1_POINT_2F{(dstX + dstW) / 2.f, (dstY + dstH) / 2.f}));
+	if (nullptr != img)
+	{
+		m_pRenderTarget->DrawBitmap(img->GetImage(), imgRect, _alpha, D2D1_BITMAP_INTERPOLATION_MODE_NEAREST_NEIGHBOR);
+		
+	}
+	m_pRenderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(0, D2D1_POINT_2F{ (dstX + dstW) / 2.f, (dstY + dstH) / 2.f }));
+}
+
 void CRenderManager::RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float srcX, float srcY, float srcW, float srcH, float _alpha)
 {
 	D2D1_RECT_F imgRect = { dstX, dstY, dstW, dstH };

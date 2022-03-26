@@ -6,6 +6,8 @@
 CBossState* CBossStateSweep::HandleInput(CObject* _pObj)
 {
 	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	if (0 >= pBoss->m_tEnemyInfo.m_iHp)
+		return new CBossStateDie();
 	if (0.5f >= pBoss->m_tEnemyInfo.m_iHp / (float)pBoss->m_tEnemyInfo.m_iMaxHp &&
 		!pBoss->m_bIsPhaseChanged)
 	{

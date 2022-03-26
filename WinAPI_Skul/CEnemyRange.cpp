@@ -3,11 +3,10 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 
-#include "CStateIdle.h"
-#include "CStateAppear.h"
+#include "CEnemyStateAppear.h"
 #include "CMeleeAttack.h"
 #include "CPlayer.h"
-#include "CProjectile.h"
+#include "CBall.h"
 #include "CScene.h"
 #include "CTile.h"
 
@@ -33,8 +32,6 @@ void CEnemyRange::Init()
 		m_pAnimator->CreateAnim(L"Wizard_Attack", L"texture\\enemy\\wizard_attack.png", 0.5f);
 		m_pAnimator->CreateAnim(L"AppearEnemy", L"texture\\effect\\Enemy_Appearance.png", 1.0f);
 		m_pAnimator->CreateAnim(L"DisappearEnemy", L"texture\\effect\\Enemy_Dead.png", 0.5f);
-
-
 
 		SetScale(Vec2(160, 160));
 		SetName(L"WIZARD");
@@ -62,7 +59,7 @@ void CEnemyRange::Init()
 
 		CreateHealthBar();
 
-		m_pState = new CStateAppear();
+		m_pState = new CEnemyStateAppear();
 		m_pState->Enter(this);
 
 		break;
@@ -97,10 +94,11 @@ void CEnemyRange::OnCollisionEnter(CCollider* _pOther)
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 0.2f);
 			SINGLE(CSoundManager)->Play(L"Hit");
 			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
 			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
 			{
 				//SetPos(GetPos() + Vec2(10, 0));
@@ -112,7 +110,7 @@ void CEnemyRange::OnCollisionEnter(CCollider* _pOther)
 				SetObjDir(true);
 			}
 
-			Hit(pPlayer->GetPlayerInfo().m_iDamage);
+			Hit(damage);
 			m_bCanHit = false;
 		}
 
@@ -125,7 +123,7 @@ void CEnemyRange::OnCollisionExit(CCollider* _pOther)
 
 void CEnemyRange::Attack()
 {
-	CProjectile* pProj = new CProjectile(OBJ_TYPE::PROJECTILE, this,
+	CBall* pProj = new CBall(OBJ_TYPE::PROJECTILE, this,
 		L"Wizard_Fireball", L"texture\\effect\\fireball.png", 5.f);
 	pProj->SetPos(GetCollider()->GetFinalPos()+Vec2(m_bIsRight? 20.f : -20.f, 0));
 	pProj->SetVelocity((PLAYERPOS - pProj->GetPos()).Normalize() * 300.f);

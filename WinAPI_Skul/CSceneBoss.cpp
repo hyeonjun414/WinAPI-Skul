@@ -33,7 +33,8 @@ void CSceneBoss::Enter()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
+	CPlayer* obj = new CPlayer(OBJ_TYPE::PLAYER);
+	obj->Init();
 	obj->SetName(L"Player");
 	obj->SetPos(Vec2(1600.f, 700.f));
 	CREATEOBJECT(obj);

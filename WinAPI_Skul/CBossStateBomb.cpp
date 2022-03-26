@@ -2,10 +2,13 @@
 #include "stateheader.h"
 #include "CEnemyBoss.h"
 #include "CAnimator.h"
-#include "CProjectile.h"
+#include "CBall.h"
 
 CBossState* CBossStateBomb::HandleInput(CObject* _pObj)
 {
+	CEnemyBoss* pBoss = (CEnemyBoss*)_pObj;
+	if (0 >= pBoss->m_tEnemyInfo.m_iHp)
+		return new CBossStateDie();
 	if (m_fNextAttackCurTime >= m_fNextAttackTime)
 		return new CBossStateIdleP2();
 	return nullptr;
@@ -119,7 +122,7 @@ void CBossStateBomb::CreateBomb(CObject* _pObj)
 	Vec2 vVelo = Vec2(rand()%500 - 250, 500);
 	SINGLE(CGameManager)->CreateEffect(L"Bomb_Emerge", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile_Emerge.png",
 		startPos, 1.f, 1.f, true, 1.f);
-	CProjectile* pProj = new CProjectile(OBJ_TYPE::PROJECTILE, _pObj,
+	CBall* pProj = new CBall(OBJ_TYPE::PROJECTILE, _pObj,
 		L"BossBomb", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile.png",
 		5.f);
 	pProj->SetPos(startPos);

@@ -28,6 +28,7 @@ public:
 	void Init();
 
 	void RenderImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float _alpha);
+	void RenderRotateImage(CD2DImage* img, float dstX, float dstY, float dstW, float dstH, float _angle, float _alpha);
 	void RenderFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,
 		float srcX, float srcY, float srcW, float srcH, float _alpha);
 	void RenderRevFrame(CD2DImage* img, float dstX, float dstY, float dstW, float dstH,

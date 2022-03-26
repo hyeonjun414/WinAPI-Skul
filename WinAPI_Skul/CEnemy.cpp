@@ -9,7 +9,7 @@
 #include "CTile.h"
 #include "CUIText.h"
 
-#include "CStateIdle.h"
+#include "CEnemyStateIdle.h"
 
 
 CEnemy::CEnemy(OBJ_TYPE _eType):

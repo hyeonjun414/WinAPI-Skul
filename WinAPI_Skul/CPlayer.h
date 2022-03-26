@@ -1,21 +1,6 @@
 #pragma once
 #include "CObject.h"
 
-
-//enum class PLAYER_STATE
-//{
-//    IDLE,
-//    MOVE,
-//    ATTACK,
-//    JUMP,
-//    FALL,
-//    SKILL,
-//    DASH,
-//    JUMPATTACK,
-//    REBONE,
-//    
-//};
-
 struct tPlayer_Info
 {
     wstring m_strName;
@@ -33,17 +18,17 @@ class CPlayer :
     public CObject
 {
     friend class CGameManager;
-    friend class CStateIdle;
-    friend class CStateMove;
-    friend class CStateJump;
-    friend class CStateFall;
-    friend class CStateAttack;
-    friend class CStateJumpAttack;
-    friend class CStateDash;
-    friend class CStateSkill;
-    friend class CStateAppear;
+    friend class CPlayerStateIdle;
+    friend class CPlayerStateMove;
+    friend class CPlayerStateJump;
+    friend class CPlayerStateFall;
+    friend class CPlayerStateJumpAttack;
+    friend class CPlayerStateSkillA;
+    friend class CPlayerStateSkillB;
+    friend class CPlayerStateDash;
+    friend class CPlayerStateAttack;
 
-private:
+protected:
     wstring         m_strCurState;
     Vec2            m_vVelocity;
     bool            m_bIsGround;
@@ -66,7 +51,7 @@ private:
 
     // 플레이어 전투 정보
     tPlayer_Info    m_tPlayerInfo;
-
+    SKUL_TYPE       m_eSkulType;
     CObject*        m_pHead; // 스킬에서 사용해서 던진 해골 객체
 
 public:
@@ -93,14 +78,15 @@ public :
     float               GetCurHealthRatio()                 { return m_tPlayerInfo.m_iHp / (float)m_tPlayerInfo.m_iMaxHp; }
 
     void                RenderPlayerInfo();
+    virtual void        Move(float _speed);
+    virtual void        Jump(float _speed);
+    virtual void        CoolTime();
+    virtual void        Attack() {}
+    virtual void        JumpAttack() {}
+    virtual void        SkillA() {}
+    virtual void        SkillB() {}
 
-    void                CoolTime();
-    void                Attack();
-    void                JumpAttack();
-    void                SkillA();
-    void                SkillB();
-
-    void                Hit(int _damage);
+    virtual void        Hit(int _damage);
 
     
 };

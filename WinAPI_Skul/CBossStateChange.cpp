@@ -101,6 +101,7 @@ void CBossStateChange::Enter(CObject* _pObj)
 	m_fOnceFuncCurTime = 0.f;
 	pBoss->m_bIsPhaseChanged = true;
 	pBoss->m_strCurState = L"Change";
+	SINGLE(CCameraManager)->WhiteOut(0.5f, 0);
 
 	m_vOriginPos = pBoss->GetPos();
 	pBoss->m_pBody->SetPos(pBoss->GetPos());
@@ -125,7 +126,7 @@ void CBossStateChange::Exit(CObject* _pObj)
 
 void CBossStateChange::AnimationChange(CEnemyBoss* _pObj)
 {
-	SINGLE(CCameraManager)->WhiteOut(4.f);
+	SINGLE(CCameraManager)->WhiteOut(4.f, 2000);
 
 	SINGLE(CSoundManager)->Play(L"BossSlam");
 	SINGLE(CSoundManager)->Play(L"BossSlam");

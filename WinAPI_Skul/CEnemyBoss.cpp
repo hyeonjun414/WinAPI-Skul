@@ -32,6 +32,7 @@ void CEnemyBoss::Init()
 		m_pBody->SetObjDir(true);
 		m_pBody->GetAnimator()->CreateAnim(L"BossBody", L"texture\\enemy\\bossbody.png", 10.f);
 		m_pBody->GetAnimator()->CreateAnim(L"BossBody_P2", L"texture\\enemy\\bossbody_p2.png", 10.f);
+		m_pBody->GetAnimator()->CreateAnim(L"BossBody_End", L"texture\\enemy\\bossbody_end.png", 10.f);
 		m_pBody->GetAnimator()->Play(L"BossBody", true);
 		CREATEOBJECT(m_pBody);
 
@@ -42,6 +43,8 @@ void CEnemyBoss::Init()
 		m_pHeadTop->SetObjDir(true);
 		m_pHeadTop->GetAnimator()->CreateAnim(L"BossHeadTop", L"texture\\enemy\\bossface_top.png", 10.f);
 		m_pHeadTop->GetAnimator()->CreateAnim(L"BossHeadTop_P2", L"texture\\enemy\\bossface_top_p2.png", 10.f);
+		m_pHeadTop->GetAnimator()->CreateAnim(L"BossHeadTop_Die", L"texture\\enemy\\bossface_top_die.png", 10.f);
+		m_pHeadTop->GetAnimator()->CreateAnim(L"BossHeadTop_End", L"texture\\enemy\\bossface_top_end.png", 10.f);
 		m_pHeadTop->GetAnimator()->Play(L"BossHeadTop", true);
 		CREATEOBJECT(m_pHeadTop);
 
@@ -50,6 +53,7 @@ void CEnemyBoss::Init()
 		m_pHeadBottom->SetObjDir(true);
 		m_pHeadBottom->GetAnimator()->CreateAnim(L"BossHeadBottom", L"texture\\enemy\\bossface_bottom.png", 10.f);
 		m_pHeadBottom->GetAnimator()->CreateAnim(L"BossHeadBottom_P2", L"texture\\enemy\\bossface_bottom_p2.png", 10.f);
+		m_pHeadBottom->GetAnimator()->CreateAnim(L"BossHeadBottom_End", L"texture\\enemy\\bossface_bottom_end.png", 10.f);
 		m_pHeadBottom->GetAnimator()->Play(L"BossHeadBottom", true);
 		CREATEOBJECT(m_pHeadBottom);
 
@@ -64,6 +68,7 @@ void CEnemyBoss::Init()
 		m_pLeftHand->GetAnimator()->CreateAnim(L"BossLeftHand_Slam_P2", L"texture\\enemy\\bosshand_slam_p2.png", 3.f);
 		m_pLeftHand->GetAnimator()->CreateAnim(L"BossLeftHand_Sweep_P2", L"texture\\enemy\\bosshand_sweep_p2.png", 3.f);
 		m_pLeftHand->GetAnimator()->CreateAnim(L"BossLeftHand_Bomb", L"texture\\enemy\\bosshand_bomb.png", 3.f);
+		m_pLeftHand->GetAnimator()->CreateAnim(L"BossLeftHand_End", L"texture\\enemy\\bosshands_end.png", 3.f);
 		m_pLeftHand->GetAnimator()->Play(L"BossLeftHand_Idle", true);
 		CREATEOBJECT(m_pLeftHand);
 
@@ -77,6 +82,7 @@ void CEnemyBoss::Init()
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Slam_P2", L"texture\\enemy\\bosshand_slam_p2.png", 3.f);
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Sweep_P2", L"texture\\enemy\\bosshand_sweep_p2.png", 3.f);
 		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_Bomb", L"texture\\enemy\\bosshand_bomb.png", 3.f);
+		m_pRightHand->GetAnimator()->CreateAnim(L"BossRightHand_End", L"texture\\enemy\\bosshands_end.png", 3.f);
 		m_pRightHand->GetAnimator()->Play(L"BossRightHand_Idle", true);
 		CREATEOBJECT(m_pRightHand);
 
@@ -104,8 +110,8 @@ void CEnemyBoss::Init()
 		SetPos(Vec2(1600.f, 800.f));
 		tEnemy_Info& info = GetEnemyInfo();
 		info.m_vVelocity = Vec2(0, 400);
-		info.m_iHp = 100;
-		info.m_iMaxHp = 100;
+		info.m_iHp = 2000;
+		info.m_iMaxHp = info.m_iHp;
 		info.m_iDamage = 5;
 		
 		m_fMoveTime = 1.0f;
@@ -179,15 +185,16 @@ void CEnemyBoss::OnCollisionEnter(CCollider* _pOther)
 	{
 		CMeleeAttack* pAttack = (CMeleeAttack*)_pOther->GetObj();
 
-		if (m_bCanHit && m_strCurState != L"Change")
+		if (m_bCanHit && m_strCurState != L"Change" && m_strCurState != L"Die")
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 0.2f);
 			SINGLE(CSoundManager)->Play(L"Hit");
 			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(pPlayer->GetPlayerInfo().m_iDamage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
-			Hit(pPlayer->GetPlayerInfo().m_iDamage);
+			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			Hit(damage);
 			m_bCanHit = false;
 		}
 	}

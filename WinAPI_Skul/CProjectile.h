@@ -3,7 +3,7 @@
 class CProjectile :
     public CAttack
 {
-private:
+protected:
     Vec2    m_vVelocity;
     bool    m_bIsGround;
     bool    m_bIsHit;
@@ -14,9 +14,7 @@ private:
     float   m_fTraceTime;
     float   m_fCurTime;
 public:
-    CProjectile(OBJ_TYPE _eType, CObject* _pObj,
-        const wstring& _strKey, const wstring& _strPath,
-        float _fDuration);
+    CProjectile(OBJ_TYPE _eType, CObject* _pObj, float _fDuration);
     virtual ~CProjectile();
 
     virtual void Update();

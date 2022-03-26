@@ -34,6 +34,13 @@ enum class OBJ_TYPE
 	SIZE,
 };
 
+// 스컬 타입
+enum class SKUL_TYPE
+{
+	Little_Born,
+	Hunter,
+};
+
 // 몬스터 그룹
 enum class ENEMY_TYPE
 {

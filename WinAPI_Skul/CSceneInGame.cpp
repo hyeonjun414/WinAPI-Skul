@@ -12,6 +12,8 @@
 #include "CEnemyRange.h"
 #include "CUIImage.h"
 #include "CUIText.h"
+#include "CHunter.h"
+#include "CLittleBorn.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -63,7 +65,8 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
+	CPlayer* obj = new CHunter(OBJ_TYPE::PLAYER);
+	obj->Init();
 	obj->SetName(L"Player");
 	obj->SetPos(Vec2(400.f, 1000.f));
 	CREATEOBJECT(obj);
@@ -101,9 +104,9 @@ void CSceneInGame::Stage01Init()
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	CREATEOBJECT(monsterMelee);
+	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
+	//CREATEOBJECT(monsterMelee);
 	//for (size_t i = 0; i < 10; i++)
 	//{
 	//	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
@@ -111,9 +114,9 @@ void CSceneInGame::Stage01Init()
 	//	CREATEOBJECT(monsterMelee);
 	//}
 	
-	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-	monsterMelee->SetPos(Vec2(800.f, 1300.f));
-	CREATEOBJECT(monsterMelee);
+	//monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	//monsterMelee->SetPos(Vec2(800.f, 1300.f));
+	//CREATEOBJECT(monsterMelee);
 
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
@@ -142,8 +145,10 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::MELEE_ATTACK, OBJ_TYPE::PLAYER);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 }
 

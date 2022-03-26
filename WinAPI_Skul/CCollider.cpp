@@ -36,7 +36,16 @@ void CCollider::FinalUpdate()
 
 void CCollider::Render()
 {
-	if (m_uiColCount > 0)
+	if (m_pOwner->GetObjType() == OBJ_TYPE::PROJECTILE)
+	{
+		RENDER->RenderRectangle(
+			m_vRenderPos.x - m_vScale.x / 2,
+			m_vRenderPos.y - m_vScale.y / 2,
+			m_vRenderPos.x + m_vScale.x / 2,
+			m_vRenderPos.y + m_vScale.y / 2,
+			RGB(0, 0, 0));
+	}
+	else if (m_uiColCount > 0)
 	{
 		RENDER->RenderRectangle(
 			m_vRenderPos.x - m_vScale.x / 2,
@@ -54,6 +63,8 @@ void CCollider::Render()
 			m_vRenderPos.y + m_vScale.y / 2,
 			RGB(0, 255, 0));
 	}
+
+	
 
 
 }

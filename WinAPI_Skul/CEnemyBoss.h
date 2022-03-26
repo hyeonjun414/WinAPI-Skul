@@ -8,6 +8,7 @@ class CEnemyBoss :
     friend class CBossStateSweep;
     friend class CBossStateChange;
     friend class CBossStateBomb;
+    friend class CBossStateDie;
     friend class CBossStateIdleP2;
 
 private:

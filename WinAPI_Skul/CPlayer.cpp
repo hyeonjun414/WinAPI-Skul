@@ -6,7 +6,7 @@
 #include "CAnimator.h"
 #include "CAnimation.h"
 #include "CState.h"
-#include "CStateIdle.h"
+#include "CPlayerStateIdle.h"
 #include "CTile.h"
 #include "CProjectile.h"
 #include "CMeleeAttack.h"
@@ -18,79 +18,6 @@
 CPlayer::CPlayer(OBJ_TYPE _objGroup) :
 	CObject(_objGroup)
 {
-	m_bIsGround = false;
-	m_bIsRight = true;
-	m_iCollCount = 0;
-	m_vVelocity = Vec2(300, 0);
-
-	m_bCanDoubleJump = false;
-	m_bCanSecondDash = true;
-	m_bCanDash = true;
-	m_bCanJumpAttack = true;
-	m_bCanSkill = true;
-
-	m_fSecondDashCoolTime = 2.f;
-	m_fSecondDashCurTime = 0.f;
-
-	m_fDashCoolTime = 1.f;
-	m_fDashCurTime = 0.f;
-
-	m_fSkillCoolTime = 5.0f;
-	m_fSkillCurTime = 0;
-
-	SetScale(Vec2(96, 96));
-	SetName(L"Player");
-	// Collider 만들기
-	CreateCollider();
-	m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y/4));
-	m_pCollider->SetScale(Vec2(GetScale()/2));
-
-	// 애니메이터 만들기
-	CreateAnimator();
-	GetAnimator()->CreateAnim(L"Player_Idle", L"texture\\player\\idle_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Move", L"texture\\player\\move_skul.png", 0.8f);
-	GetAnimator()->CreateAnim(L"Player_Jump", L"texture\\player\\jump_skul.png", 0.2f);
-	GetAnimator()->CreateAnim(L"Player_Fall", L"texture\\player\\fall_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_FallRepeat", L"texture\\player\\fallrepeat_skul.png", 0.3f);
-	GetAnimator()->CreateAnim(L"Player_AttackA", L"texture\\player\\attackA_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_AttackB", L"texture\\player\\attackB_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillA", L"texture\\player\\skillA_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillB", L"texture\\player\\skillB_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_Dash", L"texture\\player\\dash_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_JumpAttack", L"texture\\player\\jumpattack_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Idle_Headless", L"texture\\player\\idle_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Move_Headless", L"texture\\player\\move_headless_skul.png", 0.7f);
-	GetAnimator()->CreateAnim(L"Player_Jump_Headless", L"texture\\player\\jump_headless_skul.png", 0.2f);
-	GetAnimator()->CreateAnim(L"Player_Fall_Headless", L"texture\\player\\fall_headless_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_FallRepeat_Headless", L"texture\\player\\fallrepeat_headless_skul.png", 0.3f);
-	GetAnimator()->CreateAnim(L"Player_AttackA_Headless", L"texture\\player\\attackA_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_AttackB_Headless", L"texture\\player\\attackB_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Dash_Headless", L"texture\\player\\dash_headless_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_JumpAttack_Headless", L"texture\\player\\jumpattack_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillRebone", L"texture\\player\\skill_rebone_skul.png", 0.5f);
-
-	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
-	m_pAnimator->SetAllAnimOffset(Vec2(0,30));
-
-	m_pState = new CStateIdle();
-	m_pState->Enter(this);
-
-	SINGLE(CSoundManager)->AddSound(L"Jump", L"sound\\Default_Jump.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"JumpAir", L"sound\\Default_Jump_Air.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"AttackA", L"sound\\Skul_Atk 1.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"AttackB", L"sound\\Skul_Atk 2.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"JumpAttack", L"sound\\Skul_Jump_Atk.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
-
-	
-	GetPlayerInfo().m_iDamage = 100;
-	GetPlayerInfo().m_iHp = 50;
-	GetPlayerInfo().m_iMaxHp = 50;
-	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
-
 }
 
 CPlayer::~CPlayer()
@@ -105,6 +32,8 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
+	
+
 }
 
 void CPlayer::Update()
@@ -131,8 +60,6 @@ void CPlayer::Render()
 
 void CPlayer::OnCollision(CCollider* _pOther)
 {
-	//m_pState->OnCollision(this, _pOther);
-
     if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE )
     {
 		CTile* pTile = (CTile*)_pOther->GetObj();
@@ -158,7 +85,6 @@ void CPlayer::OnCollision(CCollider* _pOther)
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	//m_pState->OnCollisionEnter(this, _pOther);
     CPlayer* pPlayer = (CPlayer*)this;
     if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
     {
@@ -228,8 +154,6 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 void CPlayer::OnCollisionExit(CCollider* _pOther)
 {
-	//m_pState->OnCollisionExit(this, _pOther);
-
     CPlayer* pPlayer = (CPlayer*)this;
     if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
     {
@@ -295,6 +219,18 @@ void CPlayer::RenderPlayerInfo()
 	}
 }
 
+void CPlayer::Move(float _speed)
+{
+	m_bIsRight = _speed > 0 ? true : false;
+	m_vPos.x += _speed * DT;
+}
+
+void CPlayer::Jump(float _speed)
+{
+	m_vVelocity.y -= _speed;
+}
+
+
 void CPlayer::CoolTime()
 {
 	// 모든 상태에서 계산되어야하는 부분은 이부분에서 처리한다.
@@ -329,41 +265,6 @@ void CPlayer::CoolTime()
 	}
 }
 
-void CPlayer::Attack()
-{
-	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::PLAYER_ATTACK, this, 0.5f);
-	pAttack->CreateAttackArea(this, Vec2(50, 50), Vec2(50, 70));
-	CREATEOBJECT(pAttack);
-
-}
-
-void CPlayer::JumpAttack()
-{
-	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::PLAYER_ATTACK, this, 0.5f);
-	pAttack->CreateAttackArea(this, Vec2(50, 50), Vec2(50, 70));
-	CREATEOBJECT(pAttack);
-}
-
-void CPlayer::SkillA()
-{
-	CProjectile* pAttack = new CProjectile(OBJ_TYPE::PROJECTILE, this,
-		L"Skul_Head", L"texture\\effect\\skul_head.png",
-		5.f);
-	pAttack->SetVelocity(Vec2(GetObjDir() ? 700.f : -700.f,0));
-	pAttack->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 50.f : -50.f, 0));
-	pAttack->SetName(L"SkulHead");
-	m_pHead = pAttack;
-	CREATEOBJECT(pAttack);
-}
-
-void CPlayer::SkillB()
-{
-	if (!m_bCanSkill && nullptr != m_pHead)
-	{
-		SetPos(m_pHead->GetPos());
-		m_pHead = nullptr;
-	}
-}
 
 void CPlayer::Hit(int _damage)
 {

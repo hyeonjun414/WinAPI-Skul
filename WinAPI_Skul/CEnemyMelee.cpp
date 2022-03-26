@@ -3,8 +3,7 @@
 #include "CCollider.h"
 #include "CAnimator.h"
 
-#include "CStateIdle.h"
-#include "CStateAppear.h"
+#include "CEnemyStateAppear.h"
 #include "CMeleeAttack.h"
 #include "CPlayer.h"
 
@@ -56,7 +55,7 @@ void CEnemyMelee::Init()
 		
 		CreateHealthBar();
 
-		m_pState = new CStateAppear();
+		m_pState = new CEnemyStateAppear();
 		m_pState->Enter(this);
 
 		break;
@@ -92,7 +91,7 @@ void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
-			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 1.f);
+			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 0.2f);
 			SINGLE(CSoundManager)->Play(L"Hit");
 			SINGLE(CGameManager)->CreateEffect(L"Hit", L"texture\\effect\\hit_normal.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
@@ -122,4 +121,7 @@ void CEnemyMelee::OnCollisionExit(CCollider* _pOther)
 
 void CEnemyMelee::Attack()
 {
+	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 0.5f);
+	pAttack->CreateAttackArea(this, Vec2(60, 50), Vec2(100, 80));
+	CREATEOBJECT(pAttack);
 }
