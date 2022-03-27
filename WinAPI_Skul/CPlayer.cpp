@@ -32,7 +32,6 @@ CPlayer::~CPlayer()
 
 void CPlayer::Init()
 {
-	
 
 }
 

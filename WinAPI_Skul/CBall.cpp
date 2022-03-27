@@ -29,14 +29,13 @@ void CBall::Update()
 	if (m_fCurTime >= m_fDuration)
 		DELETEOBJECT(this);
 
-	if (OBJ_TYPE::PROJECTILE == GetObjType())
+
+	m_vPos += m_vVelocity * DT;
+	if (m_bIsHit && !m_bIsGround)
 	{
-		m_vPos += m_vVelocity * DT;
-		if (m_bIsHit && !m_bIsGround)
-		{
-			m_vVelocity.y += 1000 * DT;
-		}
+		m_vVelocity.y += 1000 * DT;
 	}
+
 	GetAnimator()->Update();
 }
 

@@ -26,27 +26,7 @@ CLittleBorn::~CLittleBorn()
 
 void CLittleBorn::Init()
 {
-	m_bIsGround = false;
-	m_bIsRight = true;
-	m_iCollCount = 0;
-	m_vVelocity = Vec2(300, 0);
 
-	m_bCanDoubleJump = false;
-	m_bCanSecondDash = true;
-	m_bCanDash = true;
-	m_bCanJumpAttack = true;
-	m_bCanSkill = true;
-
-	m_fSecondDashCoolTime = 2.f;
-	m_fSecondDashCurTime = 0.f;
-
-	m_fDashCoolTime = 1.f;
-	m_fDashCurTime = 0.f;
-
-	m_fSkillCoolTime = 5.0f;
-	m_fSkillCurTime = 0;
-
-	m_eSkulType = SKUL_TYPE::Little_Born;
 
 	SetScale(Vec2(96, 96));
 	SetName(L"Player");
@@ -85,6 +65,10 @@ void CLittleBorn::Init()
 	m_pState = new CPlayerStateIdle();
 	m_pState->Enter(this);
 
+	GetPlayerInfo().m_iDamage = 100;
+	GetPlayerInfo().m_iHp = 50;
+	GetPlayerInfo().m_iMaxHp = 50;
+
 	SINGLE(CSoundManager)->AddSound(L"Jump", L"sound\\Default_Jump.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"JumpAir", L"sound\\Default_Jump_Air.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"AttackA", L"sound\\Skul_Atk 1.wav", false);
@@ -95,11 +79,8 @@ void CLittleBorn::Init()
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 
+	Enter();
 
-	GetPlayerInfo().m_iDamage = 100;
-	GetPlayerInfo().m_iHp = 50;
-	GetPlayerInfo().m_iMaxHp = 50;
-	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
 }
 
 void CLittleBorn::Update()
@@ -170,4 +151,41 @@ void CLittleBorn::SkillB()
 void CLittleBorn::Hit(int _damage)
 {
 	CPlayer::Hit(_damage);
+}
+
+void CLittleBorn::Enter()
+{
+	SetActive(true);
+	m_bIsGround = false;
+	m_bIsRight = true;
+	m_iCollCount = 0;
+	m_vVelocity = Vec2(300, 0);
+
+	m_bCanDoubleJump = false;
+	m_bCanSecondDash = true;
+	m_bCanDash = true;
+	m_bCanJumpAttack = true;
+	m_bCanSkill = true;
+
+	m_fSecondDashCoolTime = 2.f;
+	m_fSecondDashCurTime = 0.f;
+
+	m_fDashCoolTime = 1.f;
+	m_fDashCurTime = 0.f;
+
+	m_fSkillCoolTime = 5.0f;
+	m_fSkillCurTime = 0;
+
+	m_eSkulType = SKUL_TYPE::Little_Born;
+
+
+	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
+	Vec2 vec = SINGLE(CGameManager)->m_pCurHealth->GetOriginSize();
+	SINGLE(CGameManager)->m_pCurHealth->SetScaleRate(Vec2(vec.x * GetCurHealthRatio(), vec.y));
+
+}
+
+void CLittleBorn::Exit()
+{
+	SetActive(false);
 }

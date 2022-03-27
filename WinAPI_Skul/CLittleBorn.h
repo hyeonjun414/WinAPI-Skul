@@ -22,5 +22,8 @@ public:
     virtual void        SkillB();
 
     virtual void        Hit(int _damage);
+
+    virtual void        Enter();
+    virtual void        Exit();
 };
 

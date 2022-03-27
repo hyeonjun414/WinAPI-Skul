@@ -4,6 +4,7 @@
 #include "CAnimator.h"
 #include "CCollider.h"
 #include "CHunter.h"
+#include "CLittleBorn.h"
 
 
 CPlayerState* CPlayerStateSkillB::HandleInput(CObject* _pObj)
@@ -96,9 +97,16 @@ void CPlayerStateSkillB::Enter(CObject* _pObj)
 	{
 		m_fCurTime = 0.f;
 		m_fDuration = 0.5f;
-		pPlayer->GetAnimator()->Play(L"Player_SkillA", true);
-		SINGLE(CSoundManager)->Play(L"SkillA");
-		pPlayer->SkillA();
+		SINGLE(CGameManager)->CreateVfx(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
+			pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
+
+		pPlayer->SkillB();
+
+		SINGLE(CGameManager)->CreateVfx(L"Appear", L"texture\\effect\\Enemy_Appearance.png",
+			pPlayer->GetPos(), 0.5f, 0.5f, pPlayer->GetObjDir());
+
+		pPlayer->GetAnimator()->Play(L"Player_SkillRebone", true);
+		SINGLE(CSoundManager)->Play(L"SkillB");
 		break;
 	}
 	case SKUL_TYPE::Hunter:
@@ -124,7 +132,7 @@ void CPlayerStateSkillB::Exit(CObject* _pObj)
 	{
 	case SKUL_TYPE::Little_Born:
 	{
-		pPlayer->m_bCanSkill = false;
+		pPlayer->m_bCanSkill = true;
 		pPlayer->m_fSkillCurTime = 0.f;
 		break;
 	}

@@ -72,5 +72,20 @@ void CArrow::OnCollisionEnter(CCollider* _pOther)
 			m_fDuration = m_fCurTime + 1.f;
 		}
 	}
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::ENEMY)
+	{
+		m_bIsStuck = true;
+		if (abs(m_vVelocity.x) >= 2000)
+			m_pArrowImg = SINGLE(CResourceManager)->LoadD2DImage(L"Arrow_Completed_Stuck", L"texture\\player\\hunter\\Hunter_Attack_Completed_Projectile_Stuck.png");
+		else
+			m_pArrowImg = SINGLE(CResourceManager)->LoadD2DImage(L"Arrow_Incompleted_Stuck", L"texture\\player\\hunter\\Hunter_Attack_Incompleted_Projectile_Stuck.png");
+		m_fDuration = m_fCurTime + 1.f;
+		if (GetName() == L"ArrowRain")
+		{
+			SINGLE(CGameManager)->CreateVfx(L"ArrowRain_Spark", L"texture\\effect\\Hunter_ArrowRain_Spark.png",
+				m_pCollider->GetFinalPos() + Vec2(0, -70), 1.f, 1.f, rand() % 2);
+			m_fDuration = m_fCurTime + 1.f;
+		}
+	}
 
 }

@@ -9,6 +9,10 @@
 #include "CMeleeAttack.h"
 #include "CPlayer.h"
 #include "CUIImage.h"
+#include "CObjGenerator.h"
+#include "CSfx.h"
+#include "CVfx.h"
+#include "CBall.h"
 
 CEnemyBoss::CEnemyBoss(OBJ_TYPE _eType, ENEMY_TYPE _eEnemyType):
 	CEnemy(_eType, _eEnemyType)
@@ -232,4 +236,36 @@ void CEnemyBoss::Sweep(CObject* _pObj)
 	SINGLE(CCameraManager)->CameraShaking(2000, 1.f);
 	SINGLE(CSoundManager)->Play(L"BossSweep");
 	SINGLE(CSoundManager)->Play(L"BossSweepRoar");
+}
+
+void CEnemyBoss::EnergyBomb()
+{
+	//CObject* pObj = m_pHeadTop;
+	//Vec2 startPos = pObj->GetPos() + Vec2(rand() % 1400 - 700, rand() % 50 - 25) + Vec2(0, -100);
+	////Vec2 vVelo = (PLAYERPOS - startPos).Normalize() * 300;
+	//
+	//SINGLE(CGameManager)->CreateVfx(L"Bomb_Emerge", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile_Emerge.png",
+	//	startPos, 1.f, 1.f, true, 1.f);
+	//CBall* pProj = new CBall(OBJ_TYPE::PROJECTILE, pObj,
+	//	L"BossBomb", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile.png",
+	//	5.f);
+	//Vec2 vVelo = Vec2(rand() % 500 - 250, 500);
+	//pProj->SetVelocity(vVelo);
+	//CREATEOBJECT(pProj);
+	//SINGLE(CSoundManager)->Play(L"BossBombReady");
+
+	//CObjGenerator* pObjGene = new CObjGenerator(0.1f, GetPos() + Vec2(0, -100), Vec2(rand() % 1400 - 700, rand() % 50 - 25), 1.f);
+	//for (int i = 1; i <= 20; i++)
+	//{
+	//	CBall* pProj = new CBall(OBJ_TYPE::PROJECTILE, pObj,
+	//		L"BossBomb", L"texture\\effect\\ElderEntP2_EnergyCorps_Projectile.png",
+	//		5.f);
+	//	Vec2 vVelo = Vec2(rand() % 500 - 250, 500);
+	//	pProj->SetVelocity(vVelo);
+	//	pObjGene->ReservateObj(pProj);
+
+	//	CSfx* pSfx = new CSfx(L"Arrow");
+	//	pObjGene->ReservateSfx(pSfx);
+	//}
+	//CREATEOBJECT(pObjGene);
 }

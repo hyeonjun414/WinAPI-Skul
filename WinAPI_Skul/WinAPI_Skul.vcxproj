@@ -154,6 +154,7 @@
     <ClInclude Include="CArrow.h" />
     <ClInclude Include="CAttack.h" />
     <ClInclude Include="CBall.h" />
+    <ClInclude Include="CBorn.h" />
     <ClInclude Include="CBossState.h" />
     <ClInclude Include="CBossStateBomb.h" />
     <ClInclude Include="CBossStateChange.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="CEnemyState.h" />
     <ClInclude Include="CHealthBar.h" />
     <ClInclude Include="CHunter.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CLineObj.h" />
     <ClInclude Include="CLittleBorn.h" />
     <ClInclude Include="CMeleeAttack.h" />
@@ -249,6 +251,7 @@
     <ClCompile Include="CArrow.cpp" />
     <ClCompile Include="CAttack.cpp" />
     <ClCompile Include="CBall.cpp" />
+    <ClCompile Include="CBorn.cpp" />
     <ClCompile Include="CBossState.cpp" />
     <ClCompile Include="CBossStateBomb.cpp" />
     <ClCompile Include="CBossStateChange.cpp" />
@@ -260,6 +263,7 @@
     <ClCompile Include="CEnemyState.cpp" />
     <ClCompile Include="CHealthBar.cpp" />
     <ClCompile Include="CHunter.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CLineObj.cpp" />
     <ClCompile Include="CLittleBorn.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
@@ -341,11 +345,6 @@
   <ItemGroup>
     <Image Include="small.ico" />
     <Image Include="WinAPI_Skul.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -203,6 +203,7 @@ void CScene::ClearObject()
 {
 	for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
 	{
+		if (i == (int)OBJ_TYPE::PLAYER) continue;
 		Safe_Delete_Vec(m_vecObjectList[i]);
 	}
 }

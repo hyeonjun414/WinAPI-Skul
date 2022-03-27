@@ -1,15 +1,7 @@
 #pragma once
 #include "CObject.h"
 
-struct tPlayer_Info
-{
-    wstring m_strName;
-    int     m_iMaxHp;
-    int     m_iHp;
-    int     m_iDamage;
-    int     m_iSkillDamage;
-    Vec2    m_vVelocity;
-};
+
 
 class CD2DImage;
 class CState;
@@ -85,6 +77,9 @@ public :
     virtual void        JumpAttack() {}
     virtual void        SkillA() {}
     virtual void        SkillB() {}
+
+    virtual void        Enter() {}
+    virtual void        Exit() {}
 
     virtual void        Hit(int _damage);
 

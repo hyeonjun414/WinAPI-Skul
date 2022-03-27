@@ -14,6 +14,7 @@
 #include "CUIText.h"
 #include "CHunter.h"
 #include "CLittleBorn.h"
+#include "CBorn.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -65,16 +66,22 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CPlayer* obj = new CHunter(OBJ_TYPE::PLAYER);
+	//CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
+	//obj->GetPlayerInfo().m_iHp = 2;
+	//obj->SetPos(Vec2(400.f, 1000.f));
+	//obj->Enter();
+
+	CHunter* obj = new CHunter(OBJ_TYPE::PLAYER);
 	obj->Init();
-	obj->SetName(L"Player");
-	obj->SetPos(Vec2(400.f, 1000.f));
-	CREATEOBJECT(obj);
+	obj->SetActive(true);
+	obj->SetPos(Vec2(400.f, 1140.f));
 	SINGLE(CGameManager)->SetPlayer(obj);
+	CREATEOBJECT(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
 	SINGLE(CCameraManager)->SetTarget(obj);
+
 
 
 	CImageObj* BgObj = nullptr;
@@ -104,9 +111,9 @@ void CSceneInGame::Stage01Init()
 		L"texture\\stage01.png", true);
 	CREATEOBJECT(BgObj);
 
-	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	//CREATEOBJECT(monsterMelee);
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(600.f, 1100.f));
+	CREATEOBJECT(monsterMelee);
 	//for (size_t i = 0; i < 10; i++)
 	//{
 	//	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
@@ -114,9 +121,9 @@ void CSceneInGame::Stage01Init()
 	//	CREATEOBJECT(monsterMelee);
 	//}
 	
-	//monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-	//monsterMelee->SetPos(Vec2(800.f, 1300.f));
-	//CREATEOBJECT(monsterMelee);
+	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterMelee->SetPos(Vec2(800.f, 1300.f));
+	CREATEOBJECT(monsterMelee);
 
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
@@ -128,6 +135,11 @@ void CSceneInGame::Stage01Init()
 	gateObj->SetNextScene(SCENE_TYPE::STAGE_02);
 	gateObj->SetPos(Vec2(2800, 1230));
 	CREATEOBJECT(gateObj);
+
+	CBorn* pItem = new CBorn(SKUL_TYPE::Hunter);
+	pItem->SetPos(Vec2(450, 1170));
+	CREATEOBJECT(pItem);
+
 
 	// 저장한 타일 충돌체 불러오기
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
@@ -144,7 +156,9 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ITEM);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::MELEE_ATTACK, OBJ_TYPE::PLAYER);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
@@ -158,9 +172,9 @@ void CSceneInGame::Stage02Init()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CObject* obj = new CPlayer(OBJ_TYPE::PLAYER);
-	obj->SetName(L"Player");
+	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
 	obj->SetPos(Vec2(400.f, 1000.f));
+	SINGLE(CGameManager)->SetPlayer(obj);
 	CREATEOBJECT(obj);
 	SINGLE(CGameManager)->SetPlayer(obj);
 
@@ -232,7 +246,7 @@ void CSceneInGame::Stage02Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);

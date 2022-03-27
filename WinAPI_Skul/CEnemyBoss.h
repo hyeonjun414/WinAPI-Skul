@@ -43,5 +43,6 @@ public:
 
     void        Slam(CObject* _pObj);
     void        Sweep(CObject* _pObj);
+    void        EnergyBomb();
 };
 

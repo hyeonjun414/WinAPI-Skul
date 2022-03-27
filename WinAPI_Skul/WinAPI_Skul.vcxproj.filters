@@ -76,6 +76,9 @@
     <Filter Include="03.GameObject\Object\Other">
       <UniqueIdentifier>{58527d36-7239-4dc6-88a7-e47d1c27d3a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.GameObject\Object\Item">
+      <UniqueIdentifier>{c7a4b27c-5102-40a1-a617-6eb63f003ebb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,6 +360,12 @@
     <ClInclude Include="CObjGenerator.h">
       <Filter>03.GameObject\Object\Other</Filter>
     </ClInclude>
+    <ClInclude Include="CBorn.h">
+      <Filter>03.GameObject\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>03.GameObject\Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -614,6 +623,12 @@
     <ClCompile Include="CObjGenerator.cpp">
       <Filter>03.GameObject\Object\Other</Filter>
     </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>03.GameObject\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CBorn.cpp">
+      <Filter>03.GameObject\Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinAPI_Skul.rc">
@@ -627,10 +642,5 @@
     <Image Include="WinAPI_Skul.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
 </Project>

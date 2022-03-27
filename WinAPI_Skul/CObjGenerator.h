@@ -9,7 +9,8 @@ class CObjGenerator :
 {
 private:
     vector<CObject*>    m_vecObject;
-    vector<CEffect*>    m_vecEffect;
+    vector<CEffect*>    m_vecVfx;
+    vector<CEffect*>    m_vecSfx;
     float               m_fDelayTime;
     float               m_fCurTime;
     Vec2                m_vGenerateArea;
@@ -24,6 +25,7 @@ public:
     virtual void	Update();
 
     void            ReservateObj(CObject* _pObj) { m_vecObject.push_back(_pObj); }
-    void            ReservateEft(CEffect* _pEft) { m_vecEffect.push_back(_pEft); }
+    void            ReservateVfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
+    void            ReservateSfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
 };
 

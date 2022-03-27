@@ -4,7 +4,8 @@
 CObjGenerator::CObjGenerator(float _delay, Vec2 _pos, Vec2 _areaSize, float _reservTime):
 	CObject(OBJ_TYPE::GENERATOR),
 	m_vecObject{},
-	m_vecEffect{},
+	m_vecVfx{},
+	m_vecSfx{},
 	m_fDelayTime(_delay),
 	m_fCurTime(0.f),
 	m_vGenerateArea(_areaSize),
@@ -43,10 +44,16 @@ void CObjGenerator::Update()
 			pObj->SetPos(randPos);
 			CREATEOBJECT(pObj);
 			
-			if (m_vecEffect.size() != 0)
+			if (m_vecVfx.size() != 0)
 			{
-				CEffect* pEft = m_vecEffect[m_vecEffect.size() - 1];
-				m_vecEffect.pop_back();
+				CEffect* pEft = m_vecVfx[m_vecVfx.size() - 1];
+				m_vecVfx.pop_back();
+				CREATEOBJECT((CObject*)pEft);
+			}
+			if (m_vecSfx.size() != 0)
+			{
+				CEffect* pEft = m_vecSfx[m_vecSfx.size() - 1];
+				m_vecSfx.pop_back();
 				CREATEOBJECT((CObject*)pEft);
 			}
 		}

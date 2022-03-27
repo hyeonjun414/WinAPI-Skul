@@ -142,4 +142,12 @@ struct tAnimFrame
 	float	fFrameTime;		// 프레임 재생 시간
 };
 
-
+struct tPlayer_Info
+{
+	wstring m_strName;
+	int     m_iMaxHp;
+	int     m_iHp;
+	int     m_iDamage;
+	int     m_iSkillDamage;
+	Vec2    m_vVelocity;
+};

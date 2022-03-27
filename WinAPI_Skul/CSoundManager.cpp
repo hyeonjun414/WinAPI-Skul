@@ -46,6 +46,7 @@ void CSoundManager::Play(wstring _keyName)
 
 }
 
+
 void CSoundManager::Stop(wstring _keyName)
 {
 	map<wstring, CSound*>::iterator iter = m_mapSound.find(_keyName);

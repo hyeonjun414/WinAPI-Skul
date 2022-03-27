@@ -6,6 +6,7 @@
 #include "CTextObj.h"
 #include "CPlayer.h"
 #include "CVfx.h"
+#include "CLittleBorn.h"
 
 CGameManager::CGameManager():
 	m_pPlayer(nullptr)
@@ -40,6 +41,18 @@ void CGameManager::Update()
 	}
 
 
+}
+
+CPlayer* CGameManager::GetCurSkul()
+{
+	if (nullptr != m_pPlayer)
+		return m_pPlayer;
+
+	CPlayer* obj = new CLittleBorn(OBJ_TYPE::PLAYER);
+	obj->Init();
+	obj->SetName(L"Player");
+	CREATEOBJECT(obj);
+	return obj;
 }
 
 void CGameManager::EraseHeadObj()
