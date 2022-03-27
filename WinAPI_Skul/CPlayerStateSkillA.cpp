@@ -48,7 +48,7 @@ void CPlayerStateSkillA::Update(CObject* _pObj)
 		{
 			if (KEYHOLD(KEY::A) && (0.1f < m_fCurTime && m_fCurTime < 0.2f))
 			{
-				pPlayer->GetAnimator()->Play(L"Player_AttackReady2", true);
+				pPlayer->GetAnimator()->Play(L"Hunter_AttackReady2", true);
 			}
 			if (KEYHOLD(KEY::A) && m_fCurTime > 0.2f &&
 				!m_bIsAttack)
@@ -57,11 +57,11 @@ void CPlayerStateSkillA::Update(CObject* _pObj)
 				pPlayer->m_fCurChargeTime += DT;
 				if (pPlayer->m_bCharged)
 				{
-					pPlayer->GetAnimator()->Play(L"Player_Charge_completed", true);
+					pPlayer->GetAnimator()->Play(L"Hunter_Charge_completed", true);
 				}
 				else
 				{
-					pPlayer->GetAnimator()->Play(L"Player_Charging", true);
+					pPlayer->GetAnimator()->Play(L"Hunter_Charging", true);
 				}
 
 			}
@@ -91,7 +91,7 @@ void CPlayerStateSkillA::Enter(CObject* _pObj)
 	{
 		m_fCurTime = 0.f;
 		m_fDuration = 0.5f;
-		pPlayer->GetAnimator()->Play(L"Player_SkillA", true);
+		pPlayer->GetAnimator()->Play(L"LittleBorn_SkillA", true);
 		SINGLE(CSoundManager)->Play(L"SkillA");
 		pPlayer->SkillA();
 		break;
@@ -103,7 +103,7 @@ void CPlayerStateSkillA::Enter(CObject* _pObj)
 		m_bOnceFunc = true;
 		m_fOnceFuncTime = 0.3f;
 		m_fOnceFuncCurTime = 0.f;
-		pPlayer->GetAnimator()->Play(L"Player_AttackReady", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_AttackReady", true);
 		break;
 	}
 	}

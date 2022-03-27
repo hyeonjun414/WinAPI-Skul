@@ -19,6 +19,8 @@ private:
 	CD2DImage*				 m_pToolImage;
 
 public:
+	void		Init() {}
+
 	// ÅØ½ºÃÄ
 	CTexture*	CreateTexture(const wstring& _strKey, UINT _width, UINT _height);
 	CTexture*	LoadTexture(const wstring& _strKey, const wstring& _strRelativePath);

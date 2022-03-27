@@ -66,17 +66,17 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	//CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	//obj->GetPlayerInfo().m_iHp = 2;
-	//obj->SetPos(Vec2(400.f, 1000.f));
-	//obj->Enter();
+	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
+	obj->GetPlayerInfo().m_iHp = 2;
+	obj->SetPos(Vec2(400.f, 1000.f));
+	obj->Enter();
 
-	CHunter* obj = new CHunter(OBJ_TYPE::PLAYER);
-	obj->Init();
-	obj->SetActive(true);
-	obj->SetPos(Vec2(400.f, 1140.f));
-	SINGLE(CGameManager)->SetPlayer(obj);
-	CREATEOBJECT(obj);
+	//CHunter* obj = new CHunter(OBJ_TYPE::PLAYER);
+	//obj->Init();
+	//obj->SetActive(true);
+	//obj->SetPos(Vec2(400.f, 1140.f));
+	//SINGLE(CGameManager)->SetPlayer(obj);
+	//CREATEOBJECT(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));

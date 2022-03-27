@@ -22,6 +22,7 @@ void CCore::Init()
 	m_hDC = GetDC(hWnd);
 
 	// 매니저 클래스 초기화 ( 타임, 키, 경로, 사운드, 장면, 충돌, 카메라 )
+	//SINGLE(CResourceManager)->Init();
 	SINGLE(CGameManager)->Init();
 	SINGLE(CTimeManager)->Init();
 	SINGLE(CKeyManager)->Init();

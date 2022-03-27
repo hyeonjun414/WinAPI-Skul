@@ -37,27 +37,27 @@ void CLittleBorn::Init()
 
 	// 애니메이터 만들기
 	CreateAnimator();
-	GetAnimator()->CreateAnim(L"Player_Idle", L"texture\\player\\idle_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Move", L"texture\\player\\move_skul.png", 0.8f);
-	GetAnimator()->CreateAnim(L"Player_Jump", L"texture\\player\\jump_skul.png", 0.2f);
-	GetAnimator()->CreateAnim(L"Player_Fall", L"texture\\player\\fall_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_FallRepeat", L"texture\\player\\fallrepeat_skul.png", 0.3f);
-	GetAnimator()->CreateAnim(L"Player_AttackA", L"texture\\player\\attackA_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_AttackB", L"texture\\player\\attackB_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillA", L"texture\\player\\skillA_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillB", L"texture\\player\\skillB_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_Dash", L"texture\\player\\dash_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_JumpAttack", L"texture\\player\\jumpattack_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Idle_Headless", L"texture\\player\\idle_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Move_Headless", L"texture\\player\\move_headless_skul.png", 0.7f);
-	GetAnimator()->CreateAnim(L"Player_Jump_Headless", L"texture\\player\\jump_headless_skul.png", 0.2f);
-	GetAnimator()->CreateAnim(L"Player_Fall_Headless", L"texture\\player\\fall_headless_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_FallRepeat_Headless", L"texture\\player\\fallrepeat_headless_skul.png", 0.3f);
-	GetAnimator()->CreateAnim(L"Player_AttackA_Headless", L"texture\\player\\attackA_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_AttackB_Headless", L"texture\\player\\attackB_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_Dash_Headless", L"texture\\player\\dash_headless_skul.png", 1.0f);
-	GetAnimator()->CreateAnim(L"Player_JumpAttack_Headless", L"texture\\player\\jumpattack_headless_skul.png", 0.5f);
-	GetAnimator()->CreateAnim(L"Player_SkillRebone", L"texture\\player\\skill_rebone_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Idle", L"texture\\player\\idle_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Move", L"texture\\player\\move_skul.png", 0.8f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Jump", L"texture\\player\\jump_skul.png", 0.2f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Fall", L"texture\\player\\fall_skul.png", 1.0f);
+	GetAnimator()->CreateAnim(L"LittleBorn_FallRepeat", L"texture\\player\\fallrepeat_skul.png", 0.3f);
+	GetAnimator()->CreateAnim(L"LittleBorn_AttackA", L"texture\\player\\attackA_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_AttackB", L"texture\\player\\attackB_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_SkillA", L"texture\\player\\skillA_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_SkillB", L"texture\\player\\skillB_skul.png", 1.0f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Dash", L"texture\\player\\dash_skul.png", 1.0f);
+	GetAnimator()->CreateAnim(L"LittleBorn_JumpAttack", L"texture\\player\\jumpattack_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Idle_Headless", L"texture\\player\\idle_headless_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Move_Headless", L"texture\\player\\move_headless_skul.png", 0.7f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Jump_Headless", L"texture\\player\\jump_headless_skul.png", 0.2f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Fall_Headless", L"texture\\player\\fall_headless_skul.png", 1.0f);
+	GetAnimator()->CreateAnim(L"LittleBorn_FallRepeat_Headless", L"texture\\player\\fallrepeat_headless_skul.png", 0.3f);
+	GetAnimator()->CreateAnim(L"LittleBorn_AttackA_Headless", L"texture\\player\\attackA_headless_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_AttackB_Headless", L"texture\\player\\attackB_headless_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Dash_Headless", L"texture\\player\\dash_headless_skul.png", 1.0f);
+	GetAnimator()->CreateAnim(L"LittleBorn_JumpAttack_Headless", L"texture\\player\\jumpattack_headless_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_SkillRebone", L"texture\\player\\skill_rebone_skul.png", 0.5f);
 
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
 	m_pAnimator->SetAllAnimOffset(Vec2(0, 30));

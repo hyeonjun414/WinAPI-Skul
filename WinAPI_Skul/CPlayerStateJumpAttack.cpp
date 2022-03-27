@@ -71,9 +71,9 @@ void CPlayerStateJumpAttack::Enter(CObject* _pObj)
 		m_fDuration = 0.5f;
 		m_fCurTime = 0.f;
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_JumpAttack", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_JumpAttack_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_JumpAttack_Headless", true);
 		break;
 	}
 	case SKUL_TYPE::Hunter:
@@ -81,7 +81,7 @@ void CPlayerStateJumpAttack::Enter(CObject* _pObj)
 		m_fDuration = 0.3f;
 		m_fCurTime = 0.f;
 		pPlayer->JumpAttack();
-		pPlayer->GetAnimator()->Play(L"Player_JumpAttack", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_JumpAttack", true);
 		break;
 	}
 	}

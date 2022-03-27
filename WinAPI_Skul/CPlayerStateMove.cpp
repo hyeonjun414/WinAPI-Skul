@@ -88,14 +88,14 @@ void CPlayerStateMove::Enter(CObject* _pObj)
 	case SKUL_TYPE::Little_Born:
 	{
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_Move", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Move", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_Move_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Move_Headless", true);
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
-		pPlayer->GetAnimator()->Play(L"Player_Move", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_Move", true);
 		break;
 	}
 	}

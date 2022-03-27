@@ -67,7 +67,7 @@ void CBorn::OnCollision(CCollider* _pOther)
 	{
 		if (KEYTAP(KEY::F))
 		{
-			DELETEOBJECT(this);
+			Use();
 		}
 	}
 }
@@ -79,4 +79,6 @@ void CBorn::OnCollisionEnter(CCollider* _pOther)
 
 void CBorn::Use()
 {
+	SINGLE(CGameManager)->AddSkul(m_eSkulType);
+	DELETEOBJECT(this);
 }

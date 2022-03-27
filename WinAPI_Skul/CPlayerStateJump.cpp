@@ -4,6 +4,7 @@
 #include "CPlayer.h"
 #include "CAnimator.h"
 #include "CCollider.h"
+#include "CHunter.h"
 
 CPlayerState* CPlayerStateJump::HandleInput(CObject* _pObj)
 {
@@ -115,14 +116,15 @@ void CPlayerStateJump::Enter(CObject* _pObj)
 	case SKUL_TYPE::Little_Born:
 	{
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_Jump", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Jump", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_Jump_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Jump_Headless", true);
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
-		pPlayer->GetAnimator()->Play(L"Player_Jump", true);
+		CHunter* pPlayer = (CHunter*)_pObj;
+		pPlayer->GetAnimator()->Play(L"Hunter_Jump", true);
 		break;
 	}
 	}

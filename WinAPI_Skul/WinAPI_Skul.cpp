@@ -37,7 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, // 실행된 프로세스의 시
 
     // 메모리 릭 체크
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(268);
+    //_CrtSetBreakAlloc(12155);
 
     // 전역 문자열을 초기화합니다.
     // 리소스 뷰의 String Table에서 ID값으로 String을 가져오는 함수

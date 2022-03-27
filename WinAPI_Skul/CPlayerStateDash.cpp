@@ -77,14 +77,14 @@ void CPlayerStateDash::Enter(CObject* _pObj)
 	case SKUL_TYPE::Little_Born:
 	{
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Dash", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_Dash_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Dash_Headless", true);
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
-		pPlayer->GetAnimator()->Play(L"Player_Dash", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_Dash", true);
 		break;
 	}
 	}

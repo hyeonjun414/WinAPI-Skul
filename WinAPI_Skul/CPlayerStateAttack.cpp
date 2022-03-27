@@ -69,9 +69,9 @@ void CPlayerStateAttack::Update(CObject* _pObj)
 		{
 			m_bIsSecondAttack = true;
 			if (pPlayer->m_bCanSkill)
-				pPlayer->GetAnimator()->Play(L"Player_AttackB", true);
+				pPlayer->GetAnimator()->Play(L"LittleBorn_AttackB", true);
 			else
-				pPlayer->GetAnimator()->Play(L"Player_AttackB_Headless", true);
+				pPlayer->GetAnimator()->Play(L"LittleBorn_AttackB_Headless", true);
 			SINGLE(CSoundManager)->Play(L"AttackB");
 
 			if (KEYHOLD(KEY::LEFT))
@@ -96,7 +96,7 @@ void CPlayerStateAttack::Update(CObject* _pObj)
 		{
 			if (KEYHOLD(KEY::X) && (0.1f < m_fCurTime && m_fCurTime < 0.2f))
 			{
-				pPlayer->GetAnimator()->Play(L"Player_AttackReady2", true);
+				pPlayer->GetAnimator()->Play(L"Hunter_AttackReady2", true);
 			}
 			if (KEYHOLD(KEY::X) && m_fCurTime > 0.2f &&
 			!m_bIsAttack)
@@ -105,11 +105,11 @@ void CPlayerStateAttack::Update(CObject* _pObj)
 				pPlayer->m_fCurChargeTime += DT;
 				if (pPlayer->m_bCharged)
 				{
-					pPlayer->GetAnimator()->Play(L"Player_Charge_completed", true);
+					pPlayer->GetAnimator()->Play(L"Hunter_Charge_completed", true);
 				}
 				else
 				{
-					pPlayer->GetAnimator()->Play(L"Player_Charging", true);
+					pPlayer->GetAnimator()->Play(L"Hunter_Charging", true);
 				}
 
 			}
@@ -144,9 +144,9 @@ void CPlayerStateAttack::Enter(CObject* _pObj)
 		m_bIsSecondAttack = false;
 		m_bAttackInput = false;
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_AttackA", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_AttackA", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_AttackA_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_AttackA_Headless", true);
 		SINGLE(CSoundManager)->Play(L"AttackA");
 		
 		if (KEYHOLD(KEY::LEFT))
@@ -169,7 +169,7 @@ void CPlayerStateAttack::Enter(CObject* _pObj)
 		m_bOnceFunc = true;
 		m_fOnceFuncTime = 0.3f;
 		m_fOnceFuncCurTime = 0.f;
-		pPlayer->GetAnimator()->Play(L"Player_AttackReady", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_AttackReady", true);
 		break;
 	}
 	}

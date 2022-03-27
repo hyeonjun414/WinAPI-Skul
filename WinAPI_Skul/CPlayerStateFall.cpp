@@ -64,16 +64,16 @@ void CPlayerStateFall::Update(CObject* _pObj)
 		if (pPlayer->m_vVelocity.y > 200)
 		{
 			if (pPlayer->m_bCanSkill)
-				pPlayer->GetAnimator()->Play(L"Player_FallRepeat", true);
+				pPlayer->GetAnimator()->Play(L"LittleBorn_FallRepeat", true);
 			else
-				pPlayer->GetAnimator()->Play(L"Player_FallRepeat_Headless", true);
+				pPlayer->GetAnimator()->Play(L"LittleBorn_FallRepeat_Headless", true);
 		}
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
 		if (pPlayer->m_vVelocity.y > 200)
-			pPlayer->GetAnimator()->Play(L"Player_FallRepeat", true);
+			pPlayer->GetAnimator()->Play(L"Hunter_FallRepeat", true);
 		break;
 	}
 	}
@@ -90,14 +90,14 @@ void CPlayerStateFall::Enter(CObject* _pObj)
 	case SKUL_TYPE::Little_Born:
 	{
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_Fall", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Fall", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_Fall_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Fall_Headless", true);
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
-		pPlayer->GetAnimator()->Play(L"Player_Fall", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_Fall", true);
 		break;
 	}
 	}

@@ -39,6 +39,11 @@ void CEventManager::Excute(const tEvent& _event)
 		SINGLE(CGameManager)->SetGamePlay((bool)_event.lParam);
 		break;
 	}
+	case EVENT_TYPE::SWITCH_SKUL:
+	{
+		SINGLE(CGameManager)->SwitchSkul();
+		break;
+	}
 	}
 }
 
@@ -91,6 +96,14 @@ void CEventManager::EventGamePlay(bool _bIsPlay)
 	tEvent even = {};
 	even.eEvent = EVENT_TYPE::PLAY_AND_PAUSE;
 	even.lParam = (DWORD_PTR)_bIsPlay;
+
+	AddEvent(even);
+}
+
+void CEventManager::EventSwitchSkul()
+{
+	tEvent even = {};
+	even.eEvent = EVENT_TYPE::SWITCH_SKUL;
 
 	AddEvent(even);
 }

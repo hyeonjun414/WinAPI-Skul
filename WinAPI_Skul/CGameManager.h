@@ -40,8 +40,8 @@ public:
 
 	CPlayer*	GetCurSkul();
 
-	void		ChangeSkul() {}
-
+	void		SwitchSkul();
+	void		AddSkul(SKUL_TYPE _eSkulType);
 
 
 

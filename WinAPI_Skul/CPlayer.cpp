@@ -37,6 +37,7 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
+	if (!GetActive()) return;
 	CState* pState = m_pState->HandleInput(this);
 	if (nullptr != pState)
 	{
@@ -53,6 +54,7 @@ void CPlayer::Update()
 
 void CPlayer::Render()
 {
+	if (!GetActive()) return;
 	ComponentRender();
 	RenderPlayerInfo();
 }

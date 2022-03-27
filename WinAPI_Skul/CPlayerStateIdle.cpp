@@ -8,6 +8,10 @@ CPlayerState* CPlayerStateIdle::HandleInput(CObject* _pObj)
 {
     CPlayer* pPlayer = (CPlayer*)_pObj;
 
+	if (KEYTAP(KEY::SPACE))
+	{
+		SWITCHSKUL;
+	}
 
 
 	//스컬 타입마다 달라야하는 기능은 아래에 같아도 되는 작업은 위에
@@ -131,15 +135,15 @@ void CPlayerStateIdle::Enter(CObject* _pObj)
 	case SKUL_TYPE::Little_Born:
 	{
 		if (pPlayer->m_bCanSkill)
-			pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Idle", true);
 		else
-			pPlayer->GetAnimator()->Play(L"Player_Idle_Headless", true);
+			pPlayer->GetAnimator()->Play(L"LittleBorn_Idle_Headless", true);
 		pPlayer->m_strCurState = L"Idle";
 		break;
 	}
 	case SKUL_TYPE::Hunter:
 	{
-		pPlayer->GetAnimator()->Play(L"Player_Idle", true);
+		pPlayer->GetAnimator()->Play(L"Hunter_Idle", true);
 		break;
 	}
 	}
