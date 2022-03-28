@@ -11,6 +11,9 @@ CPlayerState* CPlayerStateIdle::HandleInput(CObject* _pObj)
 	if (KEYTAP(KEY::SPACE))
 	{
 		SWITCHSKUL;
+		SINGLE(CGameManager)->CreateVfx(L"Switch_Skul", L"texture\\effect\\Switch_Skul.png",
+			_pObj->GetCollider()->GetFinalPos(), 0.5f, 0.5f, _pObj->GetObjDir());
+		SINGLE(CSoundManager)->Play(L"Switch");
 	}
 
 

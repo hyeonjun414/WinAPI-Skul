@@ -41,7 +41,7 @@ void CScene::Update()
 		{
 			for (unsigned int j = 0; j < m_vecObjectList[i].size(); j++)
 			{
-				if (m_vecObjectList[i][j]->GetActive())
+				if (m_vecObjectList[i][j]->IsDead())
 					m_vecObjectList[i][j]->Update();
 			}
 		}
@@ -77,7 +77,7 @@ void CScene::Render()
 		vector<CObject*>::iterator iter = m_vecObjectList[i].begin();
 		for (; iter != m_vecObjectList[i].end();)
 		{
-			if ((*iter)->GetActive())
+			if ((*iter)->IsDead())
 			{
 				(*iter)->Render();
 				++iter;

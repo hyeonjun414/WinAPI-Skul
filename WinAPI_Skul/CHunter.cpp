@@ -69,6 +69,11 @@ void CHunter::Init()
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Arrow", L"sound\\Shot_Arrow.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Default_Switch.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hunter_Charge_Completed", L"sound\\Hunter_Charge_Completed.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hunter_DrawArrow", L"sound\\Hunter_DrawArrow.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hunter_SkillA_Fire", L"sound\\Hunter_SkillA_Impact2.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hunter_SkillB_Arrow", L"sound\\Hunter_SkillB_Arrow.wav", false);
 
 
 
@@ -162,7 +167,7 @@ void CHunter::SkillA()
 
 	if (m_bCharged)
 	{
-		SINGLE(CSoundManager)->Play(L"Arrow");
+		SINGLE(CSoundManager)->Play(L"Hunter_SkillA_Fire");
 		m_fCurChargeTime = 0.f;
 		m_bCharged = false;
 		GetAnimator()->Play(L"Hunter_Attack", true);
@@ -220,7 +225,7 @@ void CHunter::SkillB()
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
 			pObjGene->ReservateObj(pProj);
 
-			CSfx* pSfx = new CSfx(L"Arrow");
+			CSfx* pSfx = new CSfx(L"Hunter_SkillB_Arrow");
 			pObjGene->ReservateSfx(pSfx);
 		}
 		CREATEOBJECT(pObjGene);
@@ -242,7 +247,7 @@ void CHunter::SkillB()
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
 			pObjGene->ReservateObj(pProj);
 
-			CSfx* pSfx = new CSfx(L"Arrow");
+			CSfx* pSfx = new CSfx(L"Hunter_SkillB_Arrow");
 			pObjGene->ReservateSfx(pSfx);
 		}
 		CREATEOBJECT(pObjGene);
@@ -287,9 +292,17 @@ void CHunter::Enter()
 	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
 	Vec2 vec = SINGLE(CGameManager)->m_pCurHealth->GetOriginSize();
 	SINGLE(CGameManager)->m_pCurHealth->SetScaleRate(Vec2(vec.x * GetCurHealthRatio(), vec.y));
+
+	SINGLE(CGameManager)->m_pPortrait->SetImage(L"Portrait_Hunter", L"texture\\icon\\Hunter.png");
+	SINGLE(CGameManager)->m_pSkillA->SetImage(L"SkillA_Hunter", L"texture\\icon\\SiegeShot.png");
+	SINGLE(CGameManager)->m_pSkillB->SetImage(L"SkillB_Hunter", L"texture\\icon\\ImmovableShot.png");
+
 }
 
 void CHunter::Exit()
 {
 	SetActive(false);
+	SINGLE(CGameManager)->m_pSubSkul->SetImage(L"Portrait_Hunter", L"texture\\icon\\Hunter.png");
+	SINGLE(CGameManager)->m_pSubSkillA->SetImage(L"SkillA_Hunter", L"texture\\icon\\SiegeShot.png");
+	SINGLE(CGameManager)->m_pSubSkillB->SetImage(L"SkillB_Hunter", L"texture\\icon\\ImmovableShot.png");
 }

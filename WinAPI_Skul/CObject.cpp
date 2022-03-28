@@ -4,7 +4,7 @@
 #include "CAnimator.h"
 
 CObject::CObject():
-	m_bIsActive(true),
+	m_bIsDead(true),
 	m_pCollider(nullptr),
 	m_pAnimator(nullptr)
 {
@@ -12,9 +12,10 @@ CObject::CObject():
 }
 
 CObject::CObject(OBJ_TYPE _eType) :
-	m_bIsActive(true),
+	m_bIsDead(true),
 	m_pCollider(nullptr),
-	m_pAnimator(nullptr)
+	m_pAnimator(nullptr),
+	m_bIsActive(true)
 {
 	m_eType = _eType;
 }
@@ -22,7 +23,7 @@ CObject::CObject(OBJ_TYPE _eType) :
 CObject::CObject(const CObject& _origin) :
 	m_strName(_origin.m_strName),
 	m_eType(_origin.m_eType),
-	m_bIsActive(true),
+	m_bIsDead(true),
 	m_vPos(_origin.m_vPos),
 	m_vScale(_origin.m_vScale),
 	m_pCollider(nullptr),

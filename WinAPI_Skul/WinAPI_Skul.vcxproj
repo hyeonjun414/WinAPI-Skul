@@ -184,6 +184,7 @@
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CSceneBoss.h" />
     <ClInclude Include="CSfx.h" />
+    <ClInclude Include="CStatusHUD.h" />
     <ClInclude Include="CUIButton.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CSceneBoss.cpp" />
     <ClCompile Include="CSfx.cpp" />
+    <ClCompile Include="CStatusHUD.cpp" />
     <ClCompile Include="CUIButton.cpp" />
     <ClCompile Include="CCameraManager.cpp" />
     <ClCompile Include="CCollider.cpp" />

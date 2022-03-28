@@ -79,6 +79,9 @@
     <Filter Include="03.GameObject\Object\Item">
       <UniqueIdentifier>{c7a4b27c-5102-40a1-a617-6eb63f003ebb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.GameObject\UI\HUD">
+      <UniqueIdentifier>{14179943-0d66-4acc-8a22-300ba114e676}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -366,6 +369,9 @@
     <ClInclude Include="CItem.h">
       <Filter>03.GameObject\Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="CStatusHUD.h">
+      <Filter>03.GameObject\UI\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -628,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="CBorn.cpp">
       <Filter>03.GameObject\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CStatusHUD.cpp">
+      <Filter>03.GameObject\UI\HUD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

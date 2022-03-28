@@ -119,7 +119,7 @@ void CCollisionManager::CollisionGroupUpdate(OBJ_TYPE _eLeft, OBJ_TYPE _eRight)
 				{
 					// 이전 프레임에도 충돌이 일어났었다면.
 
-					if (!vecLeft[i]->GetActive() || !vecRight[j]->GetActive())
+					if (!vecLeft[i]->IsDead() || !vecRight[j]->IsDead())
 					{
 						// 둘 중 하나가 삭제 예정이라면, 충돌 해제시켜준다.
 						pLeftCol->OnCollisionExit(pRightCol);
@@ -139,7 +139,7 @@ void CCollisionManager::CollisionGroupUpdate(OBJ_TYPE _eLeft, OBJ_TYPE _eRight)
 				{
 					// 이번 충돌이 처음 일어난 충돌이라면
 					// 두 오브젝트 모두 삭제 예정이 아니라면 실행
-					if (vecLeft[i]->GetActive() && vecRight[j]->GetActive())
+					if (vecLeft[i]->IsDead() && vecRight[j]->IsDead())
 					{
 						pLeftCol->OnCollisionEnter(pRightCol);
 						pRightCol->OnCollisionEnter(pLeftCol);
@@ -172,7 +172,8 @@ bool CCollisionManager::IsCollision(CCollider* _pLeftCol, CCollider* _pRightCol)
 	Vec2 vRightScale = _pRightCol->GetScale();
 
 	if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x) / 2.f &&
-		abs(vRightPos.y - vLeftPos.y) < (vLeftScale.y + vRightScale.y) / 2.f)
+		abs(vRightPos.y - vLeftPos.y) < (vLeftScale.y + vRightScale.y) / 2.f &&
+		_pLeftCol->GetObj()->IsActive() && _pRightCol->GetObj()->IsActive())
 	{
 		return true;
 	}

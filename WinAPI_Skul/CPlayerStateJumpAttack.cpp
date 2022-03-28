@@ -82,6 +82,7 @@ void CPlayerStateJumpAttack::Enter(CObject* _pObj)
 		m_fCurTime = 0.f;
 		pPlayer->JumpAttack();
 		pPlayer->GetAnimator()->Play(L"Hunter_JumpAttack", true);
+		SINGLE(CSoundManager)->Play(L"Hunter_DrawArrow");
 		break;
 	}
 	}

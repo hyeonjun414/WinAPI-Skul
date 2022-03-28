@@ -10,6 +10,7 @@ protected:
 	wstring			m_strName;		// 오브젝트 이름
 
 	OBJ_TYPE		m_eType;		// 오브젝트 타입
+	bool			m_bIsDead;		// 삭제 여부
 	bool			m_bIsActive;	// 활성화 여부
 	bool			m_bIsRight;		// 오브젝트의 방향이 어딘지
 
@@ -36,6 +37,7 @@ public:
 	
 	void			SetName(const wstring& _strName)	{ m_strName = _strName; }
 	void			SetObjType(OBJ_TYPE _eObjType)		{ m_eType = _eObjType; }
+	void			SetIsDead(bool _active)				{ m_bIsDead = _active; }
 	void			SetActive(bool _active)				{ m_bIsActive = _active; }
 	void			SetObjDir(bool _bDir)				{ m_bIsRight = _bDir; }
 	void			SetPos(Vec2 _pos)					{ m_vPos = _pos; }
@@ -45,7 +47,8 @@ public:
 	
 	const wstring&	GetName()		{ return m_strName; }
 	OBJ_TYPE		GetObjType()	{ return m_eType; }
-	bool			GetActive()		{ return m_bIsActive; }
+	bool			IsDead()		{ return m_bIsDead; }
+	bool			IsActive()		{ return m_bIsActive; }
 	bool			GetObjDir()		{ return m_bIsRight; }
 	Vec2			GetPos()		{ return m_vPos; }
 	Vec2			GetRenderPos()	{ return m_vRenderPos; }

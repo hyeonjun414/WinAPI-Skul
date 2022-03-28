@@ -45,41 +45,37 @@ void CPlayerStateSkillB::Update(CObject* _pObj)
 	{
 		CHunter* pPlayer = (CHunter*)_pObj;
 		m_fCurTime += DT;
-		if (m_bOnceFunc)
+		if (KEYHOLD(KEY::S) && (0.1f < m_fCurTime && m_fCurTime < 0.2f))
 		{
-			if (KEYHOLD(KEY::S) && (0.1f < m_fCurTime && m_fCurTime < 0.2f))
+			pPlayer->GetAnimator()->Play(L"Hunter_AttackReady2", true);
+		}
+		if (KEYHOLD(KEY::S) && m_fCurTime > 0.2f &&
+			!m_bIsAttack)
+		{
+			m_fDuration += DT;
+			pPlayer->m_fCurChargeTime += DT;
+			if (pPlayer->m_bCharged && m_bOnceFunc)
 			{
-				pPlayer->GetAnimator()->Play(L"Hunter_AttackReady2", true);
-			}
-			if (KEYHOLD(KEY::S) && m_fCurTime > 0.2f &&
-				!m_bIsAttack)
-			{
-				m_fDuration += DT;
-				pPlayer->m_fCurChargeTime += DT;
-				if (pPlayer->m_bCharged)
-				{
-					pPlayer->GetAnimator()->Play(L"Hunter_Charge_completed", true);
-				}
-				else
-				{
-					pPlayer->GetAnimator()->Play(L"Hunter_Charging", true);
-				}
-
-			}
-			if (KEYAWAY(KEY::S) && !m_bIsAttack)
-			{
-				if (pPlayer->m_bCharged)
-					m_fDuration = m_fCurTime + 1.f;
-				else
-					m_fDuration = m_fCurTime + 0.5f;
-				pPlayer->SkillB();
-				
+				pPlayer->GetAnimator()->Play(L"Hunter_Charge_completed", true);
+				SINGLE(CSoundManager)->Play(L"Hunter_Charge_Completed");
 				m_fOnceFuncCurTime = 0;
 				m_bOnceFunc = false;
-				m_bIsAttack = true;
 			}
-		}
+			else if (m_bOnceFunc)
+			{
+				pPlayer->GetAnimator()->Play(L"Hunter_Charging", true);
+			}
 
+		}
+		if (KEYAWAY(KEY::S) && !m_bIsAttack)
+		{
+			if (pPlayer->m_bCharged)
+				m_fDuration = m_fCurTime + 1.f;
+			else
+				m_fDuration = m_fCurTime + 0.5f;
+			pPlayer->SkillB();
+			m_bIsAttack = true;
+		}
 		break;
 	}
 	}
@@ -114,9 +110,10 @@ void CPlayerStateSkillB::Enter(CObject* _pObj)
 		m_fDuration = 0.5f;
 		m_fCurTime = 0.f;
 		m_bOnceFunc = true;
-		m_fOnceFuncTime = 0.3f;
+		m_fOnceFuncTime = 1.0f;
 		m_fOnceFuncCurTime = 0.f;
 		pPlayer->GetAnimator()->Play(L"Hunter_AttackReady", true);
+		SINGLE(CSoundManager)->Play(L"Hunter_DrawArrow");
 		break;
 	}
 	}

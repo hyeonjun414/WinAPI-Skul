@@ -37,7 +37,7 @@ void CPlayer::Init()
 
 void CPlayer::Update()
 {
-	if (!GetActive()) return;
+	if (!IsActive()) return;
 	CState* pState = m_pState->HandleInput(this);
 	if (nullptr != pState)
 	{
@@ -54,7 +54,7 @@ void CPlayer::Update()
 
 void CPlayer::Render()
 {
-	if (!GetActive()) return;
+	if (!IsActive()) return;
 	ComponentRender();
 	RenderPlayerInfo();
 }
@@ -134,7 +134,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
 			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
-			SINGLE(CSoundManager)->Play(L"Hit");
+			//SINGLE(CSoundManager)->Play(L"Hit");
 
 			Hit(pEnemy->GetEnemyInfo().m_iDamage);
 		}

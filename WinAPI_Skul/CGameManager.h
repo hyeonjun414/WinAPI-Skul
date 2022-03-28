@@ -23,6 +23,17 @@ public:
 	CUIImage*	m_pCurHealth;
 	CUIText*	m_pCurHealthText;
 
+	CUIImage*	m_pPortrait;
+	CUIImage*	m_pSkillA;
+	CUIImage*	m_pSkillB;
+	CUIImage*	m_pSubSkillA;
+	CUIImage*	m_pSubSkillB;
+	CUIImage*	m_pSubSkul;
+
+	CUIImage*	m_pSubSkillFrame;
+	CUIImage*	m_pSubSkulFrame;
+
+
 	CUIImage*	m_pBossStatus;
 
 	vector<CObject> m_vecItem;

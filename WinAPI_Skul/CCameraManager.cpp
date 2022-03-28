@@ -65,7 +65,7 @@ void CCameraManager::Update()
 
 	if (m_pTargetObj)
 	{
-		if (!m_pTargetObj->GetActive())
+		if (!m_pTargetObj->IsDead())
 		{
 			m_pTargetObj = nullptr;
 		}
@@ -256,6 +256,7 @@ void CCameraManager::MiniMapRender()
 	{
 		for (size_t j = 0; j < vecObject[i].size(); j++)
 		{
+			if (!vecObject[i][j]->IsActive()) continue;
 
 			Vec2 vPos = vecObject[i][j]->GetPos();
 			Vec2 vScale = vecObject[i][j]->GetScale();

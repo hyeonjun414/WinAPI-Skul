@@ -3,6 +3,9 @@
 class CItem :
     public CObject
 {
+protected:
+    bool m_bIsUsed;
+
 public:
     CItem();
     virtual ~CItem();
@@ -16,5 +19,7 @@ public:
     virtual void	OnCollisionExit(CCollider* _pOther) {};
 
     virtual void Use() {}
+
+    bool    IsUsed() { return m_bIsUsed; }
 };
 

@@ -65,7 +65,7 @@ void CBorn::OnCollision(CCollider* _pOther)
 {
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER)
 	{
-		if (KEYTAP(KEY::F))
+		if (KEYTAP(KEY::F) && !IsUsed())
 		{
 			Use();
 		}
@@ -80,5 +80,6 @@ void CBorn::OnCollisionEnter(CCollider* _pOther)
 void CBorn::Use()
 {
 	SINGLE(CGameManager)->AddSkul(m_eSkulType);
+	m_bIsUsed = true;
 	DELETEOBJECT(this);
 }

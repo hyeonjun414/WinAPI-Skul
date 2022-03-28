@@ -78,6 +78,7 @@ void CLittleBorn::Init()
 	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Default_Switch.wav", false);
 
 	Enter();
 
@@ -178,14 +179,22 @@ void CLittleBorn::Enter()
 
 	m_eSkulType = SKUL_TYPE::Little_Born;
 
-
+	// UI ¿¬µ¿
 	SINGLE(CGameManager)->m_pCurHealthText->SetText(to_wstring(m_tPlayerInfo.m_iHp) + L" / " + to_wstring(m_tPlayerInfo.m_iMaxHp));
 	Vec2 vec = SINGLE(CGameManager)->m_pCurHealth->GetOriginSize();
 	SINGLE(CGameManager)->m_pCurHealth->SetScaleRate(Vec2(vec.x * GetCurHealthRatio(), vec.y));
+
+	SINGLE(CGameManager)->m_pPortrait->SetImage(L"Portrait_Littleborn", L"texture\\icon\\Skul.png");
+	SINGLE(CGameManager)->m_pSkillA->SetImage(L"SkillA_Littleborn", L"texture\\icon\\SkullThrowing.png");
+	SINGLE(CGameManager)->m_pSkillB->SetImage(L"SkillB_Littleborn", L"texture\\icon\\Rebone.png");
 
 }
 
 void CLittleBorn::Exit()
 {
 	SetActive(false);
+	SINGLE(CGameManager)->m_pSubSkul->SetImage(L"Portrait_Littleborn", L"texture\\icon\\Skul.png");
+	SINGLE(CGameManager)->m_pSubSkillA->SetImage(L"SkillA_Littleborn", L"texture\\icon\\SkullThrowing.png");
+	SINGLE(CGameManager)->m_pSubSkillB->SetImage(L"SkillB_Littleborn", L"texture\\icon\\Rebone.png");
+
 }

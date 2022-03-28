@@ -15,6 +15,7 @@
 #include "CHunter.h"
 #include "CLittleBorn.h"
 #include "CBorn.h"
+#include "CStatusHUD.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -67,7 +68,7 @@ void CSceneInGame::Stage01Init()
 	CreateUI();
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->GetPlayerInfo().m_iHp = 2;
+	obj->GetPlayerInfo().m_iHp = 25;
 	obj->SetPos(Vec2(400.f, 1000.f));
 	obj->Enter();
 
@@ -149,7 +150,7 @@ void CSceneInGame::Stage01Init()
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
@@ -238,7 +239,7 @@ void CSceneInGame::Stage02Init()
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
@@ -254,41 +255,45 @@ void CSceneInGame::Stage02Init()
 
 void CSceneInGame::CreateUI()
 {
-	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
-	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
-	pUI->SetScaleRate(Vec2(2.f, 2.f));
-	pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
-	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	//CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
+	//pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
+	//pUI->SetScaleRate(Vec2(2.f, 2.f));
+	//pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
+	//CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
+	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
 
-	SINGLE(CGameManager)->m_pCurHealth = pUIChild;
-	pUIChild->SetPos(Vec2(88, 90));
-	pUI->AddChild(pUIChild);
-	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
-	pUIChildText->SetPos(Vec2(70, 77));
-	pUIChildText->SetScale(Vec2(250, 40));
-	pUIChildText->SetFontSize(24.f);
-	SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
-	
-	pUI->AddChild(pUIChildText);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(4.f, 4.f));
-	pUIChild->SetPos(Vec2(15, 10));
-	pUI->AddChild(pUIChild);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Skill_SkullThrowing", L"texture\\ui\\SkullThrowing.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	pUIChild->SetPos(Vec2(115, 30));
-	pUI->AddChild(pUIChild);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"PlayerUI_Btn_A", L"texture\\ui\\A.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	pUIChild->SetPos(Vec2(127, 15));
-	pUI->AddChild(pUIChild);
-	CREATEOBJECT(pUI);
+	//SINGLE(CGameManager)->m_pCurHealth = pUIChild;
+	//pUIChild->SetPos(Vec2(88, 90));
+	//pUI->AddChild(pUIChild);
+	//CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
+	//pUIChildText->SetPos(Vec2(70, 77));
+	//pUIChildText->SetScale(Vec2(250, 40));
+	//pUIChildText->SetFontSize(24.f);
+	//SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
+	//
+	//pUI->AddChild(pUIChildText);
+	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
+	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	//pUIChild->SetScaleRate(Vec2(4.f, 4.f));
+	//pUIChild->SetPos(Vec2(15, 10));
+	//pUI->AddChild(pUIChild);
+	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"Skill_SkullThrowing", L"texture\\ui\\SkullThrowing.png");
+	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	//pUIChild->SetScaleRate(Vec2(2.f, 2.f));
+	//pUIChild->SetPos(Vec2(115, 30));
+	//pUI->AddChild(pUIChild);
+	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"PlayerUI_Btn_A", L"texture\\ui\\A.png");
+	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	//pUIChild->SetScaleRate(Vec2(2.f, 2.f));
+	//pUIChild->SetPos(Vec2(127, 15));
+	//pUI->AddChild(pUIChild);
+	//CREATEOBJECT(pUI);
 
-	pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
+	CStatusHUD* pHUD = new CStatusHUD();
+	pHUD->Init();
+	pHUD->SetPos(Vec2(0,WINSIZEY-500));
+
+	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
 	pUI->SetPos(Vec2(0, 0));

@@ -14,8 +14,6 @@ CGameManager::CGameManager():
 {}
 CGameManager::~CGameManager() 
 {
-	//if (nullptr != m_pPlayer2)
-	//	delete m_pPlayer2;
 }
 
 void CGameManager::Init()
@@ -51,7 +49,18 @@ void CGameManager::Update()
 CPlayer* CGameManager::GetCurSkul()
 {
 	if (nullptr != m_pPlayer)
+	{
+		if (nullptr != m_pPlayer2)
+		{
+			m_pSubSkillFrame->SetActive(true);
+			m_pSubSkulFrame->SetActive(true);
+			m_pPlayer2->Exit();
+		}
+		m_pPlayer->Enter();
 		return m_pPlayer;
+
+	}
+
 
 	CPlayer* obj = new CLittleBorn(OBJ_TYPE::PLAYER);
 	obj->Init();
@@ -69,39 +78,17 @@ void CGameManager::SwitchSkul()
 	CPlayer* pPlayer2 = m_pPlayer2;
 	m_pPlayer2 = m_pPlayer;
 	m_pPlayer = pPlayer2;
+	m_pPlayer->GetPlayerInfo() = m_pPlayer2->GetPlayerInfo();
 	m_pPlayer->Enter();
 	m_pPlayer->SetPos(m_pPlayer2->GetPos() + Vec2(0, -3));
 	m_pPlayer->SetObjDir(m_pPlayer2->GetObjDir());
-	CREATEOBJECT(m_pPlayer);
 	SINGLE(CCameraManager)->SetTarget(m_pPlayer);
 }
 
 void CGameManager::AddSkul(SKUL_TYPE _eSkulType)
 {
-	// 두번째 스컬이 없다면 현재 스컬을 두번쨰 스컬로보내고
-	// 현재 스컬을 새로운 스컬로 대체한다.
-	//if (nullptr == m_pPlayer2)
-	//{
-	//	CPlayer* pNew = nullptr;
-	//	switch (_eSkulType)
-	//	{
-	//	case SKUL_TYPE::Little_Born:
-	//		pNew = new CLittleBorn(OBJ_TYPE::PLAYER);
-	//		break;
-	//	case SKUL_TYPE::Hunter:
-	//		pNew = new CHunter(OBJ_TYPE::PLAYER);
-	//		break;
-	//	}
-	//	pNew->Init();
-	//	pNew->SetPos(m_pPlayer->GetPos());
-	//	pNew->GetPlayerInfo() = m_pPlayer->GetPlayerInfo();
-	//	//m_pPlayer->Exit();
-	//	m_pPlayer2 = m_pPlayer;
-	//	m_pPlayer = pNew;
-	//	CREATEOBJECT(m_pPlayer);
-	//	m_pPlayer->Enter();
-	//	SINGLE(CCameraManager)->SetTarget(m_pPlayer);
-	//}
+	 //두번째 스컬이 없다면 현재 스컬을 두번쨰 스컬로보내고
+	 //현재 스컬을 새로운 스컬로 대체한다.
 	if (nullptr == m_pPlayer2)
 	{
 		CPlayer* pNew = nullptr;
@@ -115,13 +102,14 @@ void CGameManager::AddSkul(SKUL_TYPE _eSkulType)
 			break;
 		}
 		pNew->Init();
-		pNew->SetPos(m_pPlayer->GetPos());
-		pNew->GetPlayerInfo() = m_pPlayer->GetPlayerInfo();
-		DELETEOBJECT(m_pPlayer);
-		m_pPlayer = pNew;
-		CREATEOBJECT(m_pPlayer);
-		m_pPlayer->Enter();
-		SINGLE(CCameraManager)->SetTarget(m_pPlayer);
+		pNew->Exit();
+		m_pPlayer2 = pNew;
+		CREATEOBJECT(pNew);
+		m_pSubSkillFrame->SetActive(true);
+		m_pSubSkulFrame->SetActive(true);
+
+
+		SwitchSkul();
 	}
 	// 두번째 스컬이 있다면 새로운 스컬을 만들고 첫번째 스컬의 위치정보를 옮긴뒤
 	// 첫번째 스컬을 삭제하고 첫번째스컬을 생성한다.
