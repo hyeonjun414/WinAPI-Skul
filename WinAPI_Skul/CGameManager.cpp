@@ -8,12 +8,14 @@
 #include "CVfx.h"
 #include "CLittleBorn.h"
 #include "CHunter.h"
+#include "CMenuUI.h"
 
 CGameManager::CGameManager():
 	m_pPlayer(nullptr)
 {}
 CGameManager::~CGameManager() 
 {
+
 }
 
 void CGameManager::Init()
@@ -22,9 +24,10 @@ void CGameManager::Init()
 
 void CGameManager::Update()
 {
-	if (nullptr != m_pPlayer)
-	{
 
+	if (KEYTAP(KEY::ESC))
+	{
+		ActiveMenu();
 	}
 
 	if (nullptr != m_pTimer)
@@ -55,12 +58,13 @@ CPlayer* CGameManager::GetCurSkul()
 			m_pSubSkillFrame->SetActive(true);
 			m_pSubSkulFrame->SetActive(true);
 			m_pPlayer2->Exit();
+			CREATEOBJECT(m_pPlayer2);
 		}
 		m_pPlayer->Enter();
+		CREATEOBJECT(m_pPlayer);
 		return m_pPlayer;
 
 	}
-
 
 	CPlayer* obj = new CLittleBorn(OBJ_TYPE::PLAYER);
 	obj->Init();
@@ -170,6 +174,46 @@ int CGameManager::RandomInt(int _value, float _volume)
 	// randValue = rand()%4 - 2;
 	int result = _value + randValue;
 	return result;
+}
+
+void CGameManager::ActiveMenu()
+{
+	m_bIsPlay = !m_bIsPlay;
+	m_pMenuUI->SetActive(!m_bIsPlay);
+	if (m_pMenuUI->IsActive())
+		SINGLE(CUIManager)->SetFocusedUI(m_pMenuUI);
+	else
+		SINGLE(CUIManager)->SetFocusedUI(nullptr);
+}
+
+void CGameManager::GameExit()
+{
+	PostQuitMessage(0);
+}
+
+void CGameManager::Reset()
+{
+	m_pPlayer = nullptr;
+	m_pPlayer2 = nullptr;
+
+	m_pTimer = nullptr;
+	m_pRemainEnemy = nullptr;
+	m_pCurHealth = nullptr;
+	m_pCurHealthText = nullptr;
+	
+	m_pPortrait = nullptr;
+	m_pSkillA = nullptr;
+	m_pSkillB = nullptr;
+	m_pSubSkillA = nullptr;
+	m_pSubSkillB = nullptr;
+	m_pSubSkul = nullptr;
+	
+	m_pSubSkillFrame = nullptr;
+	m_pSubSkulFrame = nullptr;
+	
+	m_pBossStatus = nullptr;
+	
+	m_pMenuUI = nullptr;
 }
 
 

@@ -6,6 +6,7 @@ class CUIText :
 protected:
     wstring    m_strText;
     float      m_fFontSize;
+    Color      m_eFontColor;
 
 public:
     CUIText(OBJ_TYPE _eType);
@@ -16,7 +17,11 @@ public:
     void            SetText(const wstring& _text)       { m_strText = _text; }
     const wstring&  GetText()                           { return m_strText; }
 
-    void            SetFontSize(float _fSize) { m_fFontSize = _fSize; }
-    float           SetFontSize() { return m_fFontSize; }
+    void            SetFontColor(Color _eColor)         { m_eFontColor = _eColor; }
+    void            SetFontSize(float _fSize)           { m_fFontSize = _fSize; }
+    float           GetFontSize()                       { return m_fFontSize; }
+
+    void            PositionSet();
+
 };
 

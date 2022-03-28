@@ -114,7 +114,7 @@ void CEnemyBoss::Init()
 		SetPos(Vec2(1600.f, 800.f));
 		tEnemy_Info& info = GetEnemyInfo();
 		info.m_vVelocity = Vec2(0, 400);
-		info.m_iHp = 2000;
+		info.m_iHp = 5000;
 		info.m_iMaxHp = info.m_iHp;
 		info.m_iDamage = 5;
 		

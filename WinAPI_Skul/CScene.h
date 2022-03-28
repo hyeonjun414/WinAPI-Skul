@@ -4,6 +4,7 @@ class CObject;
 
 class CScene
 {
+	friend CSceneManager;
 protected:
 	vector<CObject*>	m_vecObjectList[(int)OBJ_TYPE::SIZE]; // 게임 오브젝트를 그룹별로 저장할 벡터
 	wstring					m_strName;		// 씬의 이름

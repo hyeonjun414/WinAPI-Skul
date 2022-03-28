@@ -251,6 +251,8 @@ void CCameraManager::WhiteOut(float _duration, int _magnitude)
 
 void CCameraManager::MiniMapRender()
 {
+	if (!SINGLE(CGameManager)->m_bIsPlay) return;
+
 	const vector<CObject*>* vecObject = SINGLE(CSceneManager)->GetCurScene()->GetAllObject();
 	for (size_t i = (UINT)OBJ_TYPE::TILE; i < (UINT)OBJ_TYPE::PLAYER_ATTACK; i++)
 	{

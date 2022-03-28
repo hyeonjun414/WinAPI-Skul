@@ -4,6 +4,7 @@ class CObject;
 class CPlayer;
 class CUIText;
 class CUIImage;
+class CMenuUI;
 
 class CGameManager
 {
@@ -33,8 +34,9 @@ public:
 	CUIImage*	m_pSubSkillFrame;
 	CUIImage*	m_pSubSkulFrame;
 
-
 	CUIImage*	m_pBossStatus;
+
+	CMenuUI*	m_pMenuUI;
 
 	vector<CObject> m_vecItem;
 
@@ -61,5 +63,10 @@ public:
 							float _fDuration, float _fInterval, bool _bDir, float _size = 1.0f);
 	void		DamageText(const wstring& _strDamage, Vec2 _vPos, Color _color = Color::WHITE);
 	int			RandomInt(int _value, float _volume);
+
+	void		ActiveMenu();
+	void		GameExit();
+
+	void		Reset();
 };
 

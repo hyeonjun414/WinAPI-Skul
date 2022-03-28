@@ -11,6 +11,7 @@
 #include "CUIImage.h"
 #include "CUIText.h"
 #include "CEnemyBoss.h"
+#include "CStatusHUD.h"
 
 
 CSceneBoss::CSceneBoss(wstring _sceneName, SCENE_TYPE _sceneType) :
@@ -33,13 +34,8 @@ void CSceneBoss::Enter()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CPlayer* obj = new CPlayer(OBJ_TYPE::PLAYER);
-	obj->Init();
-	obj->SetName(L"Player");
+	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
 	obj->SetPos(Vec2(1600.f, 700.f));
-	CREATEOBJECT(obj);
-	SINGLE(CGameManager)->SetPlayer(obj);
-
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(1600.f, 700.f));
 	SINGLE(CCameraManager)->SetTarget(obj);
@@ -75,12 +71,12 @@ void CSceneBoss::Enter()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::MELEE_ATTACK);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MELEE_ATTACK);
-
 }
 
 void CSceneBoss::Exit()
@@ -93,41 +89,12 @@ void CSceneBoss::Exit()
 
 void CSceneBoss::CreateUI()
 {
-	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
-	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
-	pUI->SetScaleRate(Vec2(2.f, 2.f));
-	pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
-	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
+	CStatusHUD* pHUD = new CStatusHUD();
+	pHUD->Init();
+	pHUD->SetPos(Vec2(0, WINSIZEY - 500));
 
-	SINGLE(CGameManager)->m_pCurHealth = pUIChild;
-	pUIChild->SetPos(Vec2(88, 90));
-	pUI->AddChild(pUIChild);
-	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
-	pUIChildText->SetPos(Vec2(70, 77));
-	pUIChildText->SetScale(Vec2(250, 40));
-	pUIChildText->SetFontSize(24.f);
-	SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
 
-	pUI->AddChild(pUIChildText);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(4.f, 4.f));
-	pUIChild->SetPos(Vec2(15, 10));
-	pUI->AddChild(pUIChild);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"Skill_SkullThrowing", L"texture\\ui\\SkullThrowing.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	pUIChild->SetPos(Vec2(115, 30));
-	pUI->AddChild(pUIChild);
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"PlayerUI_Btn_A", L"texture\\ui\\A.png");
-	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	pUIChild->SetPos(Vec2(127, 15));
-	pUI->AddChild(pUIChild);
-	CREATEOBJECT(pUI);
-
-	pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
+	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
 	pUI->SetPos(Vec2(0, 0));
@@ -157,12 +124,12 @@ void CSceneBoss::CreateUI()
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
 	pUI->SetScaleRate(Vec2(2.f, 2.f));
 	pUI->SetPos(Vec2(WINSIZEX/2 - pUI->GetImage()->GetWidth()+20, 0));
-	pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(550.f, 2.5f));
+	CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(550.f, 2.5f));
 	pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
 	pUIChild->SetPos(Vec2(45, 57));
 	SINGLE(CGameManager)->m_pBossStatus = pUIChild;
 	pUI->AddChild(pUIChild);
-	pUIChildText = new CUIText(OBJ_TYPE::UI);
+	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
 	pUIChildText->SetPos(Vec2(pUI->GetImage()->GetWidth()/2+35, 20));
 	pUIChildText->SetScale(Vec2(250, 40));
 	pUIChildText->SetFontSize(18.f);

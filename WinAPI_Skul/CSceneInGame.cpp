@@ -16,6 +16,7 @@
 #include "CLittleBorn.h"
 #include "CBorn.h"
 #include "CStatusHUD.h"
+#include "CMenuUI.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -34,6 +35,7 @@ CSceneInGame::~CSceneInGame()
 void CSceneInGame::Update()
 {
 	CScene::Update();
+
 
 }
 
@@ -68,16 +70,7 @@ void CSceneInGame::Stage01Init()
 	CreateUI();
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->GetPlayerInfo().m_iHp = 25;
 	obj->SetPos(Vec2(400.f, 1000.f));
-	obj->Enter();
-
-	//CHunter* obj = new CHunter(OBJ_TYPE::PLAYER);
-	//obj->Init();
-	//obj->SetActive(true);
-	//obj->SetPos(Vec2(400.f, 1140.f));
-	//SINGLE(CGameManager)->SetPlayer(obj);
-	//CREATEOBJECT(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
@@ -115,13 +108,7 @@ void CSceneInGame::Stage01Init()
 	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
 	monsterMelee->SetPos(Vec2(600.f, 1100.f));
 	CREATEOBJECT(monsterMelee);
-	//for (size_t i = 0; i < 10; i++)
-	//{
-	//	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-	//	monsterMelee->SetPos(Vec2(800.f, 1300.f));
-	//	CREATEOBJECT(monsterMelee);
-	//}
-	
+
 	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
 	monsterMelee->SetPos(Vec2(800.f, 1300.f));
 	CREATEOBJECT(monsterMelee);
@@ -164,7 +151,6 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
-	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 }
 
 void CSceneInGame::Stage02Init()
@@ -175,9 +161,6 @@ void CSceneInGame::Stage02Init()
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
 	obj->SetPos(Vec2(400.f, 1000.f));
-	SINGLE(CGameManager)->SetPlayer(obj);
-	CREATEOBJECT(obj);
-	SINGLE(CGameManager)->SetPlayer(obj);
 
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
@@ -233,9 +216,6 @@ void CSceneInGame::Stage02Init()
 	LoadTile(strPath);
 
 
-	
-
-
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
@@ -246,8 +226,10 @@ void CSceneInGame::Stage02Init()
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ITEM);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::MELEE_ATTACK, OBJ_TYPE::PLAYER);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
@@ -255,43 +237,11 @@ void CSceneInGame::Stage02Init()
 
 void CSceneInGame::CreateUI()
 {
-	//CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"PlayerUI", L"texture\\ui\\Player_Normal_Frame.png");
-	//pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
-	//pUI->SetScaleRate(Vec2(2.f, 2.f));
-	//pUI->SetPos(Vec2(0, WINSIZEY - pUI->GetImage()->GetHeight() * pUI->GetScaleRate().y));
-	//CUIImage* pUIChild = new CUIImage(OBJ_TYPE::UI, L"HealthBar", L"texture\\ui\\Player_HealthBar.png", Vec2(232.f, 2.f));
-	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-
-	//SINGLE(CGameManager)->m_pCurHealth = pUIChild;
-	//pUIChild->SetPos(Vec2(88, 90));
-	//pUI->AddChild(pUIChild);
-	//CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
-	//pUIChildText->SetPos(Vec2(70, 77));
-	//pUIChildText->SetScale(Vec2(250, 40));
-	//pUIChildText->SetFontSize(24.f);
-	//SINGLE(CGameManager)->m_pCurHealthText = pUIChildText;
-	//
-	//pUI->AddChild(pUIChildText);
-	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"Portrait", L"texture\\ui\\portrait_skul.png");
-	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	//pUIChild->SetScaleRate(Vec2(4.f, 4.f));
-	//pUIChild->SetPos(Vec2(15, 10));
-	//pUI->AddChild(pUIChild);
-	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"Skill_SkullThrowing", L"texture\\ui\\SkullThrowing.png");
-	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	//pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	//pUIChild->SetPos(Vec2(115, 30));
-	//pUI->AddChild(pUIChild);
-	//pUIChild = new CUIImage(OBJ_TYPE::UI, L"PlayerUI_Btn_A", L"texture\\ui\\A.png");
-	//pUIChild->SetScale(Vec2((float)pUIChild->GetImage()->GetWidth(), (float)pUIChild->GetImage()->GetHeight()));
-	//pUIChild->SetScaleRate(Vec2(2.f, 2.f));
-	//pUIChild->SetPos(Vec2(127, 15));
-	//pUI->AddChild(pUIChild);
-	//CREATEOBJECT(pUI);
 
 	CStatusHUD* pHUD = new CStatusHUD();
 	pHUD->Init();
-	pHUD->SetPos(Vec2(0,WINSIZEY-500));
+
+
 
 	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
@@ -318,4 +268,7 @@ void CSceneInGame::CreateUI()
 	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
+
+	CMenuUI* pMenuUI = new CMenuUI();
+	pMenuUI->Init();
 }

@@ -71,6 +71,7 @@ void CUI::Render()
 	{
 		vPos = SINGLE(CCameraManager)->GetRenderPos(vPos);
 	}
+	/*
 	if (m_bLbtnDown)
 	{
 		RENDER->RenderFillRectangle(
@@ -103,7 +104,7 @@ void CUI::Render()
 			vPos.y + vScale.y,
 			RGB(0, 0, 0));
 	}
-
+*/
 
 	RenderChild();
 }

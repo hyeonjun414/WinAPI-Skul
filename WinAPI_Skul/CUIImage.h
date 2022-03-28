@@ -11,7 +11,7 @@ protected:
 public:
     CUIImage(OBJ_TYPE _eType);
     CUIImage(OBJ_TYPE _eType, const wstring& _strKey, const wstring& _strPath, Vec2 _sizeRate = Vec2(1.f,1.f));
-    ~CUIImage();
+    virtual ~CUIImage();
 
     virtual void    Render();
 

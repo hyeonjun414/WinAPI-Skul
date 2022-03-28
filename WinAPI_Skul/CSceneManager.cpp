@@ -48,7 +48,10 @@ void CSceneManager::Init()
 void CSceneManager::ChangeScene(SCENE_TYPE _sceneType)
 {
 	m_pCurScene->Exit();						// 기존 씬의 마무리
+	
+	
 	m_pCurScene = m_arrScene[(int)_sceneType];	// 씬 전환
+
 	m_pCurScene->Enter();						// 새로운 씬의 시작
 }
 

@@ -138,7 +138,7 @@ void CStatusHUD::Init()
 
 
 
-	CREATEOBJECT(pHUDFrame);
+	CREATEOBJECT(this);
 	AddChild(pHUDFrame);
 }
 
