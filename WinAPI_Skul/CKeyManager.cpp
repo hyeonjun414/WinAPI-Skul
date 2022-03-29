@@ -37,6 +37,7 @@ void CKeyManager::Init()
 
 void CKeyManager::Update()
 {
+	m_bAnyKeyTap = false;
 	// 현재 선택된 윈도우가 게임 윈도우인가를 확인
 	HWND curWnd = GetFocus();
 
@@ -88,7 +89,10 @@ void CKeyManager::Update()
 			// 이전에는 눌려있었다면
 			if (m_vecKey[i].bPrevPush)
 				// 이전에 눌려있었다면 AWAY로
+			{
 				m_vecKey[i].eState = KEY_STATE::AWAY;
+				m_bAnyKeyTap = true;
+			}
 
 			else
 				// 안눌려있었다면 아예 눌린정보가 없게

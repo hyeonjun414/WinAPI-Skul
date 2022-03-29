@@ -378,6 +378,12 @@
     <ClInclude Include="CallBackFunc.h">
       <Filter>02.Util</Filter>
     </ClInclude>
+    <ClInclude Include="CSceneLobby.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinimap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -646,6 +652,12 @@
     </ClCompile>
     <ClCompile Include="CMenuUI.cpp">
       <Filter>03.GameObject\UI\UI Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneLobby.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinimap.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

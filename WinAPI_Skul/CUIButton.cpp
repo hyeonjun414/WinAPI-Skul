@@ -5,8 +5,8 @@ CUIButton::CUIButton(OBJ_TYPE _eType):
 	CUI(_eType),
 	m_pFunc(nullptr),
 	m_fFontSize(14.f),
-	m_eOnColor(Color::WHITE),
-	m_eOffColor(Color::WHITE)
+	m_eOnColor(Color::BLACK),
+	m_eOffColor(Color::BLACK)
 {
 }
 
@@ -111,6 +111,10 @@ void CUIButton::SetText(const wstring& _str, float _fontSize)
 {
 	m_strText = _str;
 	m_fFontSize = _fontSize;
+}
+
+void CUIButton::PositionSet()
+{
 	SetPos(GetPos() - Vec2(m_strText.size() / 2.f * m_fFontSize, 0));
 	SetScale(Vec2(m_strText.size() * m_fFontSize, m_fFontSize));
 }

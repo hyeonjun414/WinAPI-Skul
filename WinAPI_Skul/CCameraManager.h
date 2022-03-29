@@ -54,6 +54,7 @@ public:
 	Vec2		GetCurLookAt()						{ return m_vCurLookAt; }
 	Vec2		GetRenderPos(Vec2 _vObjPos)			{ return _vObjPos - m_vDiff; }
 	Vec2		GetRealPos(Vec2 _vRenderPos)		{ return _vRenderPos + m_vDiff; }
+	Vec2		GetWorldSize() { return m_vWorldSize; }
 	CObject*	GetTarget()							{ return m_pTargetObj; }
 
 	void		CheckBoundary();					// 현재 맵의 크기를 기준으로 카메라가 영역을 벗어나지 않도록 만드는 함수

@@ -4,7 +4,7 @@ class CUI :
     public CObject
 {
     friend class CUIManager;
-private:
+protected:
     vector<CUI*>    m_vecChildUI;
     CUI*            m_pParentUI;
 

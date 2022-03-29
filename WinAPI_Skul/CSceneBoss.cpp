@@ -12,6 +12,7 @@
 #include "CUIText.h"
 #include "CEnemyBoss.h"
 #include "CStatusHUD.h"
+#include "CMenuUI.h"
 
 
 CSceneBoss::CSceneBoss(wstring _sceneName, SCENE_TYPE _sceneType) :
@@ -91,7 +92,6 @@ void CSceneBoss::CreateUI()
 {
 	CStatusHUD* pHUD = new CStatusHUD();
 	pHUD->Init();
-	pHUD->SetPos(Vec2(0, WINSIZEY - 500));
 
 
 	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
@@ -105,11 +105,6 @@ void CSceneBoss::CreateUI()
 	SINGLE(CGameManager)->SetTimer(pTimer);
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
-
-	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_3.png");
-	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
-	pUI->SetScaleRate(Vec2(1.f, 1.f));
-	pUI->SetPos(Vec2(WINSIZEX - (float)pUI->GetImage()->GetWidth(), WINSIZEY - (float)pUI->GetImage()->GetHeight()));
 
 	pTimer = new CUIText(OBJ_TYPE::UI);
 	pTimer->SetPos(Vec2(145, 0));
@@ -142,4 +137,7 @@ void CSceneBoss::CreateUI()
 	pUIChildText->SetText(L"장로 엔트");
 	pUI->AddChild(pUIChildText);
 	CREATEOBJECT(pUI);
+
+	CMenuUI* pMenuUI = new CMenuUI();
+	pMenuUI->Init();
 }

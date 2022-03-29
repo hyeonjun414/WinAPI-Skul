@@ -10,6 +10,7 @@ public:
     CUIPanel(const CUIPanel& _origin);
     virtual ~CUIPanel();
 
+    virtual void Render();
     virtual CUIPanel* Clone();
 
     virtual void    MouseOn();

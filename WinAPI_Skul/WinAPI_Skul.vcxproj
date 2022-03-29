@@ -172,6 +172,7 @@
     <ClInclude Include="CLittleBorn.h" />
     <ClInclude Include="CMeleeAttack.h" />
     <ClInclude Include="CMenuUI.h" />
+    <ClInclude Include="CMinimap.h" />
     <ClInclude Include="CObjGenerator.h" />
     <ClInclude Include="CPlayerState.h" />
     <ClInclude Include="CPlayerStateAttack.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="CPlayerStateSkillB.h" />
     <ClInclude Include="CProjectile.h" />
     <ClInclude Include="CSceneBoss.h" />
+    <ClInclude Include="CSceneLobby.h" />
     <ClInclude Include="CSfx.h" />
     <ClInclude Include="CStatusHUD.h" />
     <ClInclude Include="CUIButton.h" />
@@ -271,6 +273,7 @@
     <ClCompile Include="CLittleBorn.cpp" />
     <ClCompile Include="CMeleeAttack.cpp" />
     <ClCompile Include="CMenuUI.cpp" />
+    <ClCompile Include="CMinimap.cpp" />
     <ClCompile Include="CObjGenerator.cpp" />
     <ClCompile Include="CPlayerState.cpp" />
     <ClCompile Include="CPlayerStateAttack.cpp" />
@@ -284,6 +287,7 @@
     <ClCompile Include="CPlayerStateSkillB.cpp" />
     <ClCompile Include="CProjectile.cpp" />
     <ClCompile Include="CSceneBoss.cpp" />
+    <ClCompile Include="CSceneLobby.cpp" />
     <ClCompile Include="CSfx.cpp" />
     <ClCompile Include="CStatusHUD.cpp" />
     <ClCompile Include="CUIButton.cpp" />

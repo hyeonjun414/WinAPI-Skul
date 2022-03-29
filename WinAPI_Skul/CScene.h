@@ -32,6 +32,8 @@ public:
 	void			SetChange(bool _flag) { m_bIsChange = _flag; }
 	void			SetName(const wstring& _strName) { m_strName = _strName; }
 
+	SCENE_TYPE      GetSceneType() { return m_eType; }
+
 	wstring			GetName() { return m_strName; }
 	UINT			GetTileX() { return m_iTileX; }
 	UINT			GetTileY() { return m_iTileY; }

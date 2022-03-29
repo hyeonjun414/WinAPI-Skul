@@ -9,6 +9,7 @@
 #include "CLittleBorn.h"
 #include "CHunter.h"
 #include "CMenuUI.h"
+#include "CScene.h"
 
 CGameManager::CGameManager():
 	m_pPlayer(nullptr)
@@ -25,7 +26,8 @@ void CGameManager::Init()
 void CGameManager::Update()
 {
 
-	if (KEYTAP(KEY::ESC))
+	if (KEYTAP(KEY::ESC) &&
+		SCENE_TYPE::START !=SINGLE(CSceneManager)->GetCurScene()->GetSceneType())
 	{
 		ActiveMenu();
 	}
@@ -207,12 +209,9 @@ void CGameManager::Reset()
 	m_pSubSkillA = nullptr;
 	m_pSubSkillB = nullptr;
 	m_pSubSkul = nullptr;
-	
 	m_pSubSkillFrame = nullptr;
 	m_pSubSkulFrame = nullptr;
-	
 	m_pBossStatus = nullptr;
-	
 	m_pMenuUI = nullptr;
 }
 

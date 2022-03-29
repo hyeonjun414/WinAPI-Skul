@@ -64,48 +64,6 @@ void CUI::FinalUpdate()
 
 void CUI::Render()
 {
-	Vec2 vPos = m_vFinalPos;
-	Vec2 vScale = m_vScale;
-
-	if (m_bCameraAffected)
-	{
-		vPos = SINGLE(CCameraManager)->GetRenderPos(vPos);
-	}
-	/*
-	if (m_bLbtnDown)
-	{
-		RENDER->RenderFillRectangle(
-			vPos.x,
-			vPos.y,
-			vPos.x + vScale.x,
-			vPos.y + vScale.y,
-			RGB(255, 255, 255)
-		);
-		RENDER->RenderRectangle(
-			vPos.x,
-			vPos.y,
-			vPos.x + vScale.x,
-			vPos.y + vScale.y,
-			RGB(0, 255, 0));
-	}
-	else
-	{
-		RENDER->RenderFillRectangle(
-			vPos.x,
-			vPos.y,
-			vPos.x + vScale.x,
-			vPos.y + vScale.y,
-			RGB(255, 255, 255)
-		);
-		RENDER->RenderRectangle(
-			vPos.x,
-			vPos.y,
-			vPos.x + vScale.x,
-			vPos.y + vScale.y,
-			RGB(0, 0, 0));
-	}
-*/
-
 	RenderChild();
 }
 

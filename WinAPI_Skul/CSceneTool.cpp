@@ -391,6 +391,7 @@ void CSceneTool::CreateTilePanel()
 	CUIButton* btnTileGroup = new CUIButton(OBJ_TYPE::UI);
 	btnTileGroup->SetScale(Vec2(100.f, 50.f));
 	btnTileGroup->SetPos(Vec2(50.f, 25.f));
+	btnTileGroup->SetOffColor(Color::BLACK);
 	btnTileGroup->SetText(L"NONE");
 	btnTileGroup->SetClickCallBack(ClickTileGroupButton, (DWORD_PTR)this, (DWORD_PTR)btnTileGroup);
 	panelTile->AddChild(btnTileGroup);
@@ -438,8 +439,7 @@ void CSceneTool::PrintTileLine()
 		);
 		CRenderManager::GetInst()->RenderLine(
 			Vec2(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
-			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y),
-			RGB(255, 0, 255), 40.f
+			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y)
 		);
 	}
 }

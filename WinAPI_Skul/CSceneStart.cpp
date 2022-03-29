@@ -25,8 +25,10 @@ void CSceneStart::Update()
 	CScene::Update();
 	// 스페이스바를 누르면 게임 시작
 	if (KEYTAP(KEY::SPACE))
+	//if(SINGLE(CKeyManager)->GetAnyKeyTap())
 	{
-		ChangeNextScene(SCENE_TYPE::STAGE_01);
+		//ChangeNextScene(SCENE_TYPE::STAGE_01);
+		ChangeNextScene(SCENE_TYPE::LOBBY_INNER);
 	}
 	if (KEYTAP(KEY::B))
 	{

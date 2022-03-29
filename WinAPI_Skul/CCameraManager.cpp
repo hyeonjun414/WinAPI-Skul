@@ -96,7 +96,7 @@ void CCameraManager::SetLookAt(Vec2 _vLook)
 	m_vLookAt = _vLook;
 	float fMoveDist = (m_vLookAt - m_vPrevLookAt).Length();
 
-	m_fSpeed = fMoveDist / m_fTime * 2;
+	m_fSpeed = fMoveDist / m_fTime * 5;
 	m_fFlowTime = 0.f;
 
 	
@@ -251,7 +251,11 @@ void CCameraManager::WhiteOut(float _duration, int _magnitude)
 
 void CCameraManager::MiniMapRender()
 {
-	if (!SINGLE(CGameManager)->m_bIsPlay) return;
+	
+	if (!SINGLE(CGameManager)->m_bIsPlay ||
+	    SCENE_TYPE::BOSS == SINGLE(CSceneManager)->GetCurScene()->GetSceneType() ||
+		SCENE_TYPE::START == SINGLE(CSceneManager)->GetCurScene()->GetSceneType() ||
+		SCENE_TYPE::TOOL == SINGLE(CSceneManager)->GetCurScene()->GetSceneType()) return;
 
 	const vector<CObject*>* vecObject = SINGLE(CSceneManager)->GetCurScene()->GetAllObject();
 	for (size_t i = (UINT)OBJ_TYPE::TILE; i < (UINT)OBJ_TYPE::PLAYER_ATTACK; i++)

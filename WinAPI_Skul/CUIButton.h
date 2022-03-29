@@ -40,7 +40,7 @@ public:
     void            SetOffColor(Color _eColor) { m_eOffColor = _eColor; }
     void            SetImage(CD2DImage* _img);
     void            SetText(const wstring& str, float _fontSize = 14.f);
-
+    void            PositionSet();
     void            SetClickCallBack(BTN_FUNC _pFunc, DWORD_PTR _param1, DWORD_PTR _param2);
 
 };
