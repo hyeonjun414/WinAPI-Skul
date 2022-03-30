@@ -106,14 +106,6 @@ void CSceneBoss::CreateUI()
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
 
-	pTimer = new CUIText(OBJ_TYPE::UI);
-	pTimer->SetPos(Vec2(145, 0));
-	pTimer->SetScale(Vec2(100, 30));
-	pTimer->SetText(L"0");
-	pTimer->SetFontSize(30.f);
-	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
-	pUI->AddChild(pTimer);
-	CREATEOBJECT(pUI);
 	
 	pUI = new CUIImage(OBJ_TYPE::UI, L"BossStatusFrame", L"texture\\ui\\bossStatus.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));

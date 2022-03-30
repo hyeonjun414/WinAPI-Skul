@@ -120,7 +120,13 @@ void CSceneTool::SetTileIdx()
 	{
 		Vec2 vMousePos = SINGLE(CKeyManager)->GetMousePos();
 		vMousePos = SINGLE(CCameraManager)->GetRealPos(vMousePos);
-
+		CUI* CurUI = SINGLE(CUIManager)->GetFocusedUI();
+		if (nullptr != CurUI)
+		{
+			if (CurUI->GetRenderPos().x < vMousePos.x && vMousePos.x < CurUI->GetRenderPos().x + CurUI->GetScale().x &&
+				CurUI->GetRenderPos().y < vMousePos.y && vMousePos.y < CurUI->GetRenderPos().y + CurUI->GetScale().y)
+				return;
+		}
 		int iTileX = m_iTileX;
 		int iTileY = m_iTileY;
 
@@ -154,6 +160,14 @@ void CSceneTool::SetTileGroup()
 	{
 		Vec2 vMousePos = MOUSEPOS;
 		vMousePos = CCameraManager::GetInst()->GetRealPos(vMousePos);
+		CUI* CurUI = SINGLE(CUIManager)->GetFocusedUI();
+		if (nullptr != CurUI)
+		{
+			if (CurUI->GetRenderPos().x < vMousePos.x && vMousePos.x < CurUI->GetRenderPos().x + CurUI->GetScale().x &&
+				CurUI->GetRenderPos().y < vMousePos.y && vMousePos.y < CurUI->GetRenderPos().y + CurUI->GetScale().y)
+				return;
+		}
+
 
 		int iTileX = m_iTileX;
 		int iTileY = m_iTileY;
@@ -371,6 +385,11 @@ void CSceneTool::ClickTileGroup(CUIButton* _btn)
 	}
 	else if (m_eTileType == TILE_TYPE::WALL)
 	{
+		m_eTileType = TILE_TYPE::CEILING;
+		_btn->SetText(L"CEILING");
+	}
+	else if (m_eTileType == TILE_TYPE::CEILING)
+	{
 		m_eTileType = TILE_TYPE::NONE;
 		_btn->SetText(L"NONE");
 	}
@@ -437,10 +456,6 @@ void CSceneTool::PrintTileLine()
 			Vec2(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
 			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y)
 		);
-		CRenderManager::GetInst()->RenderLine(
-			Vec2(x * CTile::SIZE_TILE - pos.x, 0 - pos.y),
-			Vec2(x * CTile::SIZE_TILE - pos.x, CTile::SIZE_TILE * m_iTileY - pos.y)
-		);
 	}
 }
 
@@ -485,6 +500,17 @@ void CSceneTool::PrintTileGroup()
 				CTile::SIZE_TILE / 2.f,
 				CTile::SIZE_TILE / 2.f,
 				RGB(0, 0, 255),
+				3.f
+			);
+		}
+		else if (TILE_TYPE::CEILING == pTile->GetType())
+		{
+			CRenderManager::GetInst()->RenderEllipse(
+				pTile->GetPos().x + CTile::SIZE_TILE / 2.f - pos.x,
+				pTile->GetPos().y + CTile::SIZE_TILE / 2.f - pos.y,
+				CTile::SIZE_TILE / 2.f,
+				CTile::SIZE_TILE / 2.f,
+				RGB(0, 255, 255),
 				3.f
 			);
 		}

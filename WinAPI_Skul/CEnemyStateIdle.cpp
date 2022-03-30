@@ -47,7 +47,8 @@ CEnemyState* CEnemyStateIdle::HandleInput(CObject* _pObj) {
         }
 
 
-        if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400)
+        if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400 &&
+            pEnemy->m_bCanAttack)
             return new CEnemyStateAttack();
 
         break;

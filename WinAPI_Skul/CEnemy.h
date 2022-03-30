@@ -33,6 +33,7 @@ protected:
 
     float       m_fAttackDeleyTime;
     float       m_fCurAttackTime;
+    bool        m_bCanAttack;
 
     float       m_fHitDelayTime;
     float       m_fCurHitTime;

@@ -40,13 +40,17 @@ void CEnemyRange::Init()
 		// 위치 세부 조정
 		m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y / 4));
 		m_pCollider->SetScale(Vec2(GetScale() / 2));
-		m_pAnimator->SetAllAnimOffset(Vec2(0, 20));
+		m_pAnimator->SetAllAnimOffset(Vec2(0, 30));
 
 
 		m_tEnemyInfo.m_iHp = 20;
 		m_tEnemyInfo.m_iMaxHp = 20;
 		m_tEnemyInfo.m_iDamage = 1;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
+
+		m_bCanAttack = true;
+		m_fAttackDeleyTime = 1.f;
+		m_fCurAttackTime = 0.f;
 
 
 		m_fHitDelayTime = 0.1f;

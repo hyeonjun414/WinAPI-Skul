@@ -10,6 +10,7 @@
 #include "CPlayerStateSkillB.h"
 #include "CPlayerStateDash.h"
 #include "CPlayerStateAttack.h"
+#include "CPlayerStateDie.h"
 
 // 몬스터 상태
 #include "CEnemyStateIdle.h"

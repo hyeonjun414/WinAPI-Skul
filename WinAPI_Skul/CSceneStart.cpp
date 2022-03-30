@@ -29,6 +29,7 @@ void CSceneStart::Update()
 	{
 		//ChangeNextScene(SCENE_TYPE::STAGE_01);
 		ChangeNextScene(SCENE_TYPE::LOBBY_INNER);
+		//ChangeNextScene(SCENE_TYPE::LOBBY_OUTER);
 	}
 	if (KEYTAP(KEY::B))
 	{

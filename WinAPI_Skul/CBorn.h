@@ -11,7 +11,9 @@ class CBorn :
 
     Vec2        m_vVelocity;
     float       m_fCurTime;
-    int         m_iDir;
+    int        m_iDir;
+
+    CObject* m_pAura;
 public:
     CBorn(SKUL_TYPE _eType);
     virtual ~CBorn();

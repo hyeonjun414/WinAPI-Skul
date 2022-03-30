@@ -86,4 +86,22 @@ void CEnemyStateAttack::Enter(CObject* _pObj)
 
 void CEnemyStateAttack::Exit(CObject* _pObj)
 {
+    CEnemy* pEnemy = (CEnemy*)_pObj;
+    switch (pEnemy->GetEnemyType())
+    {
+    case ENEMY_TYPE::BIG_KNIGHT:
+    {
+        pEnemy->m_bCanAttack = false;
+        pEnemy->m_fCurAttackTime = 0.f;
+        break;
+    }
+
+    case ENEMY_TYPE::WIZARD:
+    {
+        pEnemy->m_bCanAttack = false;
+        pEnemy->m_fCurAttackTime = 0.f;
+        break;
+    }
+
+    }
 }

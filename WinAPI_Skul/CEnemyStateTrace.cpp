@@ -18,7 +18,8 @@ CEnemyState* CEnemyStateTrace::HandleInput(CObject* _pObj)
     {
         CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
         if (abs(PLAYERPOS.x - pEnemy->GetPos().x) < 100 &&
-            abs(PLAYERPOS.y - pEnemy->GetPos().y) < 50)
+            abs(PLAYERPOS.y - pEnemy->GetPos().y) < 50 &&
+            pEnemy->m_bCanAttack)
             return new CEnemyStateAttack();
         if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400)
             return new CEnemyStateIdle();
@@ -38,7 +39,8 @@ CEnemyState* CEnemyStateTrace::HandleInput(CObject* _pObj)
 
         if (!pEnemy->m_bIsGround)
             return new CEnemyStateFall();
-        if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400)
+        if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400 &&
+            pEnemy->m_bCanAttack)
             return new CEnemyStateAttack();
 
         if ((PLAYERPOS - pEnemy->GetPos()).Length() > 600)

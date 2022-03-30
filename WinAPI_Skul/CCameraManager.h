@@ -68,8 +68,5 @@ public:
 	void		LodingAnimation(float _duration);
 	void		CameraShaking(int _magnitude, float _duration);
 	void		WhiteOut(float _duration, int _magnitude);
-	// 미니맵 출력
-	void		MiniMapRender();
-
 };
 

@@ -375,14 +375,14 @@
     <ClInclude Include="CMenuUI.h">
       <Filter>03.GameObject\UI\UI Module</Filter>
     </ClInclude>
-    <ClInclude Include="CallBackFunc.h">
-      <Filter>02.Util</Filter>
+    <ClInclude Include="CMinimap.h">
+      <Filter>03.GameObject\UI\UI Module</Filter>
     </ClInclude>
     <ClInclude Include="CSceneLobby.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>05.Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CMinimap.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="CPlayerStateDie.h">
+      <Filter>04.Component\State\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -653,11 +653,14 @@
     <ClCompile Include="CMenuUI.cpp">
       <Filter>03.GameObject\UI\UI Module</Filter>
     </ClCompile>
-    <ClCompile Include="CSceneLobby.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="CMinimap.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>03.GameObject\UI\UI Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneLobby.cpp">
+      <Filter>05.Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerStateDie.cpp">
+      <Filter>04.Component\State\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -149,7 +149,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CallBackFunc.h" />
     <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CAnimator.h" />
     <ClInclude Include="CArrow.h" />
@@ -177,6 +176,7 @@
     <ClInclude Include="CPlayerState.h" />
     <ClInclude Include="CPlayerStateAttack.h" />
     <ClInclude Include="CPlayerStateDash.h" />
+    <ClInclude Include="CPlayerStateDie.h" />
     <ClInclude Include="CPlayerStateFall.h" />
     <ClInclude Include="CPlayerStateIdle.h" />
     <ClInclude Include="CPlayerStateJump.h" />
@@ -278,6 +278,7 @@
     <ClCompile Include="CPlayerState.cpp" />
     <ClCompile Include="CPlayerStateAttack.cpp" />
     <ClCompile Include="CPlayerStateDash.cpp" />
+    <ClCompile Include="CPlayerStateDie.cpp" />
     <ClCompile Include="CPlayerStateFall.cpp" />
     <ClCompile Include="CPlayerStateIdle.cpp" />
     <ClCompile Include="CPlayerStateJump.cpp" />

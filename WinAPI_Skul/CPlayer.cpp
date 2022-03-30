@@ -81,6 +81,7 @@ void CPlayer::OnCollision(CCollider* _pOther)
 
             }
         }
+
     }
 }
 
@@ -89,11 +90,14 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
     CPlayer* pPlayer = (CPlayer*)this;
     if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
     {
+		CTile* tile = (CTile*)_pOther->GetObj();
 		Vec2 vLeftPos = m_pCollider->GetFinalPos();
 		Vec2 vLeftScale = m_pCollider->GetScale();
 		Vec2 vRightPos = _pOther->GetFinalPos();
 		Vec2 vRightScale = _pOther->GetScale();
 		pPlayer->m_iCollCount++;
+		if (TILE_TYPE::CEILING == tile->GetType())
+			m_vVelocity.y = 0;
 		if (abs(vRightPos.x - vLeftPos.x) < (vLeftScale.x + vRightScale.x-10) / 2.f)
 		{
 			

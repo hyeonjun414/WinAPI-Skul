@@ -19,6 +19,7 @@ class CPlayer :
     friend class CPlayerStateSkillB;
     friend class CPlayerStateDash;
     friend class CPlayerStateAttack;
+    friend class CPlayerStateDie;
 
 protected:
     wstring         m_strCurState;

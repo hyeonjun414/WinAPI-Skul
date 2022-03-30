@@ -224,6 +224,17 @@ void CEnemy::RenderEnemyInfo()
 
 void CEnemy::CoolTime()
 {
+	// 공격 상태 쿨타임
+	if (!m_bCanAttack && m_fAttackDeleyTime != 0.f)
+	{
+		m_fCurAttackTime += DT;
+		if (m_fCurAttackTime >= m_fAttackDeleyTime)
+		{
+			m_bCanAttack = true;
+			m_fCurAttackTime = 0.f;
+		}
+	}
+
 	// 피격 상태 쿨타임
 	if (!m_bCanHit && m_fHitDelayTime != 0.f)
 	{

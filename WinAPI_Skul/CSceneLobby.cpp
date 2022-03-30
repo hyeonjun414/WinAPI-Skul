@@ -18,6 +18,7 @@
 #include "CStatusHUD.h"
 #include "CMenuUI.h"
 #include "CMinimap.h"
+#include "CAnimator.h";
 
 CSceneLobby::CSceneLobby(wstring _sceneName, SCENE_TYPE _sceneType):
 	CScene(_sceneName,_sceneType)
@@ -30,18 +31,7 @@ CSceneLobby::~CSceneLobby()
 
 void CSceneLobby::Update()
 {
-
-	switch (m_eType)
-	{
-	case SCENE_TYPE::LOBBY_INNER:
-		if (SINGLE(CGameManager)->GetPlayer()->GetPos().y >=
-			SINGLE(CCameraManager)->GetWorldSize().y)
-			ChangeNextScene(SCENE_TYPE::LOBBY_OUTER);
-		break;
-	}
 	CScene::Update();
-
-
 }
 
 void CSceneLobby::Enter()
@@ -66,6 +56,17 @@ void CSceneLobby::Exit()
 
 	// 기존의 충돌 그릅을 해제시켜야한다.
 	SINGLE(CCollisionManager)->Reset();
+
+	switch (m_eType)
+	{
+	case SCENE_TYPE::LOBBY_INNER:
+		SINGLE(CSoundManager)->Stop(L"Lobby");
+		break;
+	case SCENE_TYPE::LOBBY_OUTER:
+		break;
+	default:
+		break;
+	}
 }
 
 void CSceneLobby::LobbyInnerInit()
@@ -75,7 +76,7 @@ void CSceneLobby::LobbyInnerInit()
 	CreateUI();
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->SetPos(Vec2(1800, 200));
+	obj->SetPos(Vec2(800, 200));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(800, 200));
 	SINGLE(CCameraManager)->SetTarget(obj);
 
@@ -92,6 +93,30 @@ void CSceneLobby::LobbyInnerInit()
 	lobbyWall->SetPos(Vec2(2303, -40));
 	CREATEOBJECT(lobbyWall);
 
+	CGate* pGate = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::PORTAL, SCENE_TYPE::LOBBY_OUTER);
+	pGate->SetPos(Vec2(3200, 4200));
+	pGate->CreateCollider();
+	pGate->GetCollider()->SetScale(Vec2(1000, 20));
+	CREATEOBJECT(pGate);
+
+
+	CObject* pObj = new CObject(OBJ_TYPE::MAPOBJECT);
+	pObj->CreateAnimator();
+	pObj->GetAnimator()->CreateAnim(L"Witch_Idle", L"texture\\object\\witch_idle.png", 1.f);
+	pObj->GetAnimator()->Play(L"Witch_Idle", true);
+	pObj->SetPos(Vec2(1550, 485));
+	pObj->SetObjDir(true);
+	CREATEOBJECT(pObj);
+
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(400.f, 300.f));
+	CREATEOBJECT(monsterMelee);
+
+	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterMelee->SetPos(Vec2(800.f, 300.f));
+	CREATEOBJECT(monsterMelee);
+
+
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(BgObj->GetImage()->GetWidth(), BgObj->GetImage()->GetHeight()));
 
 	// 저장한 타일 충돌체 불러오기
@@ -99,11 +124,27 @@ void CSceneLobby::LobbyInnerInit()
 	strPath += L"texture\\tile\\Map\\LobbyInner.tile";
 	LoadTile(strPath);
 
+	SINGLE(CSoundManager)->AddSound(L"Lobby", L"sound\\DemonCastle.wav", true);
+	SINGLE(CSoundManager)->Play(L"Lobby");
+
+	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
+	//SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
+	//SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
+	//SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
+	//SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
+	//SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::PLAYER);
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::TILE);
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::MAPOBJECT);
-
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::ITEM);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::ENEMY);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER_ATTACK, OBJ_TYPE::TILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::MELEE_ATTACK, OBJ_TYPE::PLAYER);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::ENEMY, OBJ_TYPE::PROJECTILE);
+	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::TILE, OBJ_TYPE::PROJECTILE);
 }
 
 void CSceneLobby::LobbyOuterInit()
@@ -130,6 +171,15 @@ void CSceneLobby::LobbyOuterInit()
 	wstring strPath = SINGLE(CPathManager)->GetContentPath();
 	strPath += L"texture\\tile\\Map\\LobbyOuter.tile";
 	LoadTile(strPath);
+
+	CImageObj* pGateWall = new CImageObj(OBJ_TYPE::MAPOBJECT, L"GateWall", L"texture\\object\\Gate_Wall.png", true);
+	pGateWall->SetPos(Vec2(480, 430));
+	CREATEOBJECT(pGateWall);
+
+	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::NORMAL, SCENE_TYPE::STAGE_01);
+	gateObj->SetPos(Vec2(1280, 650));
+	CREATEOBJECT(gateObj);
+
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);

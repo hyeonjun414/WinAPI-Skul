@@ -43,7 +43,6 @@ using namespace std; // --> 같은 이름을 지닌 기능과 겹치지 않도�
 #include "CUIManager.h"
 #include "CSoundManager.h"
 #include "CRenderManager.h"
-#include "CallBackFunc.h"
 
 // 정의
 #define WINSTARTX 100     

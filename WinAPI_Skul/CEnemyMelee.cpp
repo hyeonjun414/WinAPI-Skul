@@ -49,6 +49,10 @@ void CEnemyMelee::Init()
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
 		
+		m_bCanAttack = true;
+		m_fAttackDeleyTime = 1.f;
+		m_fCurAttackTime = 0.f;
+
 		m_fHitDelayTime = 0.1f;
 		m_fCurHitTime = 0.f;
 		m_bCanHit = true;

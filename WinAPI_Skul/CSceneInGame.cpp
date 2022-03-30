@@ -17,6 +17,7 @@
 #include "CBorn.h"
 #include "CStatusHUD.h"
 #include "CMenuUI.h"
+#include "CMinimap.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -69,11 +70,11 @@ void CSceneInGame::Stage01Init()
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();
 
-	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->SetPos(Vec2(400.f, 1000.f));
 
-	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
-	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
+	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
+	obj->SetPos(Vec2(500, 700));
+	SINGLE(CCameraManager)->SetCurLookAt(Vec2(500, 700));
+
 	SINGLE(CCameraManager)->SetTarget(obj);
 
 
@@ -102,30 +103,27 @@ void CSceneInGame::Stage01Init()
 	// 타일맵 출력
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"Stage01map",
-		L"texture\\stage01.png", true);
+		L"texture\\stage01_map.png", true);
+	SINGLE(CCameraManager)->SetWorldSize(Vec2(BgObj->GetImage()->GetWidth(), BgObj->GetImage()->GetHeight()));
+
 	CREATEOBJECT(BgObj);
 
-	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	CREATEOBJECT(monsterMelee);
+	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
+	//CREATEOBJECT(monsterMelee);
 
-	monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-	monsterMelee->SetPos(Vec2(800.f, 1300.f));
-	CREATEOBJECT(monsterMelee);
+	//monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	//monsterMelee->SetPos(Vec2(800.f, 1300.f));
+	//CREATEOBJECT(monsterMelee);
 
 
-	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
-	gateObj->SetNextScene(SCENE_TYPE::STAGE_01);
-	gateObj->SetPos(Vec2(250, 1105));
-	CREATEOBJECT(gateObj);
-
-	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
-	gateObj->SetNextScene(SCENE_TYPE::STAGE_02);
-	gateObj->SetPos(Vec2(2800, 1230));
+	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::NORMAL, SCENE_TYPE::STAGE_02);
+	gateObj->SetPos(Vec2(2700, 1160));
 	CREATEOBJECT(gateObj);
 
 	CBorn* pItem = new CBorn(SKUL_TYPE::Hunter);
-	pItem->SetPos(Vec2(450, 1170));
+	pItem->SetPos(Vec2(1650, 720));
+	pItem->Init();
 	CREATEOBJECT(pItem);
 
 
@@ -137,7 +135,7 @@ void CSceneInGame::Stage01Init()
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
@@ -160,10 +158,9 @@ void CSceneInGame::Stage02Init()
 	CreateUI();
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->SetPos(Vec2(400.f, 1000.f));
+	obj->SetPos(Vec2(200, 1800));
+	SINGLE(CCameraManager)->SetCurLookAt(Vec2(200, 1800));
 
-	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
-	SINGLE(CCameraManager)->SetCurLookAt(Vec2(400.f, 1140.f));
 	SINGLE(CCameraManager)->SetTarget(obj);
 
 
@@ -191,22 +188,18 @@ void CSceneInGame::Stage02Init()
 	// 타일맵 출력
 	BgObj = new CImageObj(OBJ_TYPE::IMAGE,
 		L"Stage02map",
-		L"texture\\stage02.png", true);
+		L"texture\\stage02_map.png", true);
+	SINGLE(CCameraManager)->SetWorldSize(Vec2(BgObj->GetImage()->GetWidth(), BgObj->GetImage()->GetHeight()));
+
 	CREATEOBJECT(BgObj);
 
-	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	CREATEOBJECT(monsterMelee);
+	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
+	//CREATEOBJECT(monsterMelee);
 
 
-	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
-	gateObj->SetNextScene(SCENE_TYPE::STAGE_02);
-	gateObj->SetPos(Vec2(250, 1050));
-	CREATEOBJECT(gateObj);
-
-	gateObj = new CGate(OBJ_TYPE::MAPOBJECT);
-	gateObj->SetNextScene(SCENE_TYPE::BOSS);
-	gateObj->SetPos(Vec2(2800, 1050));
+	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::BOSS, SCENE_TYPE::BOSS);
+	gateObj->SetPos(Vec2(3580, 1415));
 	CREATEOBJECT(gateObj);
 
 
@@ -219,7 +212,7 @@ void CSceneInGame::Stage02Init()
 	// 사운드 설정
 	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
-	//SINGLE(CSoundManager)->Play(L"Ch1Bgm");
+	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
 	// 어떤 오브젝트 그룹끼리 충돌할것인지 미리 정함
 	SINGLE(CCollisionManager)->CheckGroup(OBJ_TYPE::PLAYER, OBJ_TYPE::TILE);
@@ -255,19 +248,8 @@ void CSceneInGame::CreateUI()
 	pUI->AddChild(pTimer);
 	CREATEOBJECT(pUI);
 
-	pUI = new CUIImage(OBJ_TYPE::UI, L"MiniMap", L"texture\\ui\\minimap_3.png");
-	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));
-	pUI->SetScaleRate(Vec2(1.f, 1.f));
-	pUI->SetPos(Vec2(WINSIZEX - (float)pUI->GetImage()->GetWidth(), WINSIZEY - (float)pUI->GetImage()->GetHeight()));
-
-	pTimer = new CUIText(OBJ_TYPE::UI);
-	pTimer->SetPos(Vec2(145, 0));
-	pTimer->SetScale(Vec2(100, 30));
-	pTimer->SetText(L"0");
-	pTimer->SetFontSize(30.f);
-	SINGLE(CGameManager)->SetRemainEnemy(pTimer);
-	pUI->AddChild(pTimer);
-	CREATEOBJECT(pUI);
+	CMinimap* pMinimap = new CMinimap();
+	pMinimap->Init();
 
 	CMenuUI* pMenuUI = new CMenuUI();
 	pMenuUI->Init();

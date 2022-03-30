@@ -79,8 +79,16 @@ enum class TILE_TYPE
 	GROUND,
 	FLOATING,
 	WALL,
+	CEILING,
 
 	SIZE,
+};
+
+enum class GATE_TYPE
+{
+	NORMAL,
+	BOSS,
+	PORTAL
 };
 
 // е╟ ╩Себ

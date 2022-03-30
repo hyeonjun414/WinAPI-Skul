@@ -8,7 +8,7 @@ CPlayerState* CPlayerStateIdle::HandleInput(CObject* _pObj)
 {
     CPlayer* pPlayer = (CPlayer*)_pObj;
 
-	if (KEYTAP(KEY::SPACE))
+	if (KEYTAP(KEY::SPACE) && nullptr != SINGLE(CGameManager)->m_pPlayer2)
 	{
 		SWITCHSKUL;
 		SINGLE(CGameManager)->CreateVfx(L"Switch_Skul", L"texture\\effect\\Switch_Skul.png",

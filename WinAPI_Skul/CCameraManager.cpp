@@ -106,8 +106,6 @@ void CCameraManager::SetLookAt(Vec2 _vLook)
 
 void CCameraManager::Render()
 {
-	MiniMapRender();
-
 
 	// 카메라 효과가 시작되었을때만 렌더가 작동한다.
 	if (CAM_EFFECT::NONE == m_eEffect)
@@ -248,76 +246,3 @@ void CCameraManager::WhiteOut(float _duration, int _magnitude)
 	m_iMagnitude = _magnitude;
 	m_fCurTime = 0.f;
 }
-
-void CCameraManager::MiniMapRender()
-{
-	
-	if (!SINGLE(CGameManager)->m_bIsPlay ||
-	    SCENE_TYPE::BOSS == SINGLE(CSceneManager)->GetCurScene()->GetSceneType() ||
-		SCENE_TYPE::START == SINGLE(CSceneManager)->GetCurScene()->GetSceneType() ||
-		SCENE_TYPE::TOOL == SINGLE(CSceneManager)->GetCurScene()->GetSceneType()) return;
-
-	const vector<CObject*>* vecObject = SINGLE(CSceneManager)->GetCurScene()->GetAllObject();
-	for (size_t i = (UINT)OBJ_TYPE::TILE; i < (UINT)OBJ_TYPE::PLAYER_ATTACK; i++)
-	{
-		for (size_t j = 0; j < vecObject[i].size(); j++)
-		{
-			if (!vecObject[i][j]->IsActive()) continue;
-
-			Vec2 vPos = vecObject[i][j]->GetPos();
-			Vec2 vScale = vecObject[i][j]->GetScale();
-			vPos.x *= 0.07f;
-			vPos.y *= 0.08f;
-			vScale.y /= 2.f;
-			vScale.y *= 0.07f;
-			vPos += Vec2(WINSIZEX- 242, WINSIZEY- 144);
-			
-			switch (i)
-			{
-			case (UINT)OBJ_TYPE::PLAYER:
-			{
-				RENDER->RenderFillRectangle(
-					vPos.x,
-					vPos.y - vScale.y -5,
-					vPos.x + 5,
-					vPos.y +6 -5,
-					RGB(0, 255, 0));
-				break;
-			}
-			case (UINT)OBJ_TYPE::MAPOBJECT:
-			{
-				RENDER->RenderFillRectangle(
-					vPos.x,
-					vPos.y,
-					vPos.x + 5,
-					vPos.y + 6,
-					RGB(255,127, 0));
-				break;
-			}
-			
-			case (UINT)OBJ_TYPE::ENEMY:
-			{
-				RENDER->RenderFillRectangle(
-					vPos.x,
-					vPos.y - vScale.y -5,
-					vPos.x + 5,
-					vPos.y + 6 -5,
-					RGB(255, 0, 0));
-				break;			
-			}
-			
-			default:
-			{
-				RENDER->RenderFillRectangle(
-					vPos.x,
-					vPos.y,
-					vPos.x + 5,
-					vPos.y + 6,
-					RGB(255, 255, 255));
-				break;
-			}
-			}
-		}
-	}
-}
-
