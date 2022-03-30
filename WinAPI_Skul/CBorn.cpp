@@ -47,9 +47,9 @@ void CBorn::Update()
 {
 	m_fCurTime -= DT;
 
-	if (m_vVelocity.y < -100.f)
+	if (m_vVelocity.y < -50.f)
 		m_iDir = 1;
-	if (m_vVelocity.y > 100.f)
+	if (m_vVelocity.y > 50.f)
 		m_iDir = -1;
 
 	m_vVelocity.y += m_iDir;

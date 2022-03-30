@@ -67,9 +67,9 @@ void CHunter::Init()
 	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Arrow", L"sound\\Shot_Arrow.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Default_Switch.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Arrow_Hit", L"sound\\arrow_hit.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Skul_Switch.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Hunter_Charge_Completed", L"sound\\Hunter_Charge_Completed.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Hunter_DrawArrow", L"sound\\Hunter_DrawArrow.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Hunter_SkillA_Fire", L"sound\\Hunter_SkillA_Impact2.wav", false);

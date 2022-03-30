@@ -6,8 +6,27 @@
 #include "CTextObj.h"
 
 CMeleeAttack::CMeleeAttack(OBJ_TYPE _eType, CObject* _pObj, float _fDuration):
-	CAttack(_eType, _pObj, _fDuration)
+	CAttack(_eType, _pObj, _fDuration),
+	m_vAttackOffset(Vec2(0,0))
 {
+	switch (_pObj->GetObjType())
+	{
+	case OBJ_TYPE::PLAYER:
+	{
+		CPlayer* pPlayer = (CPlayer*)_pObj;
+		m_iDamage = pPlayer->GetPlayerInfo().m_iDamage;
+
+		break;
+	}
+	case OBJ_TYPE::ENEMY:
+	{
+		CEnemy* pEnemy = (CEnemy*)_pObj;
+		m_iDamage = pEnemy->GetEnemyInfo().m_iDamage;
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 CMeleeAttack::~CMeleeAttack()
@@ -18,11 +37,11 @@ void CMeleeAttack::Update()
 {
 	if (nullptr != m_pTraceObj)
 	{
-		SetPos(m_pTraceObj->GetPos());
+		SetPos(m_pTraceObj->GetPos() + m_vAttackOffset);
 	}
 	else
 	{
-		SetPos(m_pOwner->GetPos());
+		SetPos(m_pOwner->GetPos() + m_vAttackOffset);
 	}
 	
 	m_fCurTime += DT;
@@ -80,8 +99,6 @@ void CMeleeAttack::OnCollisionEnter(CCollider* _pOther)
 void CMeleeAttack::CreateAttackArea(CObject* _pObj, Vec2 _vPos, Vec2 _vScale)
 {
 	CreateCollider();
-	SetPos(_pObj->GetPos());
-	m_pCollider->SetOffsetPos(Vec2(0, -_pObj->GetScale().y / 4));
 	if (_pObj->GetObjDir())
 	{
 		m_pCollider->SetOffsetPos(Vec2(_vPos.x, -_pObj->GetScale().y / 4));

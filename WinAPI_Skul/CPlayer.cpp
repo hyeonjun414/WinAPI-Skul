@@ -119,28 +119,23 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		SINGLE(CSoundManager)->Play(L"Hit");
 		SINGLE(CGameManager)->CreateVfx(L"Hit", L"texture\\effect\\hit_normal.png",
 			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
-		SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+		SINGLE(CGameManager)->DamageText(to_wstring(pAttack->GetDamage()),
 			(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
-		Hit(pEnemy->GetEnemyInfo().m_iDamage);
+		Hit(pAttack->GetDamage());
 	}
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE)
 	{
-		if (L"SkulHead" == _pOther->GetObj()->GetName())
-		{
-			m_bCanSkill = true;
-			m_fSkillCurTime = 0.f;
-		}
-		else if (L"Wizard_Fireball" == _pOther->GetObj()->GetName())
+		if (L"Wizard_Fireball" == _pOther->GetObj()->GetName())
 		{
 			CAttack* pAttack = (CAttack*)_pOther->GetObj();
 			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
 			SINGLE(CGameManager)->CreateVfx(L"Explosion", L"texture\\effect\\explosion_small.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+			SINGLE(CGameManager)->DamageText(to_wstring(pAttack->GetDamage()),
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
-			//SINGLE(CSoundManager)->Play(L"Hit");
+			SINGLE(CSoundManager)->Play(L"Explosion");
 
-			Hit(pEnemy->GetEnemyInfo().m_iDamage);
+			Hit(pAttack->GetDamage());
 		}
 		else if (L"BossBomb" == _pOther->GetObj()->GetName())
 		{
@@ -148,12 +143,17 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			CEnemy* pEnemy = (CEnemy*)pAttack->GetOwner();
 			SINGLE(CGameManager)->CreateVfx(L"Explosion", L"texture\\effect\\explosion_small.png",
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 1.0f, 1.0f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(pEnemy->GetEnemyInfo().m_iDamage),
+			SINGLE(CGameManager)->DamageText(to_wstring(pAttack->GetDamage()),
 				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, Color::ORANGE);
 			SINGLE(CSoundManager)->Play(L"Hit");
 
-			Hit(pEnemy->GetEnemyInfo().m_iDamage);
+			Hit(pAttack->GetDamage());
 		}
+	}
+	if (L"SkulHead" == _pOther->GetObj()->GetName())
+	{
+		m_bCanSkill = true;
+		m_fSkillCurTime = 0.f;
 	}
 }
 

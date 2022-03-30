@@ -27,8 +27,8 @@ void CEnemyMelee::Init()
 		CreateAnimator();
 		m_pAnimator->CreateAnim(L"BigKnight_Idle", L"texture\\enemy\\big_knight_idle.png", 0.8f);
 		m_pAnimator->CreateAnim(L"BigKnight_Move", L"texture\\enemy\\big_knight_move.png", 0.8f);
-		m_pAnimator->CreateAnim(L"BigKnight_AttacKA", L"texture\\enemy\\big_knight_attacka.png", 0.6f);
-		m_pAnimator->CreateAnim(L"BigKnight_AttacKB", L"texture\\enemy\\big_knight_attackb.png", 4.0f);
+		m_pAnimator->CreateAnim(L"BigKnight_AttacKA", L"texture\\enemy\\big_knight_attacka.png", 2.0f);
+		m_pAnimator->CreateAnim(L"BigKnight_AttacKB", L"texture\\enemy\\big_knight_attackb.png", 3.0f);
 		m_pAnimator->CreateAnim(L"BigKnight_Die", L"texture\\enemy\\big_knight_die.png", 0.5f);
 		m_pAnimator->CreateAnim(L"AppearEnemy", L"texture\\effect\\Enemy_Appearance.png", 1.0f);
 		m_pAnimator->CreateAnim(L"DisappearEnemy", L"texture\\effect\\Enemy_Dead.png", 0.5f);
@@ -43,14 +43,14 @@ void CEnemyMelee::Init()
 		m_pAnimator->SetAllAnimOffset(Vec2(0, 0));
 
 
-		m_tEnemyInfo.m_iHp = 1000;
-		m_tEnemyInfo.m_iMaxHp = 1000;
-		m_tEnemyInfo.m_iDamage = 1;
+		m_tEnemyInfo.m_iHp = 500;
+		m_tEnemyInfo.m_iMaxHp = 500;
+		m_tEnemyInfo.m_iDamage = 5;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
 		
 		m_bCanAttack = true;
-		m_fAttackDeleyTime = 1.f;
+		m_fAttackDeleyTime = 2.f;
 		m_fCurAttackTime = 0.f;
 
 		m_fHitDelayTime = 0.1f;
@@ -58,6 +58,11 @@ void CEnemyMelee::Init()
 		m_bCanHit = true;
 		
 		CreateHealthBar();
+
+
+		SINGLE(CSoundManager)->AddSound(L"Enemy_Stomp", L"sound\\Enemy_Stomp.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"Enemy_Tackle", L"sound\\Default_Tackle.wav", false);
+		SINGLE(CSoundManager)->AddSound(L"Enemy_Dead", L"sound\\Enemy_Dead.wav", false);
 
 		m_pState = new CEnemyStateAppear();
 		m_pState->Enter(this);
@@ -87,35 +92,6 @@ void CEnemyMelee::OnCollision(CCollider* _pOther)
 void CEnemyMelee::OnCollisionEnter(CCollider* _pOther)
 {
 	CEnemy::OnCollisionEnter(_pOther);
-	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK)
-	{
-		CMeleeAttack* pAttack = (CMeleeAttack*)_pOther->GetObj();
-
-		if (m_bCanHit)
-		{
-			CAttack* pAttack = (CAttack*)_pOther->GetObj();
-			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
-			int damage = SINGLE(CGameManager)->RandomInt(pPlayer->GetPlayerInfo().m_iDamage, 0.2f);
-			SINGLE(CSoundManager)->Play(L"Hit");
-			SINGLE(CGameManager)->CreateVfx(L"Hit", L"texture\\effect\\hit_normal.png",
-				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, GetObjDir());
-			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
-			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
-			{
-				//SetPos(GetPos() + Vec2(10, 0));
-				SetObjDir(false);
-			}
-			else
-			{
-				//SetPos(GetPos() + Vec2(-10, 0));
-				SetObjDir(true);
-			}
-
-			Hit(damage);
-			m_bCanHit = false;
-		}
-
-	}
 }
 
 void CEnemyMelee::OnCollisionExit(CCollider* _pOther)
@@ -125,7 +101,18 @@ void CEnemyMelee::OnCollisionExit(CCollider* _pOther)
 
 void CEnemyMelee::Attack()
 {
-	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 0.5f);
-	pAttack->CreateAttackArea(this, Vec2(60, 50), Vec2(100, 80));
+	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 0.1f);
+	pAttack->SetTraceObj(this);
+	pAttack->CreateAttackArea(this, Vec2(80, 50), Vec2(100, 80));
+	SINGLE(CSoundManager)->Play(L"Enemy_Stomp");
+	CREATEOBJECT(pAttack);
+}
+
+void CEnemyMelee::Tackle()
+{
+	CMeleeAttack* pAttack = new CMeleeAttack(OBJ_TYPE::MELEE_ATTACK, this, 1.f);
+	pAttack->SetTraceObj(this);
+	pAttack->CreateAttackArea(this, Vec2(80, 30), Vec2(70, 120));
+	SINGLE(CSoundManager)->Play(L"Enemy_Tackle");
 	CREATEOBJECT(pAttack);
 }

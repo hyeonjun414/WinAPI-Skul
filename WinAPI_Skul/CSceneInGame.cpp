@@ -50,8 +50,6 @@ void CSceneInGame::Enter()
 	case SCENE_TYPE::STAGE_02:
 		Stage02Init();
 		break;
-	default:
-		break;
 	}
 
 }
@@ -60,8 +58,22 @@ void CSceneInGame::Exit()
 {
 	ClearObject();
 
+	switch (m_eType)
+	{
+	case SCENE_TYPE::STAGE_01:
+		SINGLE(CSoundManager)->Stop(L"Ch1Bgm");
+		break;
+	case SCENE_TYPE::STAGE_02:
+		SINGLE(CSoundManager)->Stop(L"Ch1Bgm");
+		break;
+	default:
+		break;
+	}
+
 	// 기존의 충돌 그릅을 해제시켜야한다.
 	SINGLE(CCollisionManager)->Reset();
+
+
 }
 
 void CSceneInGame::Stage01Init()
@@ -74,7 +86,6 @@ void CSceneInGame::Stage01Init()
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
 	obj->SetPos(Vec2(500, 700));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(500, 700));
-
 	SINGLE(CCameraManager)->SetTarget(obj);
 
 
@@ -108,13 +119,24 @@ void CSceneInGame::Stage01Init()
 
 	CREATEOBJECT(BgObj);
 
-	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	//CREATEOBJECT(monsterMelee);
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(900.f, 800.f));
+	CREATEOBJECT(monsterMelee);
+	monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(1300.f, 1300.f));
+	CREATEOBJECT(monsterMelee);
+	monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(1900.f, 1300.f));
+	CREATEOBJECT(monsterMelee);
 
-	//monsterMelee = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
-	//monsterMelee->SetPos(Vec2(800.f, 1300.f));
-	//CREATEOBJECT(monsterMelee);
+	CEnemy*monsterRange = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterRange->SetPos(Vec2(1670.f, 750.f));
+	CREATEOBJECT(monsterRange);
+	monsterRange = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterRange->SetPos(Vec2(1350.f, 880.f));
+	CREATEOBJECT(monsterRange);
+
+
 
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::NORMAL, SCENE_TYPE::STAGE_02);
@@ -122,7 +144,7 @@ void CSceneInGame::Stage01Init()
 	CREATEOBJECT(gateObj);
 
 	CBorn* pItem = new CBorn(SKUL_TYPE::Hunter);
-	pItem->SetPos(Vec2(1650, 720));
+	pItem->SetPos(Vec2(2400, 1110));
 	pItem->Init();
 	CREATEOBJECT(pItem);
 
@@ -133,7 +155,6 @@ void CSceneInGame::Stage01Init()
 	LoadTile(strPath);
 
 	// 사운드 설정
-	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
 	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
@@ -193,10 +214,25 @@ void CSceneInGame::Stage02Init()
 
 	CREATEOBJECT(BgObj);
 
-	//CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
-	//monsterMelee->SetPos(Vec2(600.f, 1100.f));
-	//CREATEOBJECT(monsterMelee);
+	CEnemy* monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(1050.f, 1700.f));
+	CREATEOBJECT(monsterMelee);
+	monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(1850.f, 1600.f));
+	CREATEOBJECT(monsterMelee);
+	monsterMelee = new CEnemyMelee(OBJ_TYPE::ENEMY, ENEMY_TYPE::BIG_KNIGHT);
+	monsterMelee->SetPos(Vec2(2750.f, 1600.f));
+	CREATEOBJECT(monsterMelee);
 
+	CEnemy* monsterRange = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterRange->SetPos(Vec2(550.f, 820.f));
+	CREATEOBJECT(monsterRange);
+	monsterRange = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterRange->SetPos(Vec2(890.f, 1520.f));
+	CREATEOBJECT(monsterRange);
+	monsterRange = new CEnemyRange(OBJ_TYPE::ENEMY, ENEMY_TYPE::WIZARD);
+	monsterRange->SetPos(Vec2(2280.f, 1600.f));
+	CREATEOBJECT(monsterRange);
 
 	CGate* gateObj = new CGate(OBJ_TYPE::MAPOBJECT, GATE_TYPE::BOSS, SCENE_TYPE::BOSS);
 	gateObj->SetPos(Vec2(3580, 1415));
@@ -210,7 +246,6 @@ void CSceneInGame::Stage02Init()
 
 
 	// 사운드 설정
-	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\arrow_hit.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"Ch1Bgm", L"sound\\Chapter1.wav", true);
 	SINGLE(CSoundManager)->Play(L"Ch1Bgm");
 
@@ -230,11 +265,8 @@ void CSceneInGame::Stage02Init()
 
 void CSceneInGame::CreateUI()
 {
-
 	CStatusHUD* pHUD = new CStatusHUD();
 	pHUD->Init();
-
-
 
 	CUIImage* pUI = new CUIImage(OBJ_TYPE::UI, L"TimerUI", L"texture\\ui\\Timer_Frame.png");
 	pUI->SetScale(Vec2((float)pUI->GetImage()->GetWidth(), (float)pUI->GetImage()->GetHeight()));

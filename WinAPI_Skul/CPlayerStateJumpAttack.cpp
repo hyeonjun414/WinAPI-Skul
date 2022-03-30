@@ -70,6 +70,7 @@ void CPlayerStateJumpAttack::Enter(CObject* _pObj)
 	{
 		m_fDuration = 0.5f;
 		m_fCurTime = 0.f;
+		pPlayer->JumpAttack();
 		if (pPlayer->m_bCanSkill)
 			pPlayer->GetAnimator()->Play(L"LittleBorn_JumpAttack", true);
 		else

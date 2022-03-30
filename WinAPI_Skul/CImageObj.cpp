@@ -55,9 +55,7 @@ void CImageObj::Update()
 
 
         if (m_bEffectSwitch)
-        {
             m_fAlpha = fRatio;
-        }
         else
             m_fAlpha = (1 - fRatio);
     }

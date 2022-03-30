@@ -4,13 +4,7 @@ class CEnemyStateAttack :
     public CEnemyState
 {
 private:
-    float   m_fAttackLimitTime;
-    float   m_fAttackDelay;
-    float   m_fFlowTime;
-    int     m_iAttackCount;
-
-    bool    m_bAttackInput;
-    bool    m_bIsSecondAttack;
+    int m_iAttackType;
 public:
 
     virtual ~CEnemyStateAttack() {}

@@ -4,6 +4,8 @@ class CProjectile :
     public CAttack
 {
 protected:
+
+
     Vec2    m_vVelocity;
     bool    m_bIsGround;
     bool    m_bIsHit;

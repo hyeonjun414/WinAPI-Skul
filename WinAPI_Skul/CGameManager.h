@@ -67,6 +67,8 @@ public:
 	void		ActiveMenu();
 	void		GameExit();
 
-	void		Reset();
+	void		Player_Reset();
+	void		UI_Reset();
+	
 };
 

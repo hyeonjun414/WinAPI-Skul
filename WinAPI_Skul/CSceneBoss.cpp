@@ -83,7 +83,7 @@ void CSceneBoss::Enter()
 void CSceneBoss::Exit()
 {
 	ClearObject();
-
+	SINGLE(CSoundManager)->Stop(L"Ch1BossBgm");
 	// 기존의 충돌 그릅을 해제시켜야한다.
 	SINGLE(CCollisionManager)->Reset();
 }
@@ -116,6 +116,8 @@ void CSceneBoss::CreateUI()
 	pUIChild->SetPos(Vec2(45, 57));
 	SINGLE(CGameManager)->m_pBossStatus = pUIChild;
 	pUI->AddChild(pUIChild);
+
+
 	CUIText* pUIChildText = new CUIText(OBJ_TYPE::UI);
 	pUIChildText->SetPos(Vec2(pUI->GetImage()->GetWidth()/2+35, 20));
 	pUIChildText->SetScale(Vec2(250, 40));

@@ -193,16 +193,19 @@ void CGameManager::GameExit()
 	PostQuitMessage(0);
 }
 
-void CGameManager::Reset()
+void CGameManager::Player_Reset()
 {
 	m_pPlayer = nullptr;
 	m_pPlayer2 = nullptr;
+}
 
+void CGameManager::UI_Reset()
+{
 	m_pTimer = nullptr;
 	m_pRemainEnemy = nullptr;
 	m_pCurHealth = nullptr;
 	m_pCurHealthText = nullptr;
-	
+
 	m_pPortrait = nullptr;
 	m_pSkillA = nullptr;
 	m_pSkillB = nullptr;
@@ -213,6 +216,8 @@ void CGameManager::Reset()
 	m_pSubSkulFrame = nullptr;
 	m_pBossStatus = nullptr;
 	m_pMenuUI = nullptr;
+	m_iRemainEnemyCount = 0;
 }
+
 
 

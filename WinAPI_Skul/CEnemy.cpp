@@ -8,7 +8,7 @@
 #include "CCollider.h"
 #include "CTile.h"
 #include "CUIText.h"
-
+#include "CAttack.h"
 #include "CEnemyStateIdle.h"
 
 
@@ -37,19 +37,6 @@ CEnemy::~CEnemy()
 
 void CEnemy::Init()
 {
-	//switch (GetObjGroup())
-	//{
-	//case OBJ_TYPE::ENEMY_MELEE:
-	//	CEnemyMelee* enemy =  new CEnemyMelee(GetObjGroup(), );
-	//	CREATEOBJECT(enemy);
-	//	break;
-	//case OBJ_TYPE::ENEMY_RANGE:
-	//	CEnemyRange* enemy = new CEnemyRange();
-	//	break;
-	//case OBJ_TYPE::ENEMY_BOSS:
-	//	CEnemyBoss* enemy = new CEnemyBoss();
-	//	break;
-	//}
 }
 
 void CEnemy::Update()
@@ -84,8 +71,6 @@ void CEnemy::Render()
 }
 void CEnemy::OnCollision(CCollider* _pOther)
 {
-	//m_pState->OnCollision(this, _pOther);
-
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
 		CTile* pTile = (CTile*)_pOther->GetObj();
@@ -98,11 +83,11 @@ void CEnemy::OnCollision(CCollider* _pOther)
 		{
 			if (pos1.x <= pos2.x - size2.x / 2)
 			{
-				m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;//Player->m_vVelocity.x* DT;
+				m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;
 			}
 			else if (pos1.x >= pos2.x + size2.x / 2)
 			{
-				m_vPos.x = pos2.x + (size1.x + size2.x) / 2;//Player->m_vVelocity.x* DT;
+				m_vPos.x = pos2.x + (size1.x + size2.x) / 2;
 
 			}
 		}
@@ -111,7 +96,6 @@ void CEnemy::OnCollision(CCollider* _pOther)
 
 void CEnemy::OnCollisionEnter(CCollider* _pOther)
 {
-	//m_pState->OnCollisionEnter(this, _pOther);
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
 		Vec2 vLeftPos = m_pCollider->GetFinalPos();
@@ -131,14 +115,37 @@ void CEnemy::OnCollisionEnter(CCollider* _pOther)
 			}
 		}
 
+	}
 
+	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::PLAYER_ATTACK ||
+		(_pOther->GetObj()->GetObjType() == OBJ_TYPE::PROJECTILE && _pOther->GetObj()->GetName() == L"SkulHead"))
+	{
+		if (m_bCanHit && m_strCurState != L"Die")
+		{
+			CAttack* pAttack = (CAttack*)_pOther->GetObj();
+			CPlayer* pPlayer = (CPlayer*)pAttack->GetOwner();
+			int damage = SINGLE(CGameManager)->RandomInt(pAttack->GetDamage(), 0.2f);
+			SINGLE(CSoundManager)->Play(L"Hit");
+			SINGLE(CGameManager)->CreateVfx(L"Skul_Hit", L"texture\\effect\\Hit_Skul.png",
+				(m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2, 0.5f, 0.5f, rand()%2);
+			SINGLE(CGameManager)->DamageText(to_wstring(damage), (m_pCollider->GetFinalPos() + _pOther->GetFinalPos()) / 2);
+			if (pAttack->GetOwner()->GetPos().x < m_pCollider->GetFinalPos().x)
+			{
+				SetObjDir(false);
+			}
+			else
+			{
+				SetObjDir(true);
+			}
+
+			Hit(damage);
+			m_bCanHit = false;
+		}
 	}
 }
 
 void CEnemy::OnCollisionExit(CCollider* _pOther)
 {
-	//m_pState->OnCollisionExit(this, _pOther);
-
 	if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE)
 	{
 		m_iCollCount--;

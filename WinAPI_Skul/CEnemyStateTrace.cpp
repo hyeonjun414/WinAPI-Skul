@@ -12,6 +12,10 @@
 CEnemyState* CEnemyStateTrace::HandleInput(CObject* _pObj)
 {
     CEnemy* pEnemy = (CEnemy*)_pObj;
+
+    if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
+        return new CEnemyStateDie();
+
     switch (pEnemy->GetEnemyType())
     {
     case ENEMY_TYPE::BIG_KNIGHT:
@@ -21,11 +25,10 @@ CEnemyState* CEnemyStateTrace::HandleInput(CObject* _pObj)
             abs(PLAYERPOS.y - pEnemy->GetPos().y) < 50 &&
             pEnemy->m_bCanAttack)
             return new CEnemyStateAttack();
-        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400)
+        if (abs(PLAYERPOS.x - pEnemy->GetPos().x) > 400 ||
+            abs(PLAYERPOS.x - pEnemy->GetPos().x) < 100)
             return new CEnemyStateIdle();
 
-        if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
-            return new CEnemyStateDie();
         if (!pEnemy->m_bIsGround)
             return new CEnemyStateFall();
     }
@@ -34,16 +37,13 @@ CEnemyState* CEnemyStateTrace::HandleInput(CObject* _pObj)
     {
         CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
 
-        if (pEnemy->m_tEnemyInfo.m_iHp <= 0)
-            return new CEnemyStateDie();
-
         if (!pEnemy->m_bIsGround)
             return new CEnemyStateFall();
         if ((PLAYERPOS - pEnemy->GetPos()).Length() < 400 &&
             pEnemy->m_bCanAttack)
             return new CEnemyStateAttack();
 
-        if ((PLAYERPOS - pEnemy->GetPos()).Length() > 600)
+        if ((PLAYERPOS - pEnemy->GetPos()).Length() > 600 || m_fCurTime >= m_fDuration)
             return new CEnemyStateIdle();
 
         break;
@@ -75,6 +75,7 @@ void CEnemyStateTrace::Update(CObject* _pObj)
     break;
     case ENEMY_TYPE::WIZARD:
     {
+        m_fCurTime += DT;
         CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
     }
     break;
@@ -96,6 +97,9 @@ void CEnemyStateTrace::Enter(CObject* _pObj)
     case ENEMY_TYPE::WIZARD:
     {
         CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        m_fDuration = 1.f;
+        m_fCurTime = 0.f;
+
         SINGLE(CGameManager)->CreateVfx(L"DisAppear", L"texture\\effect\\Enemy_Dead.png",
             pEnemy->GetPos(), 0.5f, 0.5f, pEnemy->GetObjDir());
 
@@ -123,6 +127,7 @@ void CEnemyStateTrace::Exit(CObject* _pObj)
     case ENEMY_TYPE::WIZARD:
     {
         CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        pEnemy->m_bCanTrace = false;
         break;
     }
     

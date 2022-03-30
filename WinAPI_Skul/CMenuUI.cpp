@@ -26,12 +26,14 @@ void CALLBACK BtnBackToGame(DWORD_PTR _param1, DWORD_PTR _param2)
 void CALLBACK BtnNewGame(DWORD_PTR _param1, DWORD_PTR _param2)
 {
 	SINGLE(CSceneManager)->GetCurScene()->DeleteGroup(OBJ_TYPE::PLAYER);
-	SINGLE(CGameManager)->Reset();
+	SINGLE(CGameManager)->Player_Reset();
+	SINGLE(CGameManager)->UI_Reset();
 	SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::STAGE_01);
 }
 
 void CALLBACK BtnBossStage(DWORD_PTR _param1, DWORD_PTR _param2)
 {
+	SINGLE(CGameManager)->UI_Reset();
 	SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::BOSS);
 }
 
@@ -39,7 +41,8 @@ void CALLBACK BtnTitle(DWORD_PTR _param1, DWORD_PTR _param2)
 {
 	SINGLE(CSceneManager)->GetCurScene()->DeleteGroup(OBJ_TYPE::PLAYER);
 	SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::START);
-	SINGLE(CGameManager)->Reset();
+	SINGLE(CGameManager)->Player_Reset();
+	SINGLE(CGameManager)->UI_Reset();
 }
 
 void CALLBACK BtnGameExit(DWORD_PTR _param1, DWORD_PTR _param2)
@@ -113,14 +116,6 @@ void CMenuUI::Init()
 
 	pBtn = new CUIButton(OBJ_TYPE::UI);
 	pBtn->SetPos(Vec2((float)pPanel->GetImage()->GetWidth(), 450));
-	pBtn->SetOnColor(Color::MENUTEXT_ON);
-	pBtn->SetOffColor(Color::MENUTEXT_OFF);
-	pBtn->SetText(L"설 정", 25.f);
-	pBtn->PositionSet();
-	pPanel->AddChild(pBtn);
-
-	pBtn = new CUIButton(OBJ_TYPE::UI);
-	pBtn->SetPos(Vec2((float)pPanel->GetImage()->GetWidth(), 500));
 	pBtn->SetOnColor(Color::MENUTEXT_ON);
 	pBtn->SetOffColor(Color::MENUTEXT_OFF);
 	pBtn->SetText(L"게임종료", 25.f);

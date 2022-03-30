@@ -11,36 +11,24 @@
 
 CEnemyState* CEnemyStateDie::HandleInput(CObject* _pObj)
 {
-    switch (_pObj->GetObjType())
+    CEnemy* pEnemy = (CEnemy*)_pObj;
+    switch (pEnemy->GetEnemyType())
     {
-    case OBJ_TYPE::PLAYER:
+    case ENEMY_TYPE::BIG_KNIGHT:
     {
-        CPlayer* pPlayer = (CPlayer*)_pObj;
+        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        if (m_fCurTime >= m_fDuration)
+        {
+            pEnemy->Die();
+        }
     }
     break;
-    case OBJ_TYPE::ENEMY:
+    case ENEMY_TYPE::WIZARD:
     {
-        CEnemy* pEnemy = (CEnemy*)_pObj;
-        switch (pEnemy->GetEnemyType())
+        CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        if (m_fCurTime >= m_fDuration)
         {
-        case ENEMY_TYPE::BIG_KNIGHT:
-        {
-            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-            if (m_fCurTime >= m_fDuration)
-            {
-                pEnemy->Die();
-            }
-        }
-        break;
-        case ENEMY_TYPE::WIZARD:
-        {
-            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-            if (m_fCurTime >= m_fDuration)
-            {
-                pEnemy->Die();
-            }
-        }
-        break;
+            pEnemy->Die();
         }
     }
     break;
@@ -50,30 +38,18 @@ CEnemyState* CEnemyStateDie::HandleInput(CObject* _pObj)
 
 void CEnemyStateDie::Update(CObject* _pObj)
 {
-    switch (_pObj->GetObjType())
+    m_fCurTime += DT;
+    CEnemy* pEnemy = (CEnemy*)_pObj;
+    switch (pEnemy->GetEnemyType())
     {
-    case OBJ_TYPE::PLAYER:
+    case ENEMY_TYPE::BIG_KNIGHT:
     {
-        CPlayer* pPlayer = (CPlayer*)_pObj;
+        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY:
+    case ENEMY_TYPE::WIZARD:
     {
-        m_fCurTime += DT;
-        CEnemy* pEnemy = (CEnemy*)_pObj;
-        switch (pEnemy->GetEnemyType())
-        {
-        case ENEMY_TYPE::BIG_KNIGHT:
-        {
-            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        }
-        break;
-        case ENEMY_TYPE::WIZARD:
-        {
-            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-        }
-        break;
-        }
+        CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
     }
     break;
     }
@@ -81,67 +57,43 @@ void CEnemyStateDie::Update(CObject* _pObj)
 
 void CEnemyStateDie::Enter(CObject* _pObj)
 {
-    switch (_pObj->GetObjType())
+    CEnemy* pEnemy = (CEnemy*)_pObj;
+    switch (pEnemy->GetEnemyType())
     {
-    case OBJ_TYPE::PLAYER:
+    case ENEMY_TYPE::BIG_KNIGHT:
     {
-        CPlayer* pPlayer = (CPlayer*)_pObj;
+        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
+        m_fCurTime = 0.f;
+        m_fDuration = 1.0f;
+        pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
     }
-    break;
-    case OBJ_TYPE::ENEMY:
-    {
-        CEnemy* pEnemy = (CEnemy*)_pObj;
-        switch (pEnemy->GetEnemyType())
-        {
-        case ENEMY_TYPE::BIG_KNIGHT:
-        {
-            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-            m_fCurTime = 0.f;
-            m_fDuration = 1.0f;
-            //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
-            pEnemy->GetAnimator()->PlayAndNextAnim(L"BigKnight_Die", false, L"DisappearEnemy");
-        }
-            break;
-        case ENEMY_TYPE::WIZARD:
-        {
-            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-            m_fCurTime = 0.f;
-            m_fDuration = 1.0f;
-            //pEnemy->GetAnimator()->Play(L"BigKnight_Die", true);
-            pEnemy->GetAnimator()->PlayAndNextAnim(L"Wizard_Idle", false, L"DisappearEnemy");
-        }
         break;
-        }
+    case ENEMY_TYPE::WIZARD:
+    {
+        CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
+        m_fCurTime = 0.f;
+        m_fDuration = 1.0f;
+        pEnemy->GetAnimator()->PlayAndNextAnim(L"Wizard_Die", false, L"DisappearEnemy");
     }
     break;
     }
+    pEnemy->m_strCurState = L"Die";
+    SINGLE(CSoundManager)->Play(L"Enemy_Dead");
 }
 
 void CEnemyStateDie::Exit(CObject* _pObj)
 {
-    switch (_pObj->GetObjType())
+    CEnemy* pEnemy = (CEnemy*)_pObj;
+    switch (pEnemy->GetEnemyType())
     {
-    case OBJ_TYPE::PLAYER:
+    case ENEMY_TYPE::BIG_KNIGHT:
     {
-        CPlayer* pPlayer = (CPlayer*)_pObj;
+        CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
     }
     break;
-    case OBJ_TYPE::ENEMY:
+    case ENEMY_TYPE::WIZARD:
     {
-        CEnemy* pEnemy = (CEnemy*)_pObj;
-        switch (pEnemy->GetEnemyType())
-        {
-        case ENEMY_TYPE::BIG_KNIGHT:
-        {
-            CEnemyMelee* pEnemy = (CEnemyMelee*)_pObj;
-        }
-        break;
-        case ENEMY_TYPE::WIZARD:
-        {
-            CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
-        }
-        break;
-        }
+        CEnemyRange* pEnemy = (CEnemyRange*)_pObj;
     }
     break;
     }

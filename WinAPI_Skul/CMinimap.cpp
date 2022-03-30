@@ -50,6 +50,8 @@ void CMinimap::Render()
 {
 	CUI::Render();
 
+	if (!SINGLE(CGameManager)->GetGamePlay()) return;
+
 	const vector<CObject*>* vecObject = SINGLE(CSceneManager)->GetCurScene()->GetAllObject();
 	for (size_t i = (UINT)OBJ_TYPE::TILE; i < (UINT)OBJ_TYPE::PLAYER_ATTACK; i++)
 	{

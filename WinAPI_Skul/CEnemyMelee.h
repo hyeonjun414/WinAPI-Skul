@@ -20,5 +20,6 @@ public:
     virtual void	    OnCollisionExit(CCollider* _pOther);
 
     virtual void        Attack();
+    void                Tackle();
 };
 

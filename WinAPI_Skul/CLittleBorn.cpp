@@ -77,8 +77,8 @@ void CLittleBorn::Init()
 	SINGLE(CSoundManager)->AddSound(L"Dash", L"sound\\Default_Dash.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillA", L"sound\\Legacy_AttackB.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"SkillB", L"sound\\Skul_SkullBack.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Landing", L"sound\\Landing.wav", false);
-	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Default_Switch.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Switch", L"sound\\Skul_Switch.wav", false);
+	SINGLE(CSoundManager)->AddSound(L"Hit", L"sound\\Hit.wav", false);
 
 	Enter();
 
