@@ -27,7 +27,8 @@ void CGameManager::Update()
 {
 
 	if (KEYTAP(KEY::ESC) &&
-		SCENE_TYPE::START !=SINGLE(CSceneManager)->GetCurScene()->GetSceneType())
+		m_pPlayer->GetPlayerInfo().m_iHp > 0 &&
+		SCENE_TYPE::START !=SINGLE(CSceneManager)->GetCurScene()->GetSceneType() )
 	{
 		ActiveMenu();
 	}

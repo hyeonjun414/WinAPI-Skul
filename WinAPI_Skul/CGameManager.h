@@ -16,29 +16,22 @@ public:
 
 	tPlayer_Info m_tCurPlayerInfo;
 	bool		m_bIsPlay;
-
 	int			m_iRemainEnemyCount;
 
 	CUIText*	m_pTimer;
 	CUIText*	m_pRemainEnemy;
 	CUIImage*	m_pCurHealth;
 	CUIText*	m_pCurHealthText;
-
 	CUIImage*	m_pPortrait;
 	CUIImage*	m_pSkillA;
 	CUIImage*	m_pSkillB;
 	CUIImage*	m_pSubSkillA;
 	CUIImage*	m_pSubSkillB;
 	CUIImage*	m_pSubSkul;
-
 	CUIImage*	m_pSubSkillFrame;
 	CUIImage*	m_pSubSkulFrame;
-
 	CUIImage*	m_pBossStatus;
-
 	CMenuUI*	m_pMenuUI;
-
-	vector<CObject> m_vecItem;
 
 public:
 	void		Init();
@@ -55,8 +48,6 @@ public:
 
 	void		SwitchSkul();
 	void		AddSkul(SKUL_TYPE _eSkulType);
-
-
 
 	void		EraseHeadObj();
 	void		CreateVfx(const wstring& _strKey, const wstring& _strPath, Vec2 _vPos,

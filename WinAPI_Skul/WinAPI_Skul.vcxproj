@@ -164,6 +164,7 @@
     <ClInclude Include="CBossStateSlam.h" />
     <ClInclude Include="CBossStateSweep.h" />
     <ClInclude Include="CEnemyState.h" />
+    <ClInclude Include="CGameOverUI.h" />
     <ClInclude Include="CHealthBar.h" />
     <ClInclude Include="CHunter.h" />
     <ClInclude Include="CItem.h" />
@@ -266,6 +267,7 @@
     <ClCompile Include="CBossStateSlam.cpp" />
     <ClCompile Include="CBossStateSweep.cpp" />
     <ClCompile Include="CEnemyState.cpp" />
+    <ClCompile Include="CGameOverUI.cpp" />
     <ClCompile Include="CHealthBar.cpp" />
     <ClCompile Include="CHunter.cpp" />
     <ClCompile Include="CItem.cpp" />

@@ -8,11 +8,21 @@ CPlayerState* CPlayerStateMove::HandleInput(CObject* _pObj)
 {
 	CPlayer* pPlayer = (CPlayer*)_pObj;
 
-	if (KEYAWAY(KEY::LEFT))
+	if (KEYTAP(KEY::SPACE) && nullptr != SINGLE(CGameManager)->m_pPlayer2)
 	{
-		return new CPlayerStateIdle();
+		SWITCHSKUL;
+		SINGLE(CGameManager)->CreateVfx(L"Switch_Skul", L"texture\\effect\\Switch_Skul.png",
+			_pObj->GetCollider()->GetFinalPos(), 0.5f, 0.5f, _pObj->GetObjDir());
+		SINGLE(CSoundManager)->Play(L"Switch");
 	}
-	if (KEYAWAY(KEY::RIGHT))
+
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
+
+	if (KEYAWAY(KEY::LEFT) || KEYAWAY(KEY::RIGHT))
 	{
 		return new CPlayerStateIdle();
 	}
@@ -26,7 +36,7 @@ CPlayerState* CPlayerStateMove::HandleInput(CObject* _pObj)
 	}
 	if (KEYTAP(KEY::Z) && pPlayer->m_bCanDash)
 	{
-		pPlayer->m_bCanDash = false;
+		
 		return new CPlayerStateDash();
 	}
 	if (KEYTAP(KEY::X))

@@ -8,17 +8,15 @@ CPlayerState* CPlayerStateFall::HandleInput(CObject* _pObj)
 {
 	CPlayer* pPlayer = (CPlayer*)_pObj;
 
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
 	if (pPlayer->IsGround())
 		return new CPlayerStateIdle();
 
-	if (KEYTAP(KEY::A) && pPlayer->m_bCanSkill)
-	{
-		return new CPlayerStateSkillA();
-	}
-	if (KEYTAP(KEY::S) && !pPlayer->m_bCanSkill)
-	{
-		return new CPlayerStateSkillB();
-	}
+
 	if (KEYTAP(KEY::X) && pPlayer->m_bCanJumpAttack)
 	{
 		return new CPlayerStateJumpAttack();
@@ -33,6 +31,14 @@ CPlayerState* CPlayerStateFall::HandleInput(CObject* _pObj)
 	{
 	case SKUL_TYPE::Little_Born:
 	{
+		if (KEYTAP(KEY::A) && pPlayer->m_bCanSkill)
+		{
+			return new CPlayerStateSkillA();
+		}
+		if (KEYTAP(KEY::S) && !pPlayer->m_bCanSkill)
+		{
+			return new CPlayerStateSkillB();
+		}
 		break;
 	}
 	case SKUL_TYPE::Hunter:

@@ -384,6 +384,9 @@
     <ClInclude Include="CPlayerStateDie.h">
       <Filter>04.Component\State\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="CGameOverUI.h">
+      <Filter>03.GameObject\UI\UI Module</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_Skul.cpp">
@@ -661,6 +664,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerStateDie.cpp">
       <Filter>04.Component\State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameOverUI.cpp">
+      <Filter>03.GameObject\UI\UI Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -55,6 +55,7 @@ void CHunter::Init()
 	GetAnimator()->CreateAnim(L"Hunter_Charging", L"texture\\player\\hunter\\hunter_chargeshot_charging.png", 0.2f);
 	GetAnimator()->CreateAnim(L"Hunter_Charged", L"texture\\player\\hunter\\hunter_chargeshot_charged.png", 0.2f);
 	GetAnimator()->CreateAnim(L"Hunter_Charge_completed", L"texture\\player\\hunter\\hunter_chargeshot_charge_complated.png", 1.f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Die", L"texture\\player\\skul_die.png", 1.0f);
 
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
 	m_pAnimator->SetAllAnimOffset(Vec2(0, 30));
@@ -81,9 +82,11 @@ void CHunter::Init()
 	m_pState->Enter(this);
 
 
-	GetPlayerInfo().m_iDamage = 100;
-	GetPlayerInfo().m_iHp = 50;
-	GetPlayerInfo().m_iMaxHp = 50;
+	tPlayer_Info& myInfo = GetPlayerInfo();
+
+	myInfo.m_iDamage = 100;
+	myInfo.m_iHp = 50;
+	myInfo.m_iMaxHp = myInfo.m_iHp;
 
 	Enter();
 	
@@ -179,10 +182,10 @@ void CHunter::SkillA()
 			pProj->SetName(L"ArrowRain");
 			pProj->SetVelocity(Vec2(0, 1400.f));
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
-			pObjGene->ReservateObj(pProj);
+			pObjGene->ReserveObj(pProj);
 
 			CSfx* pSfx = new CSfx(L"Arrow");
-			pObjGene->ReservateSfx(pSfx);
+			pObjGene->ReserveSfx(pSfx);
 		}
 		CREATEOBJECT(pObjGene);
 		SINGLE(CGameManager)->CreateVfx(L"ArrowRainFire", L"texture\\effect\\Hunter_SiegeShot_Charged.png",
@@ -223,10 +226,10 @@ void CHunter::SkillB()
 				L"Arrow_completed", L"texture\\player\\hunter\\Hunter_Attack_Completed_Projectile.png", 5.f);
 			pProj->SetVelocity(Vec2(GetObjDir() ? 2000.f : -2000.f, -120.f));
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
-			pObjGene->ReservateObj(pProj);
+			pObjGene->ReserveObj(pProj);
 
 			CSfx* pSfx = new CSfx(L"Hunter_SkillB_Arrow");
-			pObjGene->ReservateSfx(pSfx);
+			pObjGene->ReserveSfx(pSfx);
 		}
 		CREATEOBJECT(pObjGene);
 		SINGLE(CGameManager)->CreateVfx(L"RapidShotEffect", L"texture\\effect\\Hunter_RapidShot_Completed.png",
@@ -245,10 +248,10 @@ void CHunter::SkillB()
 				L"Arrow_Incompleted", L"texture\\player\\hunter\\Hunter_Attack_Incompleted_Projectile.png", 5.f);
 			pProj->SetVelocity(Vec2(GetObjDir() ? 1400.f : -1400.f, -150.f));
 			pProj->SetPos(m_pCollider->GetFinalPos() + Vec2(GetObjDir() ? 25.f : -25.f, 0));
-			pObjGene->ReservateObj(pProj);
+			pObjGene->ReserveObj(pProj);
 
 			CSfx* pSfx = new CSfx(L"Hunter_SkillB_Arrow");
-			pObjGene->ReservateSfx(pSfx);
+			pObjGene->ReserveSfx(pSfx);
 		}
 		CREATEOBJECT(pObjGene);
 	}

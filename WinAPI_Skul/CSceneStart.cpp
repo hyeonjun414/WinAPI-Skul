@@ -35,10 +35,10 @@ void CSceneStart::Update()
 	{
 		ChangeNextScene(SCENE_TYPE::BOSS);
 	}
-	if (KEYTAP(KEY::ESC))
-	{
-		ChangeNextScene(SCENE_TYPE::TOOL);
-	}
+	//if (KEYTAP(KEY::ESC))
+	//{
+	//	ChangeNextScene(SCENE_TYPE::TOOL);
+	//}
 }
 
 void CSceneStart::Render()

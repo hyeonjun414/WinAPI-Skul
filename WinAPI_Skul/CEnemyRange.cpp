@@ -46,7 +46,7 @@ void CEnemyRange::Init()
 
 		m_tEnemyInfo.m_iHp = 300;
 		m_tEnemyInfo.m_iMaxHp = 300;
-		m_tEnemyInfo.m_iDamage = 3;
+		m_tEnemyInfo.m_iDamage = 2;
 		m_tEnemyInfo.m_vVelocity = Vec2(100.f, 0.f);
 
 		m_bCanAttack = true;

@@ -8,6 +8,11 @@ CPlayerState* CPlayerStateDash::HandleInput(CObject* _pObj)
 {
 	CPlayer* pPlayer = (CPlayer*)_pObj;
 
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
 	if (m_iCurMoveDist >= m_iDist)
 		return new CPlayerStateIdle();
 
@@ -58,7 +63,7 @@ void CPlayerStateDash::Update(CObject* _pObj)
 void CPlayerStateDash::Enter(CObject* _pObj)
 {
 	CPlayer* pPlayer = (CPlayer*)_pObj;
-
+	pPlayer->m_bCanDash = false;
 	m_iDist = 200;
 	m_iCurMoveDist = 0;
 	m_fDashSpeed = 700;

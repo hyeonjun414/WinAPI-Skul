@@ -36,7 +36,7 @@ void CSceneBoss::Enter()
 	CreateUI();
 
 	CPlayer* obj = SINGLE(CGameManager)->GetCurSkul();
-	obj->SetPos(Vec2(1600.f, 700.f));
+	obj->SetPos(Vec2(1600.f, 1000.f));
 	SINGLE(CCameraManager)->SetWorldSize(Vec2(3200.f, 1600.f));
 	SINGLE(CCameraManager)->SetCurLookAt(Vec2(1600.f, 700.f));
 	SINGLE(CCameraManager)->SetTarget(obj);

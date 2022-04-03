@@ -13,6 +13,11 @@ CPlayerState* CPlayerStateSkillA::HandleInput(CObject* _pObj)
 	if (m_fCurTime >= m_fDuration)
 		return new CPlayerStateIdle();
 
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
 	switch (pPlayer->m_eSkulType)
 	{
 	case SKUL_TYPE::Little_Born:

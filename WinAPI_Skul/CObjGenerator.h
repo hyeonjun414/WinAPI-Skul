@@ -24,8 +24,8 @@ public:
     virtual void	Init();
     virtual void	Update();
 
-    void            ReservateObj(CObject* _pObj) { m_vecObject.push_back(_pObj); }
-    void            ReservateVfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
-    void            ReservateSfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
+    void            ReserveObj(CObject* _pObj) { m_vecObject.push_back(_pObj); }
+    void            ReserveVfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
+    void            ReserveSfx(CEffect* _pEft) { m_vecVfx.push_back(_pEft); }
 };
 

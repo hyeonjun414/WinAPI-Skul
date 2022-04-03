@@ -73,11 +73,11 @@ void CPlayer::OnCollision(CCollider* _pOther)
         {
             if (pos1.x <= pos2.x - size2.x / 2)
             {
-				m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;//Player->m_vVelocity.x* DT;
+				m_vPos.x = pos2.x + (-size1.x - size2.x) / 2;
             }
             else if (pos1.x >= pos2.x + size2.x / 2)
             {
-				m_vPos.x = pos2.x + (size1.x + size2.x) / 2;//Player->m_vVelocity.x* DT;
+				m_vPos.x = pos2.x + (size1.x + size2.x) / 2;
 
             }
         }
@@ -216,7 +216,7 @@ void CPlayer::RenderPlayerInfo()
 			L"현재 애니메이션\n : " + GetAnimator()->GetCurAnim()->GetName(),
 			pos.x,
 			pos.y + 130,
-			pos.x + 200,
+			pos.x + 300,
 			pos.y,//+ 20 + 100,
 			16.f,
 			0,

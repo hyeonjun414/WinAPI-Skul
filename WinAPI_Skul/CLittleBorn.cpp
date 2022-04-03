@@ -26,10 +26,9 @@ CLittleBorn::~CLittleBorn()
 
 void CLittleBorn::Init()
 {
-
-
 	SetScale(Vec2(96, 96));
 	SetName(L"Player");
+
 	// Collider 만들기
 	CreateCollider();
 	m_pCollider->SetOffsetPos(Vec2(0, -GetScale().y / 4));
@@ -58,6 +57,7 @@ void CLittleBorn::Init()
 	GetAnimator()->CreateAnim(L"LittleBorn_Dash_Headless", L"texture\\player\\dash_headless_skul.png", 1.0f);
 	GetAnimator()->CreateAnim(L"LittleBorn_JumpAttack_Headless", L"texture\\player\\jumpattack_headless_skul.png", 0.5f);
 	GetAnimator()->CreateAnim(L"LittleBorn_SkillRebone", L"texture\\player\\skill_rebone_skul.png", 0.5f);
+	GetAnimator()->CreateAnim(L"LittleBorn_Die", L"texture\\player\\skul_die.png", 1.0f);
 
 	// 애니메이터의 모든 애니메이션의 오프셋을 조절한다.
 	m_pAnimator->SetAllAnimOffset(Vec2(0, 30));
@@ -65,9 +65,11 @@ void CLittleBorn::Init()
 	m_pState = new CPlayerStateIdle();
 	m_pState->Enter(this);
 
-	GetPlayerInfo().m_iDamage = 100;
-	GetPlayerInfo().m_iHp = 50;
-	GetPlayerInfo().m_iMaxHp = 50;
+	tPlayer_Info& myInfo = GetPlayerInfo();
+
+	myInfo.m_iDamage = 100;
+	myInfo.m_iHp = 50;
+	myInfo.m_iMaxHp = myInfo.m_iHp;
 
 	SINGLE(CSoundManager)->AddSound(L"Jump", L"sound\\Default_Jump.wav", false);
 	SINGLE(CSoundManager)->AddSound(L"JumpAir", L"sound\\Default_Jump_Air.wav", false);

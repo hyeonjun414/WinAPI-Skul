@@ -86,16 +86,16 @@ void CAnimation::Render(bool _bIsRight, float _rate)
 			m_vecFrame[m_iCurFrame].vLT.y + m_vecFrame[m_iCurFrame].vSliceSize.y,
 			1.0f);
 	}
-	if (SINGLE(CCore)->GetDebugMode())
-	{
-		RENDER->RenderRectangle(
-			vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
-			vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
-			vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
-			vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
-			RGB(255, 255, 255)
-		);
-	}
+	//if (SINGLE(CCore)->GetDebugMode())
+	//{
+	//	RENDER->RenderRectangle(
+	//		vPos.x - m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+	//		vPos.y - m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
+	//		vPos.x + m_vecFrame[m_iCurFrame].vSliceSize.x*_rate,
+	//		vPos.y + m_vecFrame[m_iCurFrame].vSliceSize.y*_rate,
+	//		RGB(255, 255, 255)
+	//	);
+	//}
 
 }
 

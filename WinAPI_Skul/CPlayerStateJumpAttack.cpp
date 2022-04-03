@@ -9,6 +9,11 @@ CPlayerState* CPlayerStateJumpAttack::HandleInput(CObject* _pObj)
 {
 	CPlayer* pPlayer = (CPlayer*)_pObj;
 
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
 	if (m_fCurTime >= m_fDuration ||
 		pPlayer->m_bIsGround)
 		return new CPlayerStateIdle();

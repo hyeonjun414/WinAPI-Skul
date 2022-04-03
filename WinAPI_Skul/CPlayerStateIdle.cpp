@@ -16,6 +16,11 @@ CPlayerState* CPlayerStateIdle::HandleInput(CObject* _pObj)
 		SINGLE(CSoundManager)->Play(L"Switch");
 	}
 
+	if (pPlayer->GetPlayerInfo().m_iHp <= 0)
+	{
+		return new CPlayerStateDie();
+	}
+
 
 	//스컬 타입마다 달라야하는 기능은 아래에 같아도 되는 작업은 위에
 	switch (pPlayer->m_eSkulType)
