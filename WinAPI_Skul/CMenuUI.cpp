@@ -5,6 +5,7 @@
 #include "CD2DImage.h"
 #include "CUIButton.h"
 #include "CScene.h"
+#include "CUICursor.h"
 
 CMenuUI::CMenuUI():
 	CUI(OBJ_TYPE::UI)
@@ -28,7 +29,7 @@ void CALLBACK BtnNewGame(DWORD_PTR _param1, DWORD_PTR _param2)
 	SINGLE(CSceneManager)->GetCurScene()->DeleteGroup(OBJ_TYPE::PLAYER);
 	SINGLE(CGameManager)->Player_Reset();
 	SINGLE(CGameManager)->UI_Reset();
-	SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::STAGE_01);
+	SINGLE(CSceneManager)->GetCurScene()->ChangeNextScene(SCENE_TYPE::LOBBY_INNER);
 }
 
 void CALLBACK BtnBossStage(DWORD_PTR _param1, DWORD_PTR _param2)
@@ -123,8 +124,11 @@ void CMenuUI::Init()
 	pBtn->SetClickCallBack(BtnGameExit, 0, 0);
 	pPanel->AddChild(pBtn);
 
+	CUICursor* cursor = new CUICursor(OBJ_TYPE::UI);
+
 
 	AddChild(pPanel);
+	AddChild(cursor);
 	CREATEOBJECT(this);
 }
 

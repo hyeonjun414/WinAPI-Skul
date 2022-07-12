@@ -39,12 +39,18 @@ void CScene::Update()
 	{
 		for (int i = 0; i < (int)OBJ_TYPE::SIZE; i++)
 		{
+			if (i == (int)OBJ_TYPE::UI) continue;
 			for (unsigned int j = 0; j < m_vecObjectList[i].size(); j++)
 			{
 				if (m_vecObjectList[i][j]->IsDead())
 					m_vecObjectList[i][j]->Update();
 			}
 		}
+	}
+	for (unsigned int j = 0; j < m_vecObjectList[(int)OBJ_TYPE::UI].size(); j++)
+	{
+		if (m_vecObjectList[(int)OBJ_TYPE::UI][j]->IsDead())
+			m_vecObjectList[(int)OBJ_TYPE::UI][j]->Update();
 	}
 
 

@@ -18,6 +18,7 @@
 #include "CStatusHUD.h"
 #include "CMenuUI.h"
 #include "CMinimap.h"
+#include "CUICursor.h"
 
 CSceneInGame::CSceneInGame()
 {
@@ -42,6 +43,7 @@ void CSceneInGame::Update()
 
 void CSceneInGame::Enter()
 {
+
 	switch (m_eType)
 	{
 	case SCENE_TYPE::STAGE_01:
@@ -51,7 +53,6 @@ void CSceneInGame::Enter()
 		Stage02Init();
 		break;
 	}
-
 }
 
 void CSceneInGame::Exit()

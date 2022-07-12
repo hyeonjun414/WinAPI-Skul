@@ -145,8 +145,6 @@ void CEnemyBoss::Init()
 		SINGLE(CSoundManager)->AddSound(L"BossBombReady", L"sound\\ElderEnt_EnergyBomb_Ready.wav", false);
 		SINGLE(CSoundManager)->AddSound(L"BossBombExplosion", L"sound\\Atk_Explosion_Small.wav", false);
 		SINGLE(CSoundManager)->AddSound(L"BossChangeIntro", L"sound\\ElderEnt_Change_Intro.wav", false);
-		
-
 	}
 		break;
 	}
@@ -167,10 +165,8 @@ void CEnemyBoss::Update()
 
 	CoolTime();
 
-
 	if (nullptr != m_pAnimator)
 		m_pAnimator->Update();
-
 }
 
 void CEnemyBoss::Render()

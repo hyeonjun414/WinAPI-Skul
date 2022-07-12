@@ -19,6 +19,7 @@
 #include "CMenuUI.h"
 #include "CMinimap.h"
 #include "CAnimator.h";
+#include "CUICursor.h"
 
 CSceneLobby::CSceneLobby(wstring _sceneName, SCENE_TYPE _sceneType):
 	CScene(_sceneName,_sceneType)
@@ -47,7 +48,6 @@ void CSceneLobby::Enter()
 	default:
 		break;
 	}
-
 }
 
 void CSceneLobby::Exit()
@@ -203,4 +203,6 @@ void CSceneLobby::CreateUI()
 
 	CMenuUI* pMenuUI = new CMenuUI();
 	pMenuUI->Init();
+
+
 }

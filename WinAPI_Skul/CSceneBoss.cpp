@@ -13,6 +13,7 @@
 #include "CEnemyBoss.h"
 #include "CStatusHUD.h"
 #include "CMenuUI.h"
+#include "CUICursor.h"
 
 
 CSceneBoss::CSceneBoss(wstring _sceneName, SCENE_TYPE _sceneType) :
@@ -31,6 +32,8 @@ void CSceneBoss::Update()
 
 void CSceneBoss::Enter()
 {
+
+
 	GAMEPLAY(true);
 	SINGLE(CCameraManager)->FadeIn(1.f);
 	CreateUI();

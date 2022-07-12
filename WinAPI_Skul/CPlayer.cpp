@@ -39,12 +39,16 @@ void CPlayer::Update()
 {
 	if (!IsActive()) return;
 	CState* pState = m_pState->HandleInput(this);
+	// 입력된 키에 따라 다음 상태을 반환
 	if (nullptr != pState)
 	{
-		m_pState->Exit(this);
+		m_pState->Exit(this); // 현재 상태에 대한 초기화
+
+		// 상태 변경
 		delete m_pState;
-		m_pState = pState;
-		m_pState->Enter(this);
+		m_pState = pState; 
+
+		m_pState->Enter(this); // 다음 상태에 대한 초기화
 	}
 
 	m_pState->Update(this);
@@ -64,7 +68,10 @@ void CPlayer::OnCollision(CCollider* _pOther)
     if (_pOther->GetObj()->GetObjType() == OBJ_TYPE::TILE )
     {
 		CTile* pTile = (CTile*)_pOther->GetObj();
-		if (pTile->GetType() == TILE_TYPE::FLOATING) return;
+
+		if (pTile->GetType() == TILE_TYPE::FLOATING) 
+			return;
+
         Vec2 pos1 = m_pCollider->GetFinalPos();
         Vec2 pos2 = _pOther->GetFinalPos();
         Vec2 size1 = m_pCollider->GetScale();
